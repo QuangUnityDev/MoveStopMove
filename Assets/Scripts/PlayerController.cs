@@ -34,23 +34,15 @@ public class PlayerController : Charecter
         { 
             ChangeAnim("Idle");
         }
-        if (isAttack == true && rb.velocity == Vector3.zero)
+        if (isAttack == true && rb.velocity == Vector3.zero && target.gameObject.activeSelf)
         {           
             timeAttackNext += Time.deltaTime;
-            if(timeAttackNext > 2)
+            if(timeAttackNext > timeToAttack)
             {
                 Attack();
                 timeAttackNext = 0;
             }          
-        }
-        transform.localScale = new Vector3(1 + killed * 0.2f, 1 + killed * 0.2f, 1 + killed * 0.2f);
-    }
-    public void GetKill(int idBullet)
-    {
-        if (idBullet == id)
-        {
-            killed++;
-        }
+        }      
     }
     public override void Attack()
     {

@@ -35,7 +35,7 @@ public class GameManager : Singleton<GameManager>
         Vector3 posRandom = new Vector3(Random.Range(-28, 28), -0.55f, Random.Range(-28, 28));
         for (int i = 0; i < listTarget.Count ; i++)
         {
-            while(Vector3.Distance(posRandom,listTarget[i].transform.position) < 5)
+            if(Vector3.Distance(posRandom,listTarget[i].transform.position) < 5)
             {
                 posRandom = new Vector3(Random.Range(-28, 28), -0.55f, Random.Range(-28, 28));
             }
@@ -44,9 +44,11 @@ public class GameManager : Singleton<GameManager>
     }
     public void GetKill(int idBullet)
     {
-        if (idBullet == 0)
+        if (idBullet == 0 && !listTarget[0].gameObject.activeSelf)
         {
-            listTarget[0].GetComponent<PlayerController>().killed++;
+            PlayerController go = listTarget[0].GetComponent<PlayerController>();
+            go.killed++;
+            go.transform.localScale = new Vector3(1 + go.killed * 0.2f, 1 + go.killed * 0.2f, 1 + go.killed * 0.2f);
         }
         else
         {
@@ -54,7 +56,10 @@ public class GameManager : Singleton<GameManager>
             {
                 if(listTarget[i].GetComponent<BotController>().id == idBullet)
                 {
-                    listTarget[i].GetComponent<BotController>().killed++;
+                    BotController go = listTarget[i].GetComponent<BotController>();
+                    go.killed++;
+                    go.transform.localScale = new Vector3(1 + go.killed * 0.2f, 1 + go.killed * 0.2f, 1 + go.killed * 0.2f);
+
                 }
             }          
         }

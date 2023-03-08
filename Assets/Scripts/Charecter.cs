@@ -15,6 +15,14 @@ public class Charecter : MonoBehaviour
     public bool isAttack;
     public int killed;
     public int id;
+    public TypeWeaapon typeWeaapon;
+    public enum TypeWeaapon
+    {
+        BULLET,
+        SWORD,
+        BOOMERANG,  
+    }
+
     public void ChangeAnim(string animName)
     {
         if (animName != currentAnim)
@@ -41,11 +49,26 @@ public class Charecter : MonoBehaviour
     }
     Vector3 dir;
     public virtual void Attack()
-    {
-        Bullet more = ObjectsPooling.GetInstance().SpawnBullet(throwPos);
-        more.idBulletPlayer = id;
-        Debug.LogError("Ban dan");
-        more.rb.AddForce(dir.normalized * 15f,ForceMode.Impulse);
+    {  
+        switch (typeWeaapon)
+        {
+            case TypeWeaapon.BULLET:
+            Bullet more = ObjectsPooling.GetInstance().SpawnBullet(throwPos);
+            more.idBulletPlayer = id;
+            more.rb.AddForce(dir.normalized * 15);
+                break;
+            case TypeWeaapon.BOOMERANG:
+            Boomerang boome = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos);
+            boome.idBulletPlayer = id;
+            boome.rb.AddForce(dir.normalized * 15);
+            boome.target = transform;
+                break;
+            case TypeWeaapon.SWORD:
+                break;
+            default:
+                break;
+        }
+        
     }
     private void OnTriggerEnter(Collider other)
     {

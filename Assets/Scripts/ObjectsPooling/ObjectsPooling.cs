@@ -7,6 +7,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
 {
 
     [SerializeField] private List<Bullet> listBullets;
+    [SerializeField] private List<Boomerang> listBoomerangs;
     [SerializeField] private List<BotController> listBotController;
     [SerializeField] private bool isCreateNew = true;
     [SerializeField] private List<Transform> contain;
@@ -37,6 +38,37 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
                 Bullet bullet = more.GetComponent<Bullet>();               
                 bullet.gameObject.SetActive(true);
                 listBullets.Add(bullet);
+                return bullet;
+            }
+        }
+        return null;
+
+    }
+    public Boomerang SpawnBoomerang(Transform playerTransform)
+    {
+        for (int i = 0; i < listBoomerangs.Count; i++)
+        {
+            if (!listBoomerangs[i].gameObject.activeSelf)
+            {
+                listBoomerangs[i].transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
+                listBoomerangs[i].gameObject.SetActive(true);
+                _isHadObject = true;
+                return listBoomerangs[i];
+            }
+            else
+            {
+                _isHadObject = false;
+            }
+        }
+        if (isCreateNew)
+        {
+            if (!_isHadObject)
+            {
+                GameObject more = Instantiate(listBoomerangs[0].gameObject, playerTransform.position, playerTransform.rotation, contain[2].transform);
+                more.transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
+                Boomerang bullet = more.GetComponent<Boomerang>();
+                bullet.gameObject.SetActive(true);
+                listBoomerangs.Add(bullet);
                 return bullet;
             }
         }

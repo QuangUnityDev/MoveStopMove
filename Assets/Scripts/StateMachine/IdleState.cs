@@ -6,8 +6,10 @@ public class IdleState : IState
 {
     float time;
     float nextState;
+    float timeWaitAttack;
     public void OnEnter(BotController botController)
     {
+        timeWaitAttack = 0;
         time = 0;
         botController.nav.speed = 0;
         nextState = Random.Range(3, 7);
@@ -17,7 +19,11 @@ public class IdleState : IState
     {
         botController.ChangeAnim("Idle");
         time += Time.deltaTime;
-        if (botController.isAttack == true && time > botController.timeToAttack)
+        if(botController.isAttack == true)
+        {
+            timeWaitAttack += Time.deltaTime;
+        }
+        if (botController.isAttack == true && timeWaitAttack > botController.timeToAttack)
         {
             botController.ChangState(new AttackState());
         }  

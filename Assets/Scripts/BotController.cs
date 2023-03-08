@@ -49,7 +49,6 @@ public class BotController : Charecter
     }
     void FixedUpdate()
     {
-        transform.localScale = new Vector3(1 + killed * 0.2f, 1 + killed * 0.2f, 1 + killed * 0.2f);
         if (currentState != null)
         {
             currentState.OnExcute(this);

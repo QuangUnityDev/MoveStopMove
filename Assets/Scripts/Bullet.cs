@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
     }
     IEnumerator OnDespawn()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         transform.gameObject.SetActive(false);
     }
     private void OnDisable()
