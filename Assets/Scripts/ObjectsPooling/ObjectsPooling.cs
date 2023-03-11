@@ -50,7 +50,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
         {
             if (!listBoomerangs[i].gameObject.activeSelf)
             {
-                listBoomerangs[i].transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
+                listBoomerangs[i].transform.SetPositionAndRotation(playerTransform.position, Quaternion.identity);
                 listBoomerangs[i].gameObject.SetActive(true);
                 _isHadObject = true;
                 return listBoomerangs[i];
@@ -64,7 +64,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
         {
             if (!_isHadObject)
             {
-                GameObject more = Instantiate(listBoomerangs[0].gameObject, playerTransform.position, playerTransform.rotation, contain[2].transform);
+                GameObject more = Instantiate(listBoomerangs[0].gameObject, playerTransform.position, Quaternion.identity, contain[2].transform);
                 more.transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
                 Boomerang bullet = more.GetComponent<Boomerang>();
                 bullet.gameObject.SetActive(true);

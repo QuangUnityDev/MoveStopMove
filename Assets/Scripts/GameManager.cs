@@ -8,7 +8,7 @@ public class GameManager : Singleton<GameManager>
     public List<GameObject> listTarget;
     public int numberPlayerEnemy;
     public static int id = 0;
-    private bool isSpawn;
+    private bool isSpawned;
 
     private void Awake()
     {
@@ -30,6 +30,14 @@ public class GameManager : Singleton<GameManager>
             listTarget.Add(more.gameObject);
         }
     }
+    IEnumerator WaitSpawn()
+    {
+        isSpawned = false;
+        yield return new WaitForSeconds(3);
+        BotController more = ObjectsPooling.GetInstance().SpawnPlayerEnemy(SpawnRandom(), transform);
+        listTarget.Add(more.gameObject);
+        isSpawned = false;
+    }
     public Vector3 SpawnRandom()
     {
         Vector3 posRandom = new Vector3(Random.Range(-28, 28), -0.55f, Random.Range(-28, 28));
@@ -44,7 +52,7 @@ public class GameManager : Singleton<GameManager>
     }
     public void GetKill(int idBullet)
     {
-        if (idBullet == 0 && !listTarget[0].gameObject.activeSelf)
+        if (idBullet == listTarget[0].GetComponent<PlayerController>().id)
         {
             PlayerController go = listTarget[0].GetComponent<PlayerController>();
             go.killed++;

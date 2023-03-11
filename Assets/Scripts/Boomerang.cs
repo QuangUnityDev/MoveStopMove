@@ -1,48 +1,44 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boomerang : MonoBehaviour
+public class Boomerang : Weapon
 {
-    public int idBulletPlayer;
-    public Rigidbody rb;
-    public float timeBack;
-    public Transform target;
-    bool isForce;
-    private void OnEnable()
+   
+    public override void OnEnable()
     {
-        StartCoroutine(OnDespawn());
-        timeBack = 0;
-        isForce = false;
+        
+        base.OnEnable();
+        transform.rotation = Quaternion.Euler(90f, 0f, 0f);
     }
-    private void FixedUpdate()
+
+    public override void FixedUpdate()
     {
-        timeBack += Time.deltaTime;
-        if(timeBack > 1 && target != null && isForce == false)
+        transform.Rotate(Vector3.forward * 200 * Time.fixedDeltaTime);
+        SetTarGet(() =>
         {
-            rb.velocity = Vector3.zero; 
-            rb.AddForce((target.transform.position - transform.position).normalized * 15, ForceMode.Impulse);
-            isForce = true;
+            rb.velocity = Vector3.zero;
+            rb.AddForce((posStart - transform.position).normalized * 10, ForceMode.VelocityChange);
+        }
+       );
+        if (Vector3.Distance(transform.position, posStart) > rangOfPlayer + 4 && isBack == false)
+        {
+            isBack = true;
+            finishCallBack?.Invoke();          
+            Debug.LogError("Dan quay lai");
+        }
+        if(Vector3.Distance(transform.position, posStart) < 0.1f && isBack == true)
+        {
+            gameObject.SetActive(false);
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {       
-        if (other.CompareTag("PlayerEnemy") || other.CompareTag("Player"))
-        {
-            Debug.LogError("Die");
-            GameManager.GetInstance().listTarget.Remove(other.gameObject);
-            transform.gameObject.SetActive(false);
-            other.gameObject.SetActive(false);
-            GameManager.GetInstance().GetKill(idBulletPlayer);
-        }
-    }
-    IEnumerator OnDespawn()
+    public override void OnTriggerEnter(Collider other)
     {
-        yield return new WaitForSeconds(3);
-        transform.gameObject.SetActive(false);
+        base.OnTriggerEnter(other);
     }
-    private void OnDisable()
+    public override void OnDisable()
     {
-        rb.velocity = Vector3.zero;
+        base.OnDisable();
     }
 }

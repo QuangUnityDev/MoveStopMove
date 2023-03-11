@@ -12,7 +12,7 @@ public class IdleState : IState
         timeWaitAttack = 0;
         time = 0;
         botController.nav.speed = 0;
-        nextState = Random.Range(3, 7);
+        nextState = Random.Range(2, 5);
     }
 
     public void OnExcute(BotController botController)

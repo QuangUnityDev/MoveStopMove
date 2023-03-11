@@ -42,7 +42,7 @@ public class BotController : Charecter
     public void SetTargetRandom()
     {
         target = GameManager.GetInstance().listTarget[Random.Range(0, GameManager.GetInstance().listTarget.Count)].transform;
-        while(target == transform)
+        if(target == transform)
         {
             target = GameManager.GetInstance().listTarget[Random.Range(0, GameManager.GetInstance().listTarget.Count)].transform;
         }
@@ -70,14 +70,5 @@ public class BotController : Charecter
     public override void Attack()
     {
         base.Attack();
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("PlayerEnemy") || other.CompareTag("Player"))
-        {
-            target = other.gameObject.transform;
-            transform.LookAt(new Vector3(target.localPosition.x, transform.position.y, target.localPosition.z));
-            throwPos.transform.LookAt(target);
-        }
     }
 }

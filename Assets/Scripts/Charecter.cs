@@ -4,23 +4,29 @@ using UnityEngine;
 
 public class Charecter : MonoBehaviour
 {
-    public Rigidbody rb;
-    public float speed;
+    [SerializeField]protected Rigidbody rb;
     public Animator anim;
-    private string currentAnim;
+
+    public TypeWeaapon typeWeaapon;
     public Transform target;
+    public float speed;
+    private string currentAnim;
+   
     public float timeToAttack;
     public Transform throwPos;
     public float time;
     public bool isAttack;
     public int killed;
     public int id;
-    public TypeWeaapon typeWeaapon;
+   
+    public Transform tranformRange;
+    private float rangeAttack;
+
     public enum TypeWeaapon
     {
         BULLET,
         SWORD,
-        BOOMERANG,  
+        BOOMERANG,
     }
 
     public void ChangeAnim(string animName)
@@ -34,6 +40,7 @@ public class Charecter : MonoBehaviour
     }
     private void Update()
     {
+        rangeAttack = tranformRange.GetComponent<SphereCollider>().radius;
         if (target != null)
         {
             dir = target.position - throwPos.position;
@@ -41,7 +48,7 @@ public class Charecter : MonoBehaviour
             {
                 isAttack = false;
             }
-        }
+        }      
     }
     public virtual void OnInit()
     {
@@ -49,27 +56,27 @@ public class Charecter : MonoBehaviour
     }
     Vector3 dir;
     public virtual void Attack()
-    {  
+    {
         switch (typeWeaapon)
         {
             case TypeWeaapon.BULLET:
-            Bullet more = ObjectsPooling.GetInstance().SpawnBullet(throwPos);
-            more.idBulletPlayer = id;
-            more.rb.AddForce(dir.normalized * 15);
+                Bullet more = ObjectsPooling.GetInstance().SpawnBullet(throwPos);             
+                more.rb.AddForce(dir.normalized * more.shootForce, ForceMode.VelocityChange);
+                more.GetInfoPlayer(id, throwPos.position, rangeAttack);
                 break;
             case TypeWeaapon.BOOMERANG:
-            Boomerang boome = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos);
-            boome.idBulletPlayer = id;
-            boome.rb.AddForce(dir.normalized * 15);
-            boome.target = transform;
+                Boomerang boome = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos); 
+                boome.rb.AddForce(dir.normalized * boome.shootForce, ForceMode.VelocityChange);
+                boome.GetInfoPlayer(id, throwPos.position, rangeAttack);
                 break;
             case TypeWeaapon.SWORD:
                 break;
             default:
                 break;
         }
-        
+
     }
+   
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") || other.CompareTag("PlayerEnemy"))
@@ -83,6 +90,7 @@ public class Charecter : MonoBehaviour
         if (other.CompareTag("Player") || other.CompareTag("PlayerEnemy"))
         {
             isAttack = false;
+            target = null;
         }
-    }   
+    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackState : IState
 {
-    float time;
+    private float time;
     private bool isFirstAttack;
     public void OnEnter(BotController botController)
     {
@@ -13,7 +13,7 @@ public class AttackState : IState
     }
 
     public void OnExcute(BotController botController)
-    {       
+    {
         botController.transform.LookAt(new Vector3(botController.target.position.x,botController.transform.position.y,botController.target.position.z));
         botController.throwPos.transform.LookAt(botController.target);
         time += Time.deltaTime;
