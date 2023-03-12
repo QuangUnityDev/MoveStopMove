@@ -17,7 +17,7 @@ public class AttackState : IState
         botController.transform.LookAt(new Vector3(botController.target.position.x,botController.transform.position.y,botController.target.position.z));
         botController.throwPos.transform.LookAt(botController.target);
         time += Time.deltaTime;
-        if(isFirstAttack == true && time > 1 && botController.isAttack == true)
+        if(isFirstAttack == true && time > 1 && botController.isAttack == true && botController.isAttacking == false)
         {
             botController.ChangeAnim("Attack");
             botController.Attack();
@@ -28,7 +28,7 @@ public class AttackState : IState
             botController.ChangState(new PatrolState());
         }
         else
-        if (time > 4 && botController.isAttack == true && botController.target.gameObject.activeSelf)
+        if (time > 4 && botController.isAttack == true && botController.target.gameObject.activeSelf && botController.isAttacking == false)
         {
             Debug.LogError("Tan cong lan 2");
             botController.ChangeAnim("Attack");

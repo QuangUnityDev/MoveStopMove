@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerController : Charecter
 {
     public VariableJoystick variableJoystick;
-    private float timeAttackNext;
     private void Start()
     {
         OnInit();
@@ -38,12 +37,13 @@ public class PlayerController : Charecter
         
         if (Mathf.Abs(variableJoystick.Vertical) > 0 || Mathf.Abs(variableJoystick.Horizontal) > 0)
         {
-            time = 0;
+            time = 0;           
             ChangeAnim("Run");
         }
         else 
-        { 
-            ChangeAnim("Idle");
+        {
+            if (isAttacking == false)
+                ChangeAnim("Idle");
         }
         if (target == null || target.gameObject.activeSelf == false) return;
       
@@ -62,8 +62,10 @@ public class PlayerController : Charecter
                 {
                     throwPos.transform.LookAt(target);
                     transform.LookAt(new Vector3(target.localPosition.x, transform.position.y, target.localPosition.z));
-                    Attack();
-                    timeAttackNext = 0;
+                    if (isAttacking == false)
+                    {
+                        Attack();
+                    }                  
                 }
             }
             else timeAttackNext = 0;           

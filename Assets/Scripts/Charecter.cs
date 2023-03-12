@@ -18,9 +18,12 @@ public class Charecter : MonoBehaviour
     public bool isAttack;
     public int killed;
     public int id;
+    public Knife knife;
    
     public Transform tranformRange;
     private float rangeAttack;
+    public bool isAttacking;
+    protected float timeAttackNext;
 
     public enum TypeWeaapon
     {
@@ -63,20 +66,35 @@ public class Charecter : MonoBehaviour
                 Bullet more = ObjectsPooling.GetInstance().SpawnBullet(throwPos);             
                 more.rb.AddForce(dir.normalized * more.shootForce, ForceMode.VelocityChange);
                 more.GetInfoPlayer(id, throwPos.position, rangeAttack);
+                isAttacking = true;
+                knife.gameObject.SetActive(false);
+                DeAttack();
                 break;
             case TypeWeaapon.BOOMERANG:
                 Boomerang boome = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos); 
                 boome.rb.AddForce(dir.normalized * boome.shootForce, ForceMode.VelocityChange);
                 boome.GetInfoPlayer(id, throwPos.position, rangeAttack);
+                isAttacking = true;
+                knife.gameObject.SetActive(false);
+                DeAttack();
                 break;
             case TypeWeaapon.SWORD:
+                knife.gameObject.SetActive(true);
+                isAttacking = true;
+                ChangeAnim("Attack");
+                timeToAttack += 3;
+                Invoke(nameof(DeAttack),2.25f);
                 break;
             default:
                 break;
         }
 
     }
-   
+    protected void DeAttack()
+    {
+        timeAttackNext = 0;
+        isAttacking = false;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") || other.CompareTag("PlayerEnemy"))
