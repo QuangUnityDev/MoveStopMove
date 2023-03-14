@@ -9,7 +9,7 @@ public class SaveLoadData : Singleton<SaveLoadData>
     public string saveName = "savedGame";
     public string directoryName = "Saves";  
 
-    public void SaveToFile(PlayerController player)
+    public void SaveToFile()
     {       
         // To save in a directory, it must be created first
         if (!Directory.Exists(directoryName))
@@ -22,7 +22,7 @@ public class SaveLoadData : Singleton<SaveLoadData>
         FileStream saveFile = File.Create(directoryName + "/" + saveName + ".bin");
 
         // Write our C# Unity game data type to a binary file
-    Data data = new Data(player);
+    Data data = new Data();
     formatter.Serialize(saveFile, data);
 
         saveFile.Close();

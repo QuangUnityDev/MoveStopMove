@@ -22,7 +22,7 @@ public class Boomerang : Weapon
             rb.AddForce((posStart - transform.position).normalized * 10, ForceMode.VelocityChange);
         }
        );
-        if (Vector3.Distance(transform.position, posStart) > rangOfPlayer + 4 && isBack == false)
+        if (Vector3.Distance(transform.position, posStart) > rangWeapon + killPlayer * 0.2f && isBack == false)
         {
             isBack = true;
             finishCallBack?.Invoke();          

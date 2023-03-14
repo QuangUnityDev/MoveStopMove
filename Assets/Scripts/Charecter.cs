@@ -21,7 +21,7 @@ public class Charecter : MonoBehaviour
     public Knife knife;
    
     public Transform tranformRange;
-    private float rangeAttack;
+    public Transform rangeAttack;
     public bool isAttacking;
     protected float timeAttackNext;
 
@@ -43,7 +43,8 @@ public class Charecter : MonoBehaviour
     }
     private void Update()
     {
-        rangeAttack = tranformRange.GetComponent<SphereCollider>().radius;
+        tranformRange.GetComponent<SphereCollider>().radius = WeaponAtributesFirst.rangeBoomerang + killed * 0.2f;
+        rangeAttack.localScale = new Vector3(1 + WeaponAtributesFirst.rangeBoomerang / 2.5f - 1, 1 + WeaponAtributesFirst.rangeBoomerang / 2.5f - 1, 1 + WeaponAtributesFirst.rangeBoomerang / 2.5f - 1);
         if (target != null)
         {
             dir = target.position - throwPos.position;
@@ -65,7 +66,7 @@ public class Charecter : MonoBehaviour
             case TypeWeaapon.BULLET:
                 Bullet more = ObjectsPooling.GetInstance().SpawnBullet(throwPos);             
                 more.rb.AddForce(dir.normalized * more.shootForce, ForceMode.VelocityChange);
-                more.GetInfoPlayer(id, throwPos.position, rangeAttack);
+                more.GetInfoPlayer(id, throwPos.position,killed);
                 isAttacking = true;
                 knife.gameObject.SetActive(false);
                 DeAttack();
@@ -73,7 +74,7 @@ public class Charecter : MonoBehaviour
             case TypeWeaapon.BOOMERANG:
                 Boomerang boome = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos); 
                 boome.rb.AddForce(dir.normalized * boome.shootForce, ForceMode.VelocityChange);
-                boome.GetInfoPlayer(id, throwPos.position, rangeAttack);
+                boome.GetInfoPlayer(id, throwPos.position,killed);
                 isAttacking = true;
                 knife.gameObject.SetActive(false);
                 DeAttack();

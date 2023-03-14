@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    //[SerializeField] private List<GameObject> levelData;
     public List<GameObject> listTarget;
     public int numberPlayerEnemy;
     public static int id = 0;
     private bool isSpawned;
+    [SerializeField] public PlayerController player;
+    [SerializeField] private Data data;
+    public int levelCurrent;
+    public int gold;
 
     private void Awake()
     {
+        levelCurrent = 1;
+        SaveLoadData.GetInstance().SaveToFile();
         GameManager.id = 0;
+    }
+    public void SaveData()
+    {
+        data.currentWeapon = (int)GameManager.GetInstance().player.typeWeaapon;
+        data.gold = GameManager.GetInstance().gold;
+        data.levelID = GameManager.GetInstance().levelCurrent;
+        SaveLoadData.GetInstance().SaveToFile();
+    }
+    public void GetData()
+    {
+        SaveLoadData.GetInstance().LoadFromFile();
+        data.currentWeapon = ChangeEquiment.GetInstance().currentWeapon;
+        data.gold = gold;
+        data.levelID = levelCurrent;
     }
     private void Start()
     {

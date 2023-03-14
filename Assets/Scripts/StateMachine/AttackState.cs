@@ -14,6 +14,7 @@ public class AttackState : IState
 
     public void OnExcute(BotController botController)
     {
+        if (botController.target == null) return;
         botController.transform.LookAt(new Vector3(botController.target.position.x,botController.transform.position.y,botController.target.position.z));
         botController.throwPos.transform.LookAt(botController.target);
         time += Time.deltaTime;

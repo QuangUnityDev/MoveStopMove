@@ -8,7 +8,8 @@ public class Weapon : MonoBehaviour
     public int idBulletPlayer;
     public Rigidbody rb;
     public Vector3 posStart;
-    public float rangOfPlayer;
+    public float rangWeapon;
+    public int killPlayer;
     public float shootForce;
     protected Action finishCallBack;
     protected bool isBack;
@@ -18,6 +19,7 @@ public class Weapon : MonoBehaviour
     }
     public virtual void FixedUpdate()
     {            
+       
     }
     public void SetTarGet(Action callBack)
     {
@@ -28,27 +30,10 @@ public class Weapon : MonoBehaviour
         if (other.CompareTag(GlobalTag.playerEnemy) || other.CompareTag(GlobalTag.player))
         {
             Debug.LogError("Die");      
+            if(idBulletPlayer != other.GetComponent<Charecter>().id)
             CheckPlayer(other.gameObject);
 
         }
-        //if (other.CompareTag(GlobalTag.playerEnemy))
-        //{
-        //    Debug.LogError("Die");
-        //    if (other.gameObject.GetComponent<BotController>().id != idBulletPlayer)
-        //    {
-        //        CheckPlayer(other.gameObject);
-        //    }
-
-        //}
-        //else if (other.CompareTag(GlobalTag.player))
-        //{
-        //    Debug.LogError("Die");
-        //    if (other.gameObject.GetComponent<PlayerController>().id != idBulletPlayer)
-        //    {
-        //        CheckPlayer(other.gameObject);
-        //    }
-
-        //}
     }
     public void CheckPlayer( GameObject go)
     {
@@ -57,14 +42,15 @@ public class Weapon : MonoBehaviour
         go.gameObject.SetActive(false);
         GameManager.GetInstance().GetKill(idBulletPlayer);
     }
-    public virtual  void OnDisable()
+    public virtual void OnDisable()
     {
+        if(rb != null)
         rb.velocity = Vector3.zero;
     }
-    public void GetInfoPlayer(int idPlayer, Vector3 posThrow,float RangAttack)
+    public void GetInfoPlayer(int idPlayer, Vector3 posThrow, int killPlayer)
     {
-        idBulletPlayer = idPlayer;
-        rangOfPlayer = RangAttack;
+        idBulletPlayer = idPlayer;      
         posStart = posThrow;
+        this.killPlayer = killPlayer;
     }
 }

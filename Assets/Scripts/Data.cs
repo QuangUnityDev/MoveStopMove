@@ -11,11 +11,13 @@ public class Data
     //public string playerName;
     public int currentWeapon;
     public int[] weaponOwner;
-    public int goal;
-    public Data (PlayerController player)
-    {
-        currentWeapon = (int)player.typeWeaapon;
-        goal = player.killed;
-    }
+    public int gold;
+    public int levelID;
+    //public Data ()
+    //{
+    //    //currentWeapon = (int)GameManager.GetInstance().player.typeWeaapon;
+    //    //gold = GameManager.GetInstance().gold;
+    //    //levelID = GameManager.GetInstance().levelCurrent;
+    //}
 }
 
