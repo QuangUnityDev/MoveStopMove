@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Boomerang : Weapon
-{
-   
+{  
     public override void OnEnable()
-    {
-        
+    {        
         base.OnEnable();
         transform.rotation = Quaternion.Euler(90f, 0f, 0f);
     }
