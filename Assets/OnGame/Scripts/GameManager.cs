@@ -15,6 +15,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
+        gameSubcribers = new ArrayList();
         levelCurrent = 1;
         SaveLoadData.GetInstance().SaveToFile();
         GameManager.id = 0;
@@ -35,6 +36,7 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
+        isLoaded = false;
         for (int i = 0; i < numberPlayerEnemy; i++)
         {
             BotController more = ObjectsPooling.GetInstance().SpawnPlayerEnemy(SpawnRandom(), transform);
@@ -91,4 +93,131 @@ public class GameManager : Singleton<GameManager>
             }          
         }
     }
+    #region Game Subcribers
+    public ArrayList gameSubcribers;
+    public delegate void EventCall(IGameSubscriber s);
+    public void AddSubcriber(IGameSubscriber s)
+    {
+        gameSubcribers.Add(s);
+    }
+    public void RemoveSubcriber(IGameSubscriber s)
+    {
+        gameSubcribers.Remove(s);
+    }
+    public void CallEvent(EventCall call)
+    {
+        foreach (IGameSubscriber s in gameSubcribers)
+            call(s);
+    }
+
+    public void GamePrepare()
+    {
+        //  Debug.LogError("GamePrepare");
+        //CurrencyOnGame = 0;
+        //TopUI.Instance.SetCurrencyInGame(CurrencyOnGame);      
+        game_State = GAME_STATE.GAME_PREPARE;
+        StartCoroutine(IEGamePrepare());
+        isLoaded = true;
+        // }
+    }
+
+    public void GameStart()
+    {     
+        game_State = GAME_STATE.GAME_PLAY;
+        CallEvent((s) =>
+        {
+            s.GameStart();
+        });
+    }
+    public void GameRevival()
+    {
+        if (game_State != GAME_STATE.GAME_REVIVAL)
+        {
+            game_State = GAME_STATE.GAME_REVIVAL;
+            CallEvent((s) => { s.GameRevival(); });
+        }
+
+    }
+    public void GamePause()
+    {
+        if (game_State != GAME_STATE.GAME_PAUSE)
+        {
+            game_State = GAME_STATE.GAME_PAUSE;
+            CallEvent((s) => { s.GamePause(); });
+            Time.timeScale = 0;
+        }
+    }
+    public void GameResume()
+    {
+        if (game_State != GAME_STATE.GAME_PLAY)
+        {
+            game_State = GAME_STATE.GAME_PLAY;
+            CallEvent((s) => { s.GameResume(); });
+            Time.timeScale = 1;
+        }
+
+    }
+    public void GameOver()
+    {
+        if (game_State != GAME_STATE.GAME_OVER && game_State != GAME_STATE.GAME_COMPLETE)
+        {
+            game_State = GAME_STATE.GAME_OVER;
+            CallEvent((s) => { s.GameOver(); });
+            //TopUI.Instance.SetCurrencyEndGame();
+            Debug.Log("Game over you lose");
+        }
+
+    }
+    public void GameCompleted()
+    {
+        if (game_State != GAME_STATE.GAME_OVER && game_State != GAME_STATE.GAME_COMPLETE)
+        {         
+            CallEvent((s) => { s.GameCompleted(); });
+        }
+    }
+    #endregion Game Subcribers
+
+
+    public GAME_STATE game_State = GAME_STATE.GAME_COMPLETE;
+
+    public bool isLoaded = false;
+    IEnumerator IEGamePrepare()
+    {
+        yield return new WaitUntil(() => isLoaded);
+        CallEvent((s) => { s.GamePrepare(); });
+        yield return new WaitForFixedUpdate();
+    }
+
+    public bool IsPlaying
+    {
+        get
+        {
+            return game_State == GAME_STATE.GAME_PLAY;
+        }
+    }
+    public bool IsPreparing
+    {
+        get
+        {
+            return game_State == GAME_STATE.GAME_PREPARE;
+        }
+    }
+    public bool IsPausing
+    {
+        get
+        {
+            return game_State == GAME_STATE.GAME_PAUSE;
+        }
+    }
+}
+
+public enum GAME_STATE
+{
+    GAME_PREPARE,
+    GAME_PLAY,
+    GAME_PAUSE,
+    GAME_REVIVAL,
+    GAME_COMPLETE,
+    GAME_OVER
+}
 }
