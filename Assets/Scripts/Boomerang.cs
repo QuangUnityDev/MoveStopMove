@@ -10,9 +10,9 @@ public class Boomerang : Weapon
         base.OnEnable();
         transform.rotation = Quaternion.Euler(90f, 0f, 0f);
     }
-
+    
     public override void FixedUpdate()
-    {
+    {        
         transform.Rotate(Vector3.forward * 200 * Time.fixedDeltaTime);
         SetTarGet(() =>
         {
@@ -20,13 +20,13 @@ public class Boomerang : Weapon
             rb.AddForce((posStart - transform.position).normalized * 10, ForceMode.VelocityChange);
         }
        );
-        if (Vector3.Distance(transform.position, posStart) > rangWeapon + killPlayer * 0.2f && isBack == false)
+        if (Vector3.Distance(transform.position, new Vector3(posStart.x,transform.position.y,posStart.z)) > rangWeapon && isBack == false)
         {
             isBack = true;
-            finishCallBack?.Invoke();          
-            Debug.LogError("Dan quay lai");
+            finishCallBack?.Invoke();
+            Debug.LogError(Vector3.Distance(transform.position, new Vector3(posStart.x, transform.position.y, posStart.z)));
         }
-        if(Vector3.Distance(transform.position, posStart) < 0.1f && isBack == true)
+        if(Vector3.Distance(transform.position, new Vector3(posStart.x, transform.position.y, posStart.z)) < 0.1f && isBack == true)
         {
             gameObject.SetActive(false);
         }

@@ -9,6 +9,10 @@ public class BotController : Charecter
     private IState currentState;
     [SerializeField] private SkinnedMeshRenderer mesh;
     private int randomMat;
+    protected override void Start()
+    {
+        base.Start();
+    }
     private void OnEnable()
     {
         OnInit();

@@ -13,9 +13,8 @@ public class Bullet : Weapon
         rb.velocity = Vector3.zero;
     }
     public override void FixedUpdate()
-    {
-        rangWeapon = WeaponAtributesFirst.rangeBullet + killPlayer * 0.2f;
-        if (Vector3.Distance(transform.position, posStart) > rangWeapon + killPlayer * 0.2f)
+    {        
+        if (Vector3.Distance(transform.position, posStart) > rangWeapon)
         {
             rb.velocity = Vector3.zero;
             gameObject.SetActive(false);

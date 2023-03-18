@@ -5,23 +5,11 @@ using UnityEngine;
 public class PlayerController : Charecter
 {
     public VariableJoystick variableJoystick;
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         OnInit();
-        //switch (SaveLoadData.GetInstance().data.currentWeapon)
-        //{
-        //    case 0:
-        //        typeWeaapon = TypeWeaapon.BULLET;
-        //        break;
-        //    case 1:
-        //        typeWeaapon = TypeWeaapon.SWORD;
-        //        break;
-        //    case 2:
-        //        typeWeaapon = TypeWeaapon.BOOMERANG;
-        //        break;
-        //    default:
-        //        break;
-        //}
+        ChangeEquiment.GetInstance().ChangeWeapon(typeWeaapon, colliderRange, spriteRange);
     }
     public override void OnInit()
     {

@@ -8,4 +8,9 @@ public class Knife : Weapon
     {
         base.OnTriggerEnter(other);
     }
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        rangWeapon = WeaponAtributesFirst.rangeBoomerang + killPlayer * 0.54f;
+    }
 }

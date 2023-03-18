@@ -32,7 +32,7 @@ public class Weapon : MonoBehaviour
             Debug.LogError("Die");      
             if(idBulletPlayer != other.GetComponent<Charecter>().id)
             CheckPlayer(other.gameObject);
-
+            gameObject.SetActive(false);
         }
     }
     public void CheckPlayer( GameObject go)
@@ -47,10 +47,9 @@ public class Weapon : MonoBehaviour
         if(rb != null)
         rb.velocity = Vector3.zero;
     }
-    public void GetInfoPlayer(int idPlayer, Vector3 posThrow, int killPlayer)
+    public void GetInfoPlayer(int idPlayer, Vector3 posThrow)
     {
         idBulletPlayer = idPlayer;      
         posStart = posThrow;
-        this.killPlayer = killPlayer;
     }
 }

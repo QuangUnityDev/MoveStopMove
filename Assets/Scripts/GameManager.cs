@@ -13,25 +13,32 @@ public class GameManager : Singleton<GameManager>
     public int levelCurrent;
     public int gold;
 
+    public float valueScare;
+
     private void Awake()
     {
         levelCurrent = 1;
-        SaveLoadData.GetInstance().SaveToFile();
-        GameManager.id = 0;
+        id = 0;
+        OnInit();
+    }
+    void OnInit()
+    {
+        valueScare = 0.2f;
     }
     public void SaveData()
     {
-        data.currentWeapon = (int)GameManager.GetInstance().player.typeWeaapon;
-        data.gold = GameManager.GetInstance().gold;
-        data.levelID = GameManager.GetInstance().levelCurrent;
+        data.currentWeapon = (int)player.typeWeaapon;
+        data.gold = gold;
+        data.levelID = levelCurrent;
         SaveLoadData.GetInstance().SaveToFile();
     }
     public void GetData()
     {
         SaveLoadData.GetInstance().LoadFromFile();
-        data.currentWeapon = ChangeEquiment.GetInstance().currentWeapon;
-        data.gold = gold;
-        data.levelID = levelCurrent;
+        ChangeEquiment.GetInstance().currentWeapon = data.currentWeapon;
+        gold  = data.gold;
+        Debug.LogError(gold);
+        levelCurrent = data.levelID ;
     }
     private void Start()
     {
@@ -71,11 +78,9 @@ public class GameManager : Singleton<GameManager>
     }
     public void GetKill(int idBullet)
     {
-        if (idBullet == listTarget[0].GetComponent<PlayerController>().id)
+        if (idBullet == player.id)
         {
-            PlayerController go = listTarget[0].GetComponent<PlayerController>();
-            go.killed++;
-            go.transform.localScale = new Vector3(1 + go.killed * 0.2f, 1 + go.killed * 0.2f, 1 + go.killed * 0.2f);
+            UpSize(player);
         }
         else
         {
@@ -84,11 +89,15 @@ public class GameManager : Singleton<GameManager>
                 if(listTarget[i].GetComponent<BotController>().id == idBullet)
                 {
                     BotController go = listTarget[i].GetComponent<BotController>();
-                    go.killed++;
-                    go.transform.localScale = new Vector3(1 + go.killed * 0.2f, 1 + go.killed * 0.2f, 1 + go.killed * 0.2f);
-
+                    UpSize(go);
                 }
             }          
         }
+    }
+    public void UpSize(Charecter player)
+    {
+        player.killed++;
+        player.transform.localScale = new Vector3(1 + player.killed * valueScare, 1 + player.killed * valueScare, 1 + player.killed * valueScare);
+        ChangeEquiment.GetInstance().ChangeWeapon(player.typeWeaapon, player.colliderRange, player.spriteRange);
     }
 }
