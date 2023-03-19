@@ -13,9 +13,11 @@ public class Weapon : MonoBehaviour
     public float shootForce;
     protected Action finishCallBack;
     protected bool isBack;
+    public Transform player;
     public virtual void OnEnable()
     {
         isBack = false;
+        //transform.localScale = new Vector3(1 + killPlayer * 0.2f, 1 + killPlayer * 0.2f, 1 + killPlayer * 0.2f);
     }
     public virtual void FixedUpdate()
     {            
@@ -28,19 +30,24 @@ public class Weapon : MonoBehaviour
     public virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(GlobalTag.playerEnemy) || other.CompareTag(GlobalTag.player))
-        {
-            Debug.LogError("Die");      
+        {            
             if(idBulletPlayer != other.GetComponent<Charecter>().id)
-            CheckPlayer(other.gameObject);
-            gameObject.SetActive(false);
+            {
+                //Debug.LogError("Die");
+                CheckPlayer(other.gameObject.GetComponent<Charecter>());
+            }
+         
         }
     }
-    public void CheckPlayer( GameObject go)
+    public void CheckPlayer( Charecter go)
     {
-        GameManager.GetInstance().listTarget.Remove(go.gameObject);
-        transform.gameObject.SetActive(false);
-        go.gameObject.SetActive(false);
-        GameManager.GetInstance().GetKill(idBulletPlayer);
+        if (idBulletPlayer != go.GetComponent<Charecter>().id)
+        {
+            GameManager.GetInstance().listTarget.Remove(go.gameObject);
+            this.gameObject.SetActive(false);
+            go.gameObject.SetActive(false);
+            GameManager.GetInstance().GetKill(idBulletPlayer);
+        }
     }
     public virtual void OnDisable()
     {

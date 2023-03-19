@@ -4,41 +4,46 @@ using UnityEngine;
 
 public class AttackState : IState
 {
-    private float time;
-    private bool isFirstAttack;
     public void OnEnter(BotController botController)
     {
-        time = 0;
-        isFirstAttack = true;
+        botController.LookTarGet();
+        botController.nav.speed = 0;
+        botController.isTimeAttackNext = true;
+        botController.timeToAttack = 0;
     }
 
     public void OnExcute(BotController botController)
     {
-        if (botController.target == null) return;
-        botController.transform.LookAt(new Vector3(botController.target.position.x,botController.transform.position.y,botController.target.position.z));
-        botController.throwPos.transform.LookAt(botController.target);
-        time += Time.deltaTime;
-        if(isFirstAttack == true && time > 1 && botController.isAttack == true && botController.isAttacking == false)
-        {
-            botController.ChangeAnim("Attack");
-            botController.Attack();
-            isFirstAttack = false;
+        if (!botController.isHadObject())
+        {     
+           botController.ChangState(new PatrolState());
         }
-        if (botController.isAttack == false || !botController.target.gameObject.activeSelf)
+        if (botController.numberThrowed > 0)
         {
+
+            if (botController.isAttacking || !botController.isAttack || botController.isTimeAttackNext == false) return;
+            if (botController.isPrepareAttacking == false)
+            {
+                botController.LookTarGet();
+                botController.CountDownAttack();
+            }
+            if (botController.isPrepareAttacking)
+            {
+                botController.timeToAttack += Time.fixedDeltaTime;
+                if (botController.timeToAttack > 0.5f)
+                {
+                    botController.LookTarGet();
+                    botController.Attack();
+                    botController.numberThrowed--;
+                }
+            }
+        }       
+        else
+        {
+            botController.SetNumberThrow();
             botController.ChangState(new PatrolState());
         }
-        else
-        if (time > 4 && botController.isAttack == true && botController.target.gameObject.activeSelf && botController.isAttacking == false)
-        {
-            Debug.LogError("Tan cong lan 2");
-            botController.ChangeAnim("Attack");
-            botController.Attack();
-            botController.isAttack = false;
-        }      
-       
     }
-
     public void OnExit(BotController botController)
     {
 

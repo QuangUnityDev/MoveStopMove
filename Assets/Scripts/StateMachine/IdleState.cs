@@ -19,19 +19,23 @@ public class IdleState : IState
     {
         botController.ChangeAnim("Idle");
         time += Time.deltaTime;
-        if(botController.isAttack == true)
+        if (botController.isAttack == true)
         {
             timeWaitAttack += Time.deltaTime;
+            if (timeWaitAttack > 0.5f)
+            {                
+              botController.ChangState(new AttackState());
+            }
         }
-        if (botController.isAttack == true && timeWaitAttack > botController.timeToAttack)
-        {
-            botController.ChangState(new AttackState());
-        }  
         else
-        if( time > nextState && botController.isAttack == false)
         {
-            botController.ChangState(new PatrolState());
+            timeWaitAttack = 0;
+            if (time > nextState)
+            {
+                botController.ChangState(new PatrolState());
+            }
         }
+
     }
 
     public void OnExit(BotController botController)

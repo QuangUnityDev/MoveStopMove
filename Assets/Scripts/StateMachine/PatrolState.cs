@@ -5,29 +5,35 @@ using UnityEngine;
 public class PatrolState : IState
 {
     float time;
+    float nextStateTime;
     public void OnEnter(BotController botController)
     {
         time = 0;
         botController.nav.speed = botController.speed;
-        botController.SetTargetRandom();        
+        botController.SetTargetRandom();
+        nextStateTime = 0;
     }
 
     public void OnExcute(BotController botController)
     {
         time += Time.deltaTime;
-        if (botController.target == null)
+        if (!botController.isHadObject())
         {
             botController.SetTargetRandom();
         }
-         else
-        if (botController.isAttack == true || time > 4f)
+        botController.ChangeAnim("Run");
+        if (botController.isAttack == true)
         {
-            botController.ChangState(new IdleState());
+            nextStateTime += Time.deltaTime;
+            if (nextStateTime > 0.5f)
+            {
+                botController.ChangState(new AttackState());
+            }
         }
+        else if (time > 4) botController.ChangState(new IdleState());
         else
         {
             botController.nav.SetDestination(botController.target.position);
-            botController.ChangeAnim("Run");
         }
     }
 

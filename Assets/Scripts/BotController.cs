@@ -9,6 +9,7 @@ public class BotController : Charecter
     private IState currentState;
     [SerializeField] private SkinnedMeshRenderer mesh;
     private int randomMat;
+    public int numberThrowed;
     protected override void Start()
     {
         base.Start();
@@ -16,8 +17,11 @@ public class BotController : Charecter
     private void OnEnable()
     {
         OnInit();
-        #region randomMat
-        randomMat = Random.Range(0, 4);
+        base.OnInit();
+        currentWeapon = 2;
+        ChangeEquiment.GetInstance().ChangeWeapon(currentWeapon, colliderRange, spriteRange, typeWeaapon);
+    #region randomMat
+    randomMat = Random.Range(0, 4);
         switch (randomMat)
         {
             case 0:
@@ -37,10 +41,16 @@ public class BotController : Charecter
         }
         #endregion       
     }
+    public void SetNumberThrow()
+    {
+        numberThrowed = Random.Range(0, 3);
+    }
     public override void OnInit()
     {
         base.OnInit();
+        isAttack = false;
         ChangState(new IdleState());
+        SetNumberThrow();
         nav.speed = speed;
     }
     public void SetTargetRandom()
@@ -60,7 +70,6 @@ public class BotController : Charecter
     }
     public void ChangState(IState newState)
     {
-        //Debug.LogError(newState);
         if (currentState != null)
         {
             currentState.OnExit(this);
@@ -73,6 +82,18 @@ public class BotController : Charecter
     }
     public override void Attack()
     {
-        base.Attack();
+      base.Attack();
+        if (isAttacking == false && isPrepareAttacking == false)
+        {
+            ChangState(new PatrolState());
+        }
+    }
+    public void NextState()
+    {
+        Invoke(nameof(BackStateIdle), 0.5f);
+    }
+    public void BackStateIdle()
+    {
+        ChangState(new IdleState());
     }
 }

@@ -7,12 +7,11 @@ public class GameManager : Singleton<GameManager>
     public List<GameObject> listTarget;
     public int numberPlayerEnemy;
     public static int id = 0;
-    private bool isSpawned;
     [SerializeField] public PlayerController player;
     [SerializeField] private Data data;
     public int levelCurrent;
     public int gold;
-
+    float timeReload;
     public float valueScare;
 
     private void Awake()
@@ -35,7 +34,7 @@ public class GameManager : Singleton<GameManager>
     public void GetData()
     {
         SaveLoadData.GetInstance().LoadFromFile();
-        ChangeEquiment.GetInstance().currentWeapon = data.currentWeapon;
+        player.currentWeapon = data.currentWeapon;
         gold  = data.gold;
         Debug.LogError(gold);
         levelCurrent = data.levelID ;
@@ -50,19 +49,13 @@ public class GameManager : Singleton<GameManager>
     }
     void Update()
     {
+        timeReload++;
+        if(timeReload > 10)
         if (listTarget.Count < numberPlayerEnemy)
         {
             BotController more = ObjectsPooling.GetInstance().SpawnPlayerEnemy(SpawnRandom(), transform);
             listTarget.Add(more.gameObject);
         }
-    }
-    IEnumerator WaitSpawn()
-    {
-        isSpawned = false;
-        yield return new WaitForSeconds(3);
-        BotController more = ObjectsPooling.GetInstance().SpawnPlayerEnemy(SpawnRandom(), transform);
-        listTarget.Add(more.gameObject);
-        isSpawned = false;
     }
     public Vector3 SpawnRandom()
     {
@@ -96,8 +89,9 @@ public class GameManager : Singleton<GameManager>
     }
     public void UpSize(Charecter player)
     {
+        player.target = null;
         player.killed++;
         player.transform.localScale = new Vector3(1 + player.killed * valueScare, 1 + player.killed * valueScare, 1 + player.killed * valueScare);
-        ChangeEquiment.GetInstance().ChangeWeapon(player.typeWeaapon, player.colliderRange, player.spriteRange);
+        ChangeEquiment.GetInstance().ChangeWeapon(player.currentWeapon, player.colliderRange, player.spriteRange,player.typeWeaapon);
     }
 }

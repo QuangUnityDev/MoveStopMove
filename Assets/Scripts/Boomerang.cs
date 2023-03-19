@@ -20,11 +20,10 @@ public class Boomerang : Weapon
             rb.AddForce((posStart - transform.position).normalized * 10, ForceMode.VelocityChange);
         }
        );
-        if (Vector3.Distance(transform.position, new Vector3(posStart.x,transform.position.y,posStart.z)) > rangWeapon && isBack == false)
+        if (Vector3.Distance(posStart, new Vector3(transform.position.x,posStart.y,transform.position.z)) > rangWeapon && isBack == false)
         {
             isBack = true;
             finishCallBack?.Invoke();
-            Debug.LogError(Vector3.Distance(transform.position, new Vector3(posStart.x, transform.position.y, posStart.z)));
         }
         if(Vector3.Distance(transform.position, new Vector3(posStart.x, transform.position.y, posStart.z)) < 0.1f && isBack == true)
         {

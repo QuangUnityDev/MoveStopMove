@@ -14,22 +14,21 @@ public class Charecter : MonoBehaviour
     public float speed;
     private string currentAnim;
    
-    public float timeToAttack;
     public Transform throwPos;
-    public float time;
     public bool isAttack;
     public int killed;
     public int id;
-    public Knife knife;
-   
-    
+    public int currentWeapon;
+    public float timeToAttack;
+
+    public bool isPrepareAttacking;
     public bool isAttacking;
-    protected float timeAttackNext;
+    public bool isTimeAttackNext;
     public float scareValue;
     protected virtual void Start()
     {
         scareValue = GameManager.GetInstance().valueScare * WeaponAtributesFirst.rangeFirst;
-        Debug.LogError(scareValue);
+        //Debug.LogError(scareValue);
     }
     public enum TypeWeaapon
     {
@@ -37,7 +36,10 @@ public class Charecter : MonoBehaviour
         SWORD,
         BOOMERANG,
     }
-
+    public void TakeWeapon()
+    {
+        //Instantiate()
+    }
     public void ChangeAnim(string animName)
     {
         if (animName != currentAnim)
@@ -62,44 +64,69 @@ public class Charecter : MonoBehaviour
     public virtual void OnInit()
     {
         isAttack = false;
-     
+        isPrepareAttacking = false;
+        isAttacking = false;
+        isTimeAttackNext = true;
     }
     Vector3 dir; 
     public virtual void Attack()
     {
+        isAttacking = true;
+        isTimeAttackNext = false;
         switch (typeWeaapon)
         {
             case TypeWeaapon.BULLET:
                 Bullet more = ObjectsPooling.GetInstance().SpawnBullet(throwPos);
-                WeaponGetInfo(more,WeaponAtributesFirst.rangeBullet);
+                WeaponGetInfo(more,WeaponAtributesFirst.rangeBullet);               
                 break;
             case TypeWeaapon.BOOMERANG:
                 Boomerang boome = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos);
                 WeaponGetInfo(boome, WeaponAtributesFirst.rangeBoomerang);
-                DeAttack();
                 break;
             case TypeWeaapon.SWORD:
                 //Knife knift = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos);
-                isAttacking = true;
                 ChangeAnim("Attack");
-                timeToAttack += 3;
-                Invoke(nameof(DeAttack),2.25f);
                 break;
             default:
                 break;
         }
+        Invoke(nameof(DeAttack), 0.4f);
     }
-    public void WeaponGetInfo(Weapon wepon, float range)
+    public void WeaponGetInfo(Weapon wepon, float rangeFirst)
     {
         wepon.rb.AddForce(dir.normalized * wepon.shootForce, ForceMode.VelocityChange);
         wepon.GetInfoPlayer(id, throwPos.position);
-        isAttacking = true;
-        wepon.rangWeapon = range + killed * scareValue + killed * 0.1f;
+        wepon.rangWeapon = rangeFirst + killed * scareValue;
+    }
+    public void NextTimeAttack()
+    {
+        isTimeAttackNext = true;
+        isPrepareAttacking = false;
+        timeToAttack = 0;
     }
     protected void DeAttack()
     {
-        timeAttackNext = 0;
+        Invoke(nameof(NextTimeAttack), 0.3f);        
         isAttacking = false;
+    }
+    public void CancelAttack()
+    {
+        isPrepareAttacking = false;
+        timeToAttack = 0;
+    }
+    public void CountDownAttack()
+    {
+        ChangeAnim("Attack");
+        isPrepareAttacking = true;
+    }
+    public void LookTarGet()
+    {
+        transform.LookAt(new Vector3(target.position.x, transform.position.y, target.position.z));
+        throwPos.LookAt(new Vector3(target.position.x, target.position.y, target.position.z));
+    }
+    public bool isHadObject()
+    {
+        return target != null && target.gameObject.activeSelf == true;
     }
     private void OnTriggerEnter(Collider other)
     {
