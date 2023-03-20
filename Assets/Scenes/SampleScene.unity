@@ -6029,6 +6029,8 @@ MonoBehaviour:
     levelID: 0
   levelCurrent: 0
   gold: 0
+  game_State: 4
+  isLoaded: 0
 --- !u!114 &2023969888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6041,6 +6043,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c46ea805e41056e4d8e338569335c86e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelWin: {fileID: 0}
+  panelLosr: {fileID: 0}
 --- !u!114 &2023969889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6292,6 +6296,10 @@ PrefabInstance:
     - target: {fileID: 1369122098540096847, guid: 375df95f93d3fb246a75edf3258deaaf, type: 3}
       propertyPath: m_Name
       value: GameOverPopUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1369122098540096847, guid: 375df95f93d3fb246a75edf3258deaaf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 375df95f93d3fb246a75edf3258deaaf, type: 3}

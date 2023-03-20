@@ -220,4 +220,3 @@ public enum GAME_STATE
     GAME_COMPLETE,
     GAME_OVER
 }
-}
