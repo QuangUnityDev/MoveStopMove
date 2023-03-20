@@ -14,6 +14,8 @@ public class Weapon : MonoBehaviour
     protected Action finishCallBack;
     protected bool isBack;
     public Transform player;
+    public Transform backPos;
+    public bool isModel;
     public virtual void OnEnable()
     {
         isBack = false;

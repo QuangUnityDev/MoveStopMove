@@ -25,6 +25,7 @@ public class Charecter : MonoBehaviour
     public bool isAttacking;
     public bool isTimeAttackNext;
     public float scareValue;
+
     protected virtual void Start()
     {
         scareValue = GameManager.GetInstance().valueScare * WeaponAtributesFirst.rangeFirst;
@@ -32,14 +33,11 @@ public class Charecter : MonoBehaviour
     }
     public enum TypeWeaapon
     {
-        BULLET,
+        AXE,
         SWORD,
         BOOMERANG,
     }
-    public void TakeWeapon()
-    {
-        //Instantiate()
-    }
+    
     public void ChangeAnim(string animName)
     {
         if (animName != currentAnim)
@@ -67,6 +65,7 @@ public class Charecter : MonoBehaviour
         isPrepareAttacking = false;
         isAttacking = false;
         isTimeAttackNext = true;
+        ChangeEquiment.GetInstance().ChangeWeapon(currentWeapon, colliderRange, spriteRange, typeWeaapon);
     }
     Vector3 dir; 
     public virtual void Attack()
@@ -75,8 +74,8 @@ public class Charecter : MonoBehaviour
         isTimeAttackNext = false;
         switch (typeWeaapon)
         {
-            case TypeWeaapon.BULLET:
-                Bullet more = ObjectsPooling.GetInstance().SpawnBullet(throwPos);
+            case TypeWeaapon.AXE:
+                Axe more = ObjectsPooling.GetInstance().SpawnBullet(throwPos);
                 WeaponGetInfo(more,WeaponAtributesFirst.rangeBullet);               
                 break;
             case TypeWeaapon.BOOMERANG:
@@ -94,8 +93,18 @@ public class Charecter : MonoBehaviour
     }
     public void WeaponGetInfo(Weapon wepon, float rangeFirst)
     {
+          if (target != null)
+        {
+            dir = target.position - throwPos.position;
+            if (!target.gameObject.activeSelf)
+            {
+                isAttack = false;
+            }
+        }      
         wepon.rb.AddForce(dir.normalized * wepon.shootForce, ForceMode.VelocityChange);
         wepon.GetInfoPlayer(id, throwPos.position);
+        wepon.player = transform;
+        wepon.posStart = throwPos.position;
         wepon.rangWeapon = rangeFirst + killed * scareValue;
     }
     public void NextTimeAttack()
@@ -128,6 +137,7 @@ public class Charecter : MonoBehaviour
     {
         return target != null && target.gameObject.activeSelf == true;
     }
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") || other.CompareTag("PlayerEnemy"))

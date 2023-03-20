@@ -10,7 +10,7 @@ public class ChangeEquiment : Singleton<ChangeEquiment>
         switch (currentWeapon)
         {
             case 0:
-                typeWeaapon = Charecter.TypeWeaapon.BULLET;
+                typeWeaapon = Charecter.TypeWeaapon.AXE;
                 rangeCollider.GetComponent<SphereCollider>().radius = WeaponAtributesFirst.rangeBullet;
                 spriteRange.localScale = new Vector3(WeaponAtributesFirst.rangeBullet / 2.5f, WeaponAtributesFirst.rangeBullet / 2.5f, WeaponAtributesFirst.rangeBullet / 2.5f);
                 break;

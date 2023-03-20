@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : Weapon
+public class Axe : Weapon
 {
     public override void OnTriggerEnter(Collider other)
     {
@@ -13,7 +13,7 @@ public class Bullet : Weapon
         rb.velocity = Vector3.zero;
     }
     public override void FixedUpdate()
-    {        
+    {
         if (Vector3.Distance(transform.position, posStart) > rangWeapon)
         {
             rb.velocity = Vector3.zero;

@@ -27,7 +27,7 @@ public class AttackState : IState
                 botController.LookTarGet();
                 botController.CountDownAttack();
             }
-            if (botController.isPrepareAttacking)
+            if (botController.isPrepareAttacking && !botController.isAttacking)
             {
                 botController.timeToAttack += Time.fixedDeltaTime;
                 if (botController.timeToAttack > 0.5f)

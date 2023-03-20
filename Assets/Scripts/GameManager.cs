@@ -7,12 +7,12 @@ public class GameManager : Singleton<GameManager>
     public List<GameObject> listTarget;
     public int numberPlayerEnemy;
     public static int id = 0;
-    [SerializeField] public PlayerController player;
     [SerializeField] private Data data;
     public int levelCurrent;
     public int gold;
     float timeReload;
     public float valueScare;
+    public int currentWeapon;
 
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class GameManager : Singleton<GameManager>
     }
     public void SaveData()
     {
-        data.currentWeapon = (int)player.typeWeaapon;
+        data.currentWeapon = currentWeapon ;
         data.gold = gold;
         data.levelID = levelCurrent;
         SaveLoadData.GetInstance().SaveToFile();
@@ -34,9 +34,8 @@ public class GameManager : Singleton<GameManager>
     public void GetData()
     {
         SaveLoadData.GetInstance().LoadFromFile();
-        player.currentWeapon = data.currentWeapon;
+        currentWeapon = data.currentWeapon;
         gold  = data.gold;
-        Debug.LogError(gold);
         levelCurrent = data.levelID ;
     }
     private void Start()
@@ -71,9 +70,9 @@ public class GameManager : Singleton<GameManager>
     }
     public void GetKill(int idBullet)
     {
-        if (idBullet == player.id)
+        if (idBullet == 0)
         {
-            UpSize(player);
+            UpSize(listTarget[0].GetComponent<PlayerController>());
         }
         else
         {
@@ -89,7 +88,6 @@ public class GameManager : Singleton<GameManager>
     }
     public void UpSize(Charecter player)
     {
-        player.target = null;
         player.killed++;
         player.transform.localScale = new Vector3(1 + player.killed * valueScare, 1 + player.killed * valueScare, 1 + player.killed * valueScare);
         ChangeEquiment.GetInstance().ChangeWeapon(player.currentWeapon, player.colliderRange, player.spriteRange,player.typeWeaapon);

@@ -212,7 +212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8275123548794062821
 Transform:
   m_ObjectHideFlags: 0
@@ -268,9 +268,12 @@ MonoBehaviour:
   throwPos: {fileID: 8275123548658244556}
   isAttack: 0
   killed: 0
-  id: 0
+  id: 1
   currentWeapon: 0
+  timeToAttack: 0
+  isPrepareAttacking: 0
   isAttacking: 0
+  isTimeAttackNext: 0
   scareValue: 0
   nav: {fileID: 8275123548794062823}
   mesh: {fileID: 677009146753095696}

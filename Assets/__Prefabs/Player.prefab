@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 4164746192421507657}
   - component: {fileID: 4164746192421507656}
   - component: {fileID: 4164746192421507663}
+  - component: {fileID: 6127042708612559865}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -153,11 +154,25 @@ MonoBehaviour:
   isAttack: 0
   killed: 0
   id: 0
-  knife: {fileID: 0}
   currentWeapon: 0
+  timeToAttack: 0
+  isPrepareAttacking: 0
   isAttacking: 0
+  isTimeAttackNext: 0
   scareValue: 0
   variableJoystick: {fileID: 0}
+--- !u!114 &6127042708612559865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4164746192421507658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78054e0998de1b543b58dc062e5a40e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4164746193506564138
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,14 +6,14 @@ using UnityEngine;
 public class ObjectsPooling : Singleton<ObjectsPooling>
 {
 
-    [SerializeField] private List<Bullet> listBullets;
+    [SerializeField] private List<Axe> listBullets;
     [SerializeField] private List<Boomerang> listBoomerangs;
     [SerializeField] private List<BotController> listBotController;
     [SerializeField] private bool isCreateNew = true;
     [SerializeField] private List<Transform> contain;
     private bool _isHadObject = false;
 
-    public Bullet SpawnBullet(Transform playerTransform )
+    public Axe SpawnBullet(Transform playerTransform )
     {
         for (int i = 0; i < listBullets.Count; i++)
         {
@@ -35,7 +35,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
             {
                 GameObject more = Instantiate(listBullets[0].gameObject, playerTransform.position, playerTransform.rotation, contain[0].transform);
                 more.transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
-                Bullet bullet = more.GetComponent<Bullet>();               
+                Axe bullet = more.GetComponent<Axe>();               
                 bullet.gameObject.SetActive(true);
                 listBullets.Add(bullet);
                 return bullet;

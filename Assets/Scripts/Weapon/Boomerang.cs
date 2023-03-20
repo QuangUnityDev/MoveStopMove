@@ -12,12 +12,13 @@ public class Boomerang : Weapon
     }
     
     public override void FixedUpdate()
-    {        
+    {
+        backPos = player;
         transform.Rotate(Vector3.forward * 200 * Time.fixedDeltaTime);
         SetTarGet(() =>
         {
             rb.velocity = Vector3.zero;
-            rb.AddForce((posStart - transform.position).normalized * 10, ForceMode.VelocityChange);
+            rb.AddForce((backPos.position - transform.position).normalized * 10, ForceMode.VelocityChange);
         }
        );
         if (Vector3.Distance(posStart, new Vector3(transform.position.x,posStart.y,transform.position.z)) > rangWeapon && isBack == false)
@@ -25,7 +26,7 @@ public class Boomerang : Weapon
             isBack = true;
             finishCallBack?.Invoke();
         }
-        if(Vector3.Distance(transform.position, new Vector3(posStart.x, transform.position.y, posStart.z)) < 0.1f && isBack == true)
+        if(Vector3.Distance(transform.position, new Vector3(backPos.transform.position.x, transform.position.y, backPos.position.z)) < 0.1f && isBack == true)
         {
             gameObject.SetActive(false);
         }

@@ -10,11 +10,12 @@ public class PlayerController : Charecter
     {
         currentWeapon = 2;
         base.Start();
-        OnInit();       
+        OnInit();
+        ChangeEquiment.GetInstance().ChangeWeapon(currentWeapon, colliderRange , spriteRange, typeWeaapon);
     }
     public override void OnInit()
     {
-        base.OnInit();       
+        base.OnInit();
     }
     public bool isStop()
     {
@@ -26,14 +27,17 @@ public class PlayerController : Charecter
         if(!isAttacking) rb.velocity = direction * speed * Time.fixedDeltaTime;
         if (rb.velocity != Vector3.zero) transform.rotation = Quaternion.LookRotation(direction);
 
-        if (!isStop() && !isAttacking)
+        if (!isStop())
         {
-            ChangeAnim("Run");
-            CancelAttack();
+            if (!isAttacking)
+            {
+                ChangeAnim("Run");
+                CancelAttack();
+            }       
         }
         else
         {
-            if (isAttack == false && !isAttacking) 
+            if (isAttack == false && !isAttacking || isTimeAttackNext == false) 
             {
             CancelAttack();
             ChangeAnim("Idle"); 
