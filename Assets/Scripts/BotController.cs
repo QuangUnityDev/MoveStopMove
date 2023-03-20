@@ -18,8 +18,7 @@ public class BotController : Charecter
     {
         OnInit();
         base.OnInit();
-        currentWeapon = 2;
-        ChangeEquiment.GetInstance().ChangeWeapon(currentWeapon, colliderRange, spriteRange, typeWeaapon);
+        currentWeapon = 2;   
     #region randomMat
     randomMat = Random.Range(0, 4);
         switch (randomMat)

@@ -67,6 +67,7 @@ public class Charecter : MonoBehaviour
         isPrepareAttacking = false;
         isAttacking = false;
         isTimeAttackNext = true;
+        ChangeEquiment.GetInstance().ChangeWeapon(currentWeapon, colliderRange, spriteRange, typeWeaapon);
     }
     Vector3 dir; 
     public virtual void Attack()
