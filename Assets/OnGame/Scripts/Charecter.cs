@@ -9,29 +9,37 @@ public class Charecter : MonoBehaviour
 
     public TypeWeaapon typeWeaapon;
     public Transform target;
+    public Transform colliderRange;
+    public Transform spriteRange;
     public float speed;
     private string currentAnim;
    
-    public float timeToAttack;
     public Transform throwPos;
-    public float time;
     public bool isAttack;
     public int killed;
     public int id;
-    public Knife knife;
-   
-    public Transform tranformRange;
-    public Transform rangeAttack;
-    public bool isAttacking;
-    protected float timeAttackNext;
+    public int currentWeapon;
+    public float timeToAttack;
 
+    public bool isPrepareAttacking;
+    public bool isAttacking;
+    public bool isTimeAttackNext;
+    public float scareValue;
+    protected virtual void Start()
+    {
+        scareValue = GameManager.GetInstance().valueScare * WeaponAtributesFirst.rangeFirst;
+        //Debug.LogError(scareValue);
+    }
     public enum TypeWeaapon
     {
         BULLET,
         SWORD,
         BOOMERANG,
     }
-
+    public void TakeWeapon()
+    {
+        //Instantiate()
+    }
     public void ChangeAnim(string animName)
     {
         if (animName != currentAnim)
@@ -41,10 +49,9 @@ public class Charecter : MonoBehaviour
             anim.SetTrigger(currentAnim);
         }
     }
+
     private void Update()
     {
-        tranformRange.GetComponent<SphereCollider>().radius = WeaponAtributesFirst.rangeBoomerang + killed * 0.2f;
-        rangeAttack.localScale = new Vector3(1 + WeaponAtributesFirst.rangeBoomerang / 2.5f - 1, 1 + WeaponAtributesFirst.rangeBoomerang / 2.5f - 1, 1 + WeaponAtributesFirst.rangeBoomerang / 2.5f - 1);
         if (target != null)
         {
             dir = target.position - throwPos.position;
@@ -57,44 +64,70 @@ public class Charecter : MonoBehaviour
     public virtual void OnInit()
     {
         isAttack = false;
+        isPrepareAttacking = false;
+        isAttacking = false;
+        isTimeAttackNext = true;
+        ChangeEquiment.GetInstance().ChangeWeapon(currentWeapon, colliderRange, spriteRange, typeWeaapon);
     }
-    Vector3 dir;
+    Vector3 dir; 
     public virtual void Attack()
     {
+        isAttacking = true;
+        isTimeAttackNext = false;
         switch (typeWeaapon)
         {
             case TypeWeaapon.BULLET:
-                Bullet more = ObjectsPooling.GetInstance().SpawnBullet(throwPos);             
-                more.rb.AddForce(dir.normalized * more.shootForce, ForceMode.VelocityChange);
-                more.GetInfoPlayer(id, throwPos.position,killed);
-                isAttacking = true;
-                knife.gameObject.SetActive(false);
-                DeAttack();
+                Bullet more = ObjectsPooling.GetInstance().SpawnBullet(throwPos);
+                WeaponGetInfo(more,WeaponAtributesFirst.rangeBullet);               
                 break;
             case TypeWeaapon.BOOMERANG:
-                Boomerang boome = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos); 
-                boome.rb.AddForce(dir.normalized * boome.shootForce, ForceMode.VelocityChange);
-                boome.GetInfoPlayer(id, throwPos.position,killed);
-                isAttacking = true;
-                knife.gameObject.SetActive(false);
-                DeAttack();
+                Boomerang boome = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos);
+                WeaponGetInfo(boome, WeaponAtributesFirst.rangeBoomerang);
                 break;
             case TypeWeaapon.SWORD:
-                knife.gameObject.SetActive(true);
-                isAttacking = true;
+                //Knife knift = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos);
                 ChangeAnim("Attack");
-                timeToAttack += 3;
-                Invoke(nameof(DeAttack),2.25f);
                 break;
             default:
                 break;
         }
-
+        Invoke(nameof(DeAttack), 0.4f);
+    }
+    public void WeaponGetInfo(Weapon wepon, float rangeFirst)
+    {
+        wepon.rb.AddForce(dir.normalized * wepon.shootForce, ForceMode.VelocityChange);
+        wepon.GetInfoPlayer(id, throwPos.position);
+        wepon.rangWeapon = rangeFirst + killed * scareValue;
+    }
+    public void NextTimeAttack()
+    {
+        isTimeAttackNext = true;
+        isPrepareAttacking = false;
+        timeToAttack = 0;
     }
     protected void DeAttack()
     {
-        timeAttackNext = 0;
+        Invoke(nameof(NextTimeAttack), 0.3f);        
         isAttacking = false;
+    }
+    public void CancelAttack()
+    {
+        isPrepareAttacking = false;
+        timeToAttack = 0;
+    }
+    public void CountDownAttack()
+    {
+        ChangeAnim("Attack");
+        isPrepareAttacking = true;
+    }
+    public void LookTarGet()
+    {
+        transform.LookAt(new Vector3(target.position.x, transform.position.y, target.position.z));
+        throwPos.LookAt(new Vector3(target.position.x, target.position.y, target.position.z));
+    }
+    public bool isHadObject()
+    {
+        return target != null && target.gameObject.activeSelf == true;
     }
     private void OnTriggerEnter(Collider other)
     {
