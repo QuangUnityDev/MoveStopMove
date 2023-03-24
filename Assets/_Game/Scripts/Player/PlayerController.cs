@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerController : Charecter
 {
-    public FloatingJoystick variableJoystick;
-
+    public FloatingJoystick floatingJoystick;    
     protected override void Start()
     {
         currentWeapon = 2;
@@ -19,11 +18,12 @@ public class PlayerController : Charecter
     }
     public bool IsStop()
     {
-        return Mathf.Abs(variableJoystick.Vertical) < 0.01f || Mathf.Abs(variableJoystick.Horizontal) < 0.01f;
+        return Mathf.Abs(floatingJoystick.Vertical) < 0.01f || Mathf.Abs(floatingJoystick.Horizontal) < 0.01f;
     }
     public void FixedUpdate()
     {
-        Vector3 direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
+        if (isDead) return;
+        Vector3 direction = Vector3.forward * floatingJoystick.Vertical + Vector3.right * floatingJoystick.Horizontal;
         if(!isAttacking) rb.velocity = direction * speed * Time.fixedDeltaTime;
         if (rb.velocity != Vector3.zero) Transform.rotation = Quaternion.LookRotation(direction);
 
@@ -53,12 +53,17 @@ public class PlayerController : Charecter
                 {
                     LookTarGet(targetAttack);
                     timeToAttack += Time.fixedDeltaTime;
-                    if (timeToAttack > 0.5f && !isAttacking)
+                    if (timeToAttack > 0.4f && !isAttacking)
                     {                       
                         Attack();
                     }
                 }              
             }
         }
-    } 
+    }
+    public override void OnDeath()
+    {
+        base.OnDeath();
+        ChangeAnim(GlobalTag.playerAnimDeath);
+    }
 }

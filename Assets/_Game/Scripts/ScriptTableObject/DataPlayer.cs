@@ -4,6 +4,7 @@ using UnityEngine;
 public class DataPlayer : ScriptableObject
 {
     public Material[] materials;
+    public int hp;
 
     public Material GetMat(int colorType)
     {

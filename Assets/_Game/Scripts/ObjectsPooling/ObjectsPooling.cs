@@ -6,23 +6,24 @@ using UnityEngine;
 public class ObjectsPooling : Singleton<ObjectsPooling>
 {
 
-    [SerializeField] private List<Axe> listBullets;
+    [SerializeField] private List<Axe> listAxes;
     [SerializeField] private List<Boomerang> listBoomerangs;
     [SerializeField] private List<BotController> listBotController;
     [SerializeField] private bool isCreateNew = true;
     [SerializeField] private List<Transform> contain;
+    [SerializeField] private List<ParticleSystem> effectDie;
     private bool _isHadObject = false;
 
     public Axe SpawnBullet(Transform playerTransform )
     {
-        for (int i = 0; i < listBullets.Count; i++)
+        for (int i = 0; i < listAxes.Count; i++)
         {
-            if (!listBullets[i].gameObject.activeSelf)
+            if (!listAxes[i].gameObject.activeSelf)
             {
-                listBullets[i].transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
-                listBullets[i].gameObject.SetActive(true);       
+                listAxes[i].transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
+                listAxes[i].gameObject.SetActive(true);       
                 _isHadObject = true;
-                return listBullets[i];
+                return listAxes[i];
             }
             else
             {
@@ -33,11 +34,11 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
         {
             if (!_isHadObject)
             {
-                GameObject more = Instantiate(listBullets[0].gameObject, playerTransform.position, playerTransform.rotation, contain[0].transform);
+                GameObject more = Instantiate(listAxes[0].gameObject, playerTransform.position, playerTransform.rotation, contain[0].transform);
                 more.transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
                 Axe bullet = more.GetComponent<Axe>();               
                 bullet.gameObject.SetActive(true);
-                listBullets.Add(bullet);
+                listAxes.Add(bullet);
                 return bullet;
             }
         }
@@ -81,10 +82,10 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
         {
             if (!listBotController[i].gameObject.activeSelf)
             {
-                GameManager.id++;
+                LevelManager.id++;
                 listBotController[i].transform.SetLocalPositionAndRotation(pos, playerTransform.rotation);               
                 listBotController[i].gameObject.SetActive(true);
-                listBotController[i].id = GameManager.id;
+                listBotController[i].id = LevelManager.id;
                 _isHadObject = true;
                 return listBotController[i];
             }
@@ -97,12 +98,42 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
         {
             if (!_isHadObject)
             {
-                GameManager.id++;
+                LevelManager.id++;
                 BotController more = Instantiate(listBotController[0], contain[1].transform);               
-                more.id = GameManager.id;
+                more.id = LevelManager.id;
                 more.transform.SetLocalPositionAndRotation(pos, playerTransform.rotation);
                 more.gameObject.SetActive(true);
                 listBotController.Add(more);
+                return more;
+            }
+        }
+        return null;
+
+    }
+    public ParticleSystem SpawnEffect(Transform playerTransform)
+    {
+        for (int i = 0; i < effectDie.Count; i++)
+        {
+            if (!effectDie[i].gameObject.activeSelf)
+            {
+                effectDie[i].transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
+                effectDie[i].gameObject.SetActive(true);
+                _isHadObject = true;
+                return effectDie[i];
+            }
+            else
+            {
+                _isHadObject = false;
+            }
+        }
+        if (isCreateNew)
+        {
+            if (!_isHadObject)
+            {
+                ParticleSystem more = Instantiate(effectDie[0], playerTransform.position, playerTransform.rotation, contain[3].transform);
+                more.transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
+                more.gameObject.SetActive(true);
+                effectDie.Add(more);
                 return more;
             }
         }

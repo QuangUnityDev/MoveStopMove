@@ -16,7 +16,19 @@ public class PatrolState : IState
 
     public void OnExcute(BotController botController)
     {
+        if (botController.isDead)
+        {
+            botController.ChangState(new DeathState());
+        }
         time += Time.deltaTime;
+        if (botController.IsHadObject() == true)
+        {
+            nextStateTime += Time.deltaTime;
+            if (nextStateTime > 0.5f)
+            {
+                botController.ChangState(new AttackState());
+            }
+        }
         if (botController.tarGetSeek == null || time > 4)
         {
             botController.ChangState(new IdleState());
@@ -27,14 +39,7 @@ public class PatrolState : IState
             botController.nav.SetDestination(botController.tarGetSeek.position);
             botController.LookTarGet(botController.tarGetSeek);
         }
-        if (botController.IsHadObject() == true)
-        {
-            nextStateTime += Time.deltaTime;
-            if (nextStateTime > 0.5f)
-            {
-                botController.ChangState(new AttackState());
-            }
-        }      
+      
     }
 
     public void OnExit(BotController botController)

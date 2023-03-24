@@ -5,46 +5,71 @@ using UnityEngine.UI;
 
 public class Indicator : MonoBehaviour
 {
-    public Transform[] targets;  // Mảng các Transform của các targets
-    public Image pointerImage;  // Tham chiếu đến UI Image object được sử dụng cho pointer
-    public float maxDistance = 10f;  // Khoảng cách tối đa giữa indicator và target
+    public GameObject nextStop;
 
-    private Transform closestTarget;  // Transform của target gần nhất
-    private float closestDistance = Mathf.Infinity;  // Khoảng cách đến target gần nhất
+    private RectTransform indicatorRectTransform;
+    private Camera mainCamera;
 
-    void Update()
+    private void Start()
     {
-        // Tìm target gần nhất
-        foreach (Charecter target in GameManager.GetInstance().listTarget)
+        // get reference to the UI image
+        indicatorRectTransform = GetComponent<RectTransform>();
+        // get reference to the main camera
+        mainCamera = Camera.main;
+    }
+
+    private void LateUpdate()
+    {
+        if (nextStop == null)
+            return;
+
+        Vector3 targetPosition = nextStop.transform.position;
+        Vector3 screenPosition = mainCamera.WorldToScreenPoint(targetPosition);
+
+        // Check if the target is behind the camera
+        if (screenPosition.z < 0)
+            screenPosition *= -1;
+
+        // Calculate the position of the indicator image
+        Vector2 indicatorPosition;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(indicatorRectTransform.parent as RectTransform, screenPosition, null, out indicatorPosition);
+
+        // Set the position and rotation of the indicator image
+        indicatorRectTransform.localPosition = indicatorPosition;
+        indicatorRectTransform.rotation = Quaternion.LookRotation(Vector3.forward, targetPosition - transform.position);
+    }
+
+    public List<Image> indicatorList;
+    private bool _isHadObject;
+    public bool isCreateNew;
+    public Transform containIndicator;
+
+    public Image SpawnIndicator()
+    {
+        for (int i = 0; i < indicatorList.Count; i++)
         {
-            float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
-            if (distanceToTarget < closestDistance)
+            if (!indicatorList[i].gameObject.activeSelf)
             {
-                closestTarget = target.transform;
-                closestDistance = distanceToTarget;
+                indicatorList[i].gameObject.SetActive(true);
+                _isHadObject = true;
+                return indicatorList[i];
+            }
+            else
+            {
+                _isHadObject = false;
             }
         }
-
-        // Nếu không có target, không hiển thị pointer
-        if (closestTarget == null)
+        if (isCreateNew)
         {
-            pointerImage.enabled = false;
-            return;
+            if (!_isHadObject)
+            {
+                Image more = Instantiate(indicatorList[0], containIndicator);
+                more.gameObject.SetActive(true);
+                indicatorList.Add(more);
+                return more;
+            }
         }
+        return null;
 
-        // Nếu khoảng cách đến target gần nhất lớn hơn maxDistance, không hiển thị pointer
-        if (closestDistance > maxDistance)
-        {
-            pointerImage.enabled = false;
-            return;
-        }
-
-        // Hiển thị pointer và tính toán hướng và góc xoay
-        pointerImage.enabled = true;
-        Vector3 direction = closestTarget.position - transform.position;
-        direction.z = 0f;
-        direction.Normalize();
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-        pointerImage.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public List<Charecter> listTarget;
-    public static int id = 0;
     [SerializeField] private Data data;
     public int levelCurrent;
     public int gold;
@@ -14,7 +13,6 @@ public class GameManager : Singleton<GameManager>
     private void Awake()
     {
         levelCurrent = 1;
-        id = 0;
         OnInit();
     }
     void OnInit()

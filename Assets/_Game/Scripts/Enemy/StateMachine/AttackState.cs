@@ -14,6 +14,10 @@ public class AttackState : IState
 
     public void OnExcute(BotController botController)
     {
+        if (botController.isDead)
+        {
+            botController.ChangState(new DeathState());
+        }
         if (!botController.IsHadObject())
         {     
            botController.ChangState(new PatrolState());
@@ -35,7 +39,7 @@ public class AttackState : IState
                     botController.numberThrowed--;
                 }
             }
-        }       
+        }      
         else
         {
             botController.SetNumberThrow();

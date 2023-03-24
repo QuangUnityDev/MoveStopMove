@@ -17,6 +17,10 @@ public class IdleState : IState
 
     public void OnExcute(BotController botController)
     {
+        if (botController.isDead)
+        {
+            botController.ChangState(new DeathState());
+        }
         botController.ChangeAnim(GlobalTag.playerAnimIdle);
         time += Time.deltaTime;
         if (botController.IsHadObject())

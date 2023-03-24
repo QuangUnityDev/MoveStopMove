@@ -12,6 +12,7 @@ public class Charecter : MonoBehaviour
     public Charecter target;
     [SerializeField] protected DataPlayer dataPlayer;
 
+
     [HideInInspector] public Transform Transform;
     public Transform colliderRange;
     public Transform spriteRange;
@@ -25,6 +26,7 @@ public class Charecter : MonoBehaviour
     public int killed;
     public int id;
     public int currentWeapon;
+    public int hp;
 
     public float speed;
     public float timeToAttack;
@@ -33,8 +35,14 @@ public class Charecter : MonoBehaviour
     public bool isPrepareAttacking;
     public bool isAttacking;
     public bool isTimeAttackNext;
-     
-    public Action removeTarget;   
+    public bool isDead;
+
+
+    public static Action removeTarget;
+    protected virtual void OnEnable()
+    {
+        OnInit();
+    }
     private void Awake()
     {
         Transform = transform;
@@ -61,14 +69,16 @@ public class Charecter : MonoBehaviour
     }
 
     public virtual void OnInit()
-    {  
+    {
+        listTargetInRange.RemoveAll(listTargetInRange => listTargetInRange);
+        hp = dataPlayer.hp; 
         materialPlayer.material = dataPlayer.GetMat(UnityEngine.Random.Range(0, dataPlayer.materials.Length));
         isPrepareAttacking = false;
         isAttacking = false;
         isTimeAttackNext = true;
+        isDead = false;
         ChangeEquiment.GetInstance().ChangeWeapon(currentWeapon, colliderRange, spriteRange, typeWeaapon);
     }
-
     public virtual void Attack()
     {
         isAttacking = true;
@@ -92,7 +102,7 @@ public class Charecter : MonoBehaviour
         }
         Invoke(nameof(DeAttack), 0.4f);
     }
-    public void RemoveTarget(Action call = null)
+    public static void RemoveTarget(Action call = null)
     {
         removeTarget += call;
     }
@@ -143,16 +153,17 @@ public class Charecter : MonoBehaviour
             RemoveTarget(() => listTargetInRange.Remove(target));
         }
         else targetAttack = null;      
-        return targetAttack != null;
+        return targetAttack != null && target.isDead == false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(GlobalTag.player) || other.CompareTag(GlobalTag.playerEnemy))
-        {
+        {         
             target = other.GetComponent<Charecter>();
             targetAttack = target.Transform;
-            listTargetInRange.Add(target);            
+            if(!target.isDead)
+            listTargetInRange.Add(target);
         }
     }
 
@@ -162,5 +173,15 @@ public class Charecter : MonoBehaviour
         {
             listTargetInRange.Remove(other.GetComponent<Charecter>());
         }
+    }
+    public virtual void OnDeath()
+    {
+        isDead = true;
+        removeTarget?.Invoke();
+        Invoke(nameof(Death), 2f);
+    }
+    public virtual void Death()
+    {
+        gameObject.SetActive(false);
     }
 }

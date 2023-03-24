@@ -13,11 +13,9 @@ public class BotController : Charecter
     {
         base.Start();
     }
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        OnInit();
-        base.OnInit();
-        currentWeapon = 2;            
+        base.OnEnable();            
     }
     public void SetNumberThrow()
     {
@@ -63,10 +61,6 @@ public class BotController : Charecter
     public override void Attack()
     {
       base.Attack();
-        if (isAttacking == false && isPrepareAttacking == false)
-        {
-            ChangState(new PatrolState());
-        }
     }
     public void NextState()
     {
@@ -75,5 +69,10 @@ public class BotController : Charecter
     public void BackStateIdle()
     {
         ChangState(new IdleState());
+    }
+    public override void Death()
+    {
+        base.Death();
+        LevelManager.GetInstance().callSpawn?.Invoke();
     }
 }

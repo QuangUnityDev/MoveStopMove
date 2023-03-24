@@ -1,15 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-   private int hpCurrent;
-   public void GetDamage()
+    [SerializeField] private int hpCurrent;
+   
+    private Charecter player;
+    private void Awake()
     {
-        if(hpCurrent < 0)
+        player = transform.GetComponent<Charecter>();
+    }
+    private void Start()
+    {
+        hpCurrent = player.hp;
+    }
+   
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(GlobalTag.weapon))
         {
-           
+            Weapon go = other.GetComponent<Weapon>();
+            if (go.idBulletPlayer != player.id)
+            {              
+               
+            }  
         }
     }
+   
 }

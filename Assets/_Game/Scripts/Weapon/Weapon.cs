@@ -15,6 +15,7 @@ public class Weapon : MonoBehaviour
     protected bool isBack;
     public Charecter player;    
     protected Transform Transform;
+    private Action callDeath;
     private void Awake()
     {
         OnInit();
@@ -26,8 +27,8 @@ public class Weapon : MonoBehaviour
     }
     public virtual void OnInit()
     {
-        isBack = false;
-        Transform = transform;       
+        Transform = transform;
+        isBack = false;         
     }
     public virtual void FixedUpdate()
     {                  
@@ -46,14 +47,11 @@ public class Weapon : MonoBehaviour
     }
     public void CheckPlayer( Charecter go)
     {
-        if (idBulletPlayer != go.GetComponent<Charecter>().id)
+        if (idBulletPlayer != go.id)
         {
-            GameManager.GetInstance().listTarget.Remove(go);
-            this.gameObject.SetActive(false);
-            go.gameObject.SetActive(false);
-            player.listTargetInRange.Remove(go);
-            player.removeTarget?.Invoke();
-            LevelManager.GetInstance().GetKill(idBulletPlayer);
+            ObjectsPooling.GetInstance().SpawnEffect(go.transform);
+            gameObject.SetActive(false);                
+            GetDamage(go,player);
         }
     }
     public virtual void OnDisable()
@@ -66,5 +64,37 @@ public class Weapon : MonoBehaviour
         idBulletPlayer = idPlayer;      
         posStart = posThrow;
     }
-  
+    public void GetKill(Charecter playerKilled)
+    {
+        playerKilled.killed++;
+        UpSize(playerKilled);
+    }
+    public void UpSize(Charecter player)
+    {
+        player.transform.localScale = new Vector3(1 + player.killed * 0.2f, 1 + player.killed * 0.2f, 1 + player.killed * 0.2f);
+        ChangeEquiment.GetInstance().ChangeWeapon(player.currentWeapon, player.colliderRange, player.spriteRange, player.typeWeaapon);
+    }
+    public void GetDamage(Charecter playerHeal, Charecter playerKill)
+    {
+        playerHeal.hp--;
+        if (playerHeal.hp <= 0)
+        {
+            PlayerDeath( () =>
+            {
+                Dead(playerHeal, playerKill);
+            }
+                );
+            callDeath?.Invoke();
+            callDeath = null;
+        }
+    }
+    public void Dead (Charecter playerHeal, Charecter playerKill)
+    {
+        playerHeal.OnDeath();
+        GetKill(playerKill);
+    }
+    public void PlayerDeath(Action call = null)
+    {
+        callDeath += call;
+    }
 }
