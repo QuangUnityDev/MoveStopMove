@@ -12,6 +12,7 @@ public class Charecter : MonoBehaviour
     public Charecter target;
     [SerializeField] protected DataPlayer dataPlayer;
 
+    public Weapon currentWeaponEquiped; 
 
     [HideInInspector] public Transform Transform;
     public Transform colliderRange;
@@ -77,43 +78,60 @@ public class Charecter : MonoBehaviour
         isAttacking = false;
         isTimeAttackNext = true;
         isDead = false;
-        ChangeEquiment.GetInstance().ChangeWeapon(currentWeapon, colliderRange, spriteRange, typeWeaapon);
+        ChangeEquiment.GetInstance().ResetAtributeWeapon(currentWeapon, colliderRange, spriteRange, this);
     }
-    public virtual void Attack()
+
+    public void ChangeEquiped(TypeWeaapon type)
     {
-        isAttacking = true;
-        isTimeAttackNext = false;
         switch (typeWeaapon)
         {
             case TypeWeaapon.AXE:
-                Axe more = ObjectsPooling.GetInstance().SpawnBullet(throwPos);
-                WeaponGetInfo(more, WeaponAtributesFirst.rangeBullet);
+                currentWeaponEquiped = ObjectsPooling.GetInstance().SpawnBullet(throwPos);             
                 break;
             case TypeWeaapon.BOOMERANG:
-                Boomerang boome = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos);
-                WeaponGetInfo(boome, WeaponAtributesFirst.rangeBoomerang);
+                currentWeaponEquiped = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos);
                 break;
             case TypeWeaapon.SWORD:
-                //Knife knift = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos);
-                ChangeAnim("Attack");
+                currentWeaponEquiped = ObjectsPooling.GetInstance().SpawnBullet(throwPos);
                 break;
             default:
                 break;
         }
-        Invoke(nameof(DeAttack), 0.4f);
+        WeaponOnHand();
+    }
+    public void WeaponOnHand()
+    {
+        WeaponGetInfo(currentWeaponEquiped, WeaponAtributesFirst.rangeBullet);
+        currentWeaponEquiped.transform.SetParent(throwPos);
+        currentWeaponEquiped.rb.constraints = RigidbodyConstraints.FreezeAll;
+    }
+    public void WeaponThrowed()
+    {
+        if (currentWeaponEquiped == null) return;
+        currentWeaponEquiped.rb.constraints = RigidbodyConstraints.None;
+        currentWeaponEquiped.ShootForce = 10;
+        currentWeaponEquiped.transform.SetParent(null);
+        currentWeaponEquiped.rb.AddForce(dir.normalized * 10, ForceMode.VelocityChange);       
+        currentWeaponEquiped = null;
+    }
+    public virtual void Attack()
+    {      
+        if (target != null)
+        {
+            dir = target.transform.position - throwPos.position;
+        }
+        isAttacking = true;
+        isTimeAttackNext = false;
+        WeaponThrowed();
+        Invoke(nameof(DeAttack), 0.4f);      
     }
     public static void RemoveTarget(Action call = null)
     {
         removeTarget += call;
     }
     public void WeaponGetInfo(Weapon wepon, float rangeFirst)
-    {
-        if (target != null)
-        {
-            dir = target.transform.position - throwPos.position;
-        }
+    {        
         wepon.player = this;
-        wepon.rb.AddForce(dir.normalized * wepon.ShootForce, ForceMode.VelocityChange);
         wepon.GetInfoPlayer(id, throwPos.position);
         wepon.posStart = throwPos.position;       
         wepon.rangWeapon = rangeFirst + killed * scareValue;
@@ -126,6 +144,7 @@ public class Charecter : MonoBehaviour
     }
     protected void DeAttack()
     {
+        ChangeEquiped(typeWeaapon);
         Invoke(nameof(NextTimeAttack), 0.3f);
         isAttacking = false;
     }
@@ -183,5 +202,11 @@ public class Charecter : MonoBehaviour
     public virtual void Death()
     {
         gameObject.SetActive(false);
+        if(!currentWeaponEquiped)
+        WeaponThrowed();
+    }
+    public void OnDisable()
+    {
+        removeTarget = null;
     }
 }

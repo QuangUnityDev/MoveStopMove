@@ -9,13 +9,22 @@ public class BotController : Charecter
     private IState currentState;
     public int numberThrowed;
     public Transform tarGetSeek;
+    public void RandomWeapon()
+    {
+        int indexRandom = Random.Range(0, 3);
+        if(indexRandom == 0) { typeWeaapon = TypeWeaapon.AXE; }
+        else if(indexRandom == 1) { typeWeaapon = TypeWeaapon.BOOMERANG; }
+        else if (indexRandom == 2) { typeWeaapon = TypeWeaapon.SWORD; }
+    }
     protected override void Start()
     {
         base.Start();
     }
     protected override void OnEnable()
     {
-        base.OnEnable();            
+        base.OnEnable();
+        RandomWeapon();
+        ChangeEquiped(typeWeaapon);
     }
     public void SetNumberThrow()
     {
@@ -27,7 +36,6 @@ public class BotController : Charecter
         ChangState(new IdleState());
         SetNumberThrow();
         nav.speed = speed;
-        ChangeEquiment.GetInstance().ChangeWeapon(currentWeapon, colliderRange, spriteRange, typeWeaapon);
     }
     public Charecter SetTargetRandom()
     {
@@ -41,6 +49,7 @@ public class BotController : Charecter
     }
     void FixedUpdate()
     {
+        if (GameManager.GetInstance().IsPreparing) return;
         if (currentState != null)
         {
             currentState.OnExcute(this);

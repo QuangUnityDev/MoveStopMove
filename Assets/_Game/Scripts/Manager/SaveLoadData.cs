@@ -7,9 +7,9 @@ using UnityEngine;
 public class SaveLoadData : Singleton<SaveLoadData>
 {
     public string saveName = "savedGame";
-    public string directoryName = "Saves";  
-
-    public void SaveToFile()
+    public string directoryName = "Saves";
+    //public Data data;
+    public void SaveToFile(GameManager dataGame)
     {       
         // To save in a directory, it must be created first
         if (!Directory.Exists(directoryName))
@@ -22,7 +22,7 @@ public class SaveLoadData : Singleton<SaveLoadData>
         FileStream saveFile = File.Create(directoryName + "/" + saveName + ".bin");
 
         // Write our C# Unity game data type to a binary file
-    Data data = new Data();
+        Data data = new Data(dataGame);
     formatter.Serialize(saveFile, data);
 
         saveFile.Close();
@@ -33,7 +33,7 @@ public class SaveLoadData : Singleton<SaveLoadData>
     public string saveDirectory = "Saves";
     public string saveNameLoad = "savedGame";
 
-    public void LoadFromFile()
+    public Data LoadFromFile()
     {
         // Converts binary file back into readable data for Unity game
         BinaryFormatter formatter = new BinaryFormatter();
@@ -42,16 +42,17 @@ public class SaveLoadData : Singleton<SaveLoadData>
         FileStream saveFile = File.Open(saveDirectory + "/" + saveNameLoad + ".bin", FileMode.Open);
 
         // Convert the file data into SaveGameData format for use in game
-        Data loadData = (Data) formatter.Deserialize(saveFile);
+        Data data = (Data) formatter.Deserialize(saveFile);
 
         // Print all of the data (normally you would feed this data into other loaded objects that need it like the Player script)
         print("~~~ LOADED GAME DATA ~~~");
-        print("PLAYER currentWeapon NAME: " + loadData.currentWeapon);
+        print("PLAYER currentWeapon NAME: " + data.currentWeapon);
         //print("PLAYER NAME: " + loadData.weaponOwner[1]);
-        //print("PLAYER NAME: " + loadData.playerName);
-        //print("MONEY: " + loadData.money);
-        //print("HEALTH: " + loadData.health);
+        //print("PLAYER NAME: " + data.currentWeapon);
+        //print("MONEY: " + data.gold);
+        //print("HEALTH: " + data.levelID);
 
         saveFile.Close();
+        return data;
     }
 }

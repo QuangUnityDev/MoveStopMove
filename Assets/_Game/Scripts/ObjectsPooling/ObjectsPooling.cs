@@ -34,7 +34,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
         {
             if (!_isHadObject)
             {
-                GameObject more = Instantiate(listAxes[0].gameObject, playerTransform.position, playerTransform.rotation, contain[0].transform);
+                GameObject more = Instantiate(listAxes[0].gameObject, playerTransform.position, playerTransform.rotation);
                 more.transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
                 Axe bullet = more.GetComponent<Axe>();               
                 bullet.gameObject.SetActive(true);
@@ -51,7 +51,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
         {
             if (!listBoomerangs[i].gameObject.activeSelf)
             {
-                listBoomerangs[i].transform.SetPositionAndRotation(playerTransform.position, Quaternion.identity);
+                listBoomerangs[i].transform.SetPositionAndRotation(playerTransform.position, Quaternion.Euler(0,0,0));
                 listBoomerangs[i].gameObject.SetActive(true);
                 _isHadObject = true;
                 return listBoomerangs[i];
@@ -65,7 +65,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
         {
             if (!_isHadObject)
             {
-                GameObject more = Instantiate(listBoomerangs[0].gameObject, playerTransform.position, Quaternion.identity, contain[2].transform);
+                GameObject more = Instantiate(listBoomerangs[0].gameObject, playerTransform.position, Quaternion.Euler(0, 0, 0));
                 more.transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
                 Boomerang bullet = more.GetComponent<Boomerang>();
                 bullet.gameObject.SetActive(true);
@@ -83,7 +83,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
             if (!listBotController[i].gameObject.activeSelf)
             {
                 LevelManager.id++;
-                listBotController[i].transform.SetLocalPositionAndRotation(pos, playerTransform.rotation);               
+                listBotController[i].transform.SetLocalPositionAndRotation(pos, Quaternion.Euler(0, 180, 0));               
                 listBotController[i].gameObject.SetActive(true);
                 listBotController[i].id = LevelManager.id;
                 _isHadObject = true;
@@ -101,7 +101,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
                 LevelManager.id++;
                 BotController more = Instantiate(listBotController[0], contain[1].transform);               
                 more.id = LevelManager.id;
-                more.transform.SetLocalPositionAndRotation(pos, playerTransform.rotation);
+                more.transform.SetLocalPositionAndRotation(pos, Quaternion.Euler(0, 180, 0));
                 more.gameObject.SetActive(true);
                 listBotController.Add(more);
                 return more;

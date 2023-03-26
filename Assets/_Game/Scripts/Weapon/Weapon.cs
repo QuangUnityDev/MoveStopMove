@@ -10,7 +10,7 @@ public class Weapon : MonoBehaviour
     public Vector3 posStart;
     public float rangWeapon;
     [SerializeField]private float shootForce;
-    public float ShootForce { private set { shootForce = value; } get { return shootForce; }}
+    public float ShootForce { set { shootForce = value; } get { return shootForce; }}
     protected Action finishCallBack;
     protected bool isBack;
     public Charecter player;    
@@ -49,6 +49,7 @@ public class Weapon : MonoBehaviour
     {
         if (idBulletPlayer != go.id)
         {
+            if (ShootForce <= 0) return;
             ObjectsPooling.GetInstance().SpawnEffect(go.transform);
             gameObject.SetActive(false);                
             GetDamage(go,player);
@@ -63,6 +64,7 @@ public class Weapon : MonoBehaviour
     {
         idBulletPlayer = idPlayer;      
         posStart = posThrow;
+        shootForce = 0;
     }
     public void GetKill(Charecter playerKilled)
     {
@@ -72,7 +74,7 @@ public class Weapon : MonoBehaviour
     public void UpSize(Charecter player)
     {
         player.transform.localScale = new Vector3(1 + player.killed * 0.2f, 1 + player.killed * 0.2f, 1 + player.killed * 0.2f);
-        ChangeEquiment.GetInstance().ChangeWeapon(player.currentWeapon, player.colliderRange, player.spriteRange, player.typeWeaapon);
+        ChangeEquiment.GetInstance().ResetAtributeWeapon(player.currentWeapon, player.colliderRange, player.spriteRange, player);
     }
     public void GetDamage(Charecter playerHeal, Charecter playerKill)
     {

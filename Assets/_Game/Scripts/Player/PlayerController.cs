@@ -6,15 +6,18 @@ public class PlayerController : Charecter
 {
     public FloatingJoystick floatingJoystick;    
     protected override void Start()
-    {
-        currentWeapon = 2;
-        base.Start();
-        OnInit();
-        ChangeEquiment.GetInstance().ChangeWeapon(currentWeapon, colliderRange , spriteRange, typeWeaapon);
+    {      
+        base.Start();       
     }
     public override void OnInit()
     {
-        base.OnInit();
+        currentWeapon = GameManager.GetInstance().currentWeapon;
+        base.OnInit();        
+        ChangeEquiped(typeWeaapon);
+        GameManager.GetInstance().ShowRangePlayer((isTrue) => {
+            spriteRange.gameObject.SetActive(isTrue);
+            Transform.position = new Vector3(0, -0.44f, 0);
+        });
     }
     public bool IsStop()
     {
@@ -22,6 +25,7 @@ public class PlayerController : Charecter
     }
     public void FixedUpdate()
     {
+        if (GameManager.GetInstance().IsPreparing) return;
         if (isDead) return;
         Vector3 direction = Vector3.forward * floatingJoystick.Vertical + Vector3.right * floatingJoystick.Horizontal;
         if(!isAttacking) rb.velocity = direction * speed * Time.fixedDeltaTime;
@@ -63,6 +67,8 @@ public class PlayerController : Charecter
     }
     public override void OnDeath()
     {
+        if(currentWeaponEquiped)
+        WeaponThrowed();
         base.OnDeath();
         ChangeAnim(GlobalTag.playerAnimDeath);
     }

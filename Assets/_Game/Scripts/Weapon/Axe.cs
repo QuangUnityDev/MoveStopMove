@@ -14,6 +14,7 @@ public class Axe : Weapon
     }
     public override void FixedUpdate()
     {
+        if (ShootForce <= 0) return;
         if (Vector3.Distance(transform.position, posStart) > rangWeapon)
         {
             rb.velocity = Vector3.zero;

@@ -9,15 +9,16 @@ public class Data
     //public int health;
     //public int money;
     //public string playerName;
-    public int currentWeapon;
-    public int[] weaponOwner;
-    public int gold;
+    public int currentWeapon ;
+    public int[] weaponOwner ;
+    public int gold ;
     public int levelID;
-    //public Data ()
-    //{
-    //    //currentWeapon = (int)GameManager.GetInstance().player.typeWeaapon;
-    //    //gold = GameManager.GetInstance().gold;
-    //    //levelID = GameManager.GetInstance().levelCurrent;
-    //}
+    public Data(GameManager gameData)
+    {
+        //DATA PLAYER
+        currentWeapon = gameData.currentWeapon;
+        gold = gameData.gold;
+        levelID = gameData.levelCurrent;
+    }
 }
 

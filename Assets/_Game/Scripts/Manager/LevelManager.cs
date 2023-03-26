@@ -9,7 +9,6 @@ public class LevelManager : Singleton<LevelManager>
     public List<Charecter> listAllTarget;
     public PlayerController playerPrefab;
     private PlayerController player;
-    private Transform posStartPlayer;
     public FloatingJoystick floatingJoystick;
     public static int id = 0;
     float timeReload;
@@ -30,11 +29,13 @@ public class LevelManager : Singleton<LevelManager>
     public void ResetPos()
     {
         player.gameObject.SetActive(true);
-        player.transform.position = posStartPlayer.position;
+        player.transform.position = new Vector3(0,-0.44f,0);
+        player.transform.rotation = Quaternion.Euler(0, 180, 0);
     }
     private void OnInit()
     {
-        player = Instantiate(playerPrefab, posStartPlayer);
+        player = Instantiate(playerPrefab);
+        ResetPos();
         player.floatingJoystick = floatingJoystick;
         player.id = 0;
         listAllTarget.Add(player);
@@ -48,7 +49,6 @@ public class LevelManager : Singleton<LevelManager>
     public void LoadLevelCurrent()
     {
         levelController = Instantiate(Resources.Load<LevelController>("Levels/Level" + GameManager.GetInstance().levelCurrent.ToString()));
-        posStartPlayer = levelController.playerPosStart;
         ResetPos();
     }
     int pos;
@@ -68,7 +68,6 @@ public class LevelManager : Singleton<LevelManager>
         GameManager.GetInstance().SaveData();
         Debug.LogError(GameManager.GetInstance().levelCurrent);
         levelController = Instantiate(Resources.Load<LevelController>("Levels/Level" + GameManager.GetInstance().levelCurrent.ToString()));
-        posStartPlayer = levelController.playerPosStart;
         ResetPos();
     }
 }

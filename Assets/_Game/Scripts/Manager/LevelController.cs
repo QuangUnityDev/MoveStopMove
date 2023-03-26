@@ -7,5 +7,4 @@ public class LevelController : MonoBehaviour
 {
     public LevelData levelData;
     public Transform[] posAppear;
-    public Transform playerPosStart;
 }

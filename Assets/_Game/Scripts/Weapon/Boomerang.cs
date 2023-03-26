@@ -14,11 +14,12 @@ public class Boomerang : Weapon
 
     public override void FixedUpdate()
     {      
+        if(ShootForce > 0)
         Transform.Rotate(Vector3.forward * 200 * Time.fixedDeltaTime);
         SetTarGet(() =>
         {
             rb.velocity = Vector3.zero;
-            rb.AddForce((backPos.position - Transform.position).normalized * 10, ForceMode.VelocityChange);
+            rb.AddForce((backPos.position - Transform.position).normalized * ShootForce, ForceMode.VelocityChange);
         }
        );
         if (Vector3.Distance(posStart, new Vector3(Transform.position.x, posStart.y, Transform.position.z)) > rangWeapon)

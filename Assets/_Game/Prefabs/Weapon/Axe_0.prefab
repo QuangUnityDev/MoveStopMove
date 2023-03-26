@@ -132,5 +132,5 @@ MonoBehaviour:
   rb: {fileID: 5752668622651856873}
   posStart: {x: 0, y: 0, z: 0}
   rangWeapon: 0
-  shootForce: 10
+  shootForce: 0
   player: {fileID: 0}
