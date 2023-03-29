@@ -17,7 +17,7 @@ public class PlayerController : Charecter
         GameManager.GetInstance().ShowRangePlayer((isTrue) => {
             spriteRange.gameObject.SetActive(isTrue);
             Transform.position = new Vector3(0, -0.44f, 0);
-        });
+        }, (isTrue) => Transform.gameObject.SetActive(isTrue));
     }
     public bool IsStop()
     {
@@ -68,8 +68,9 @@ public class PlayerController : Charecter
     public override void OnDeath()
     {
         if(currentWeaponEquiped)
-        WeaponThrowed();
+        ThrowWeapon();
         base.OnDeath();
+        GameManager.GetInstance().GameRevival();
         ChangeAnim(GlobalTag.playerAnimDeath);
     }
 }

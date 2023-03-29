@@ -7,6 +7,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
 {
 
     [SerializeField] private List<Axe> listAxes;
+    [SerializeField] private List<CandyTree> listCandyTree;
     [SerializeField] private List<Boomerang> listBoomerangs;
     [SerializeField] private List<BotController> listBotController;
     [SerializeField] private bool isCreateNew = true;
@@ -34,12 +35,11 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
         {
             if (!_isHadObject)
             {
-                GameObject more = Instantiate(listAxes[0].gameObject, playerTransform.position, playerTransform.rotation);
+                Axe more = Instantiate(listAxes[0], playerTransform.position, playerTransform.rotation);
                 more.transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
-                Axe bullet = more.GetComponent<Axe>();               
-                bullet.gameObject.SetActive(true);
-                listAxes.Add(bullet);
-                return bullet;
+                more.gameObject.SetActive(true);
+                listAxes.Add(more);
+                return more;
             }
         }
         return null;
@@ -65,12 +65,11 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
         {
             if (!_isHadObject)
             {
-                GameObject more = Instantiate(listBoomerangs[0].gameObject, playerTransform.position, Quaternion.Euler(0, 0, 0));
+                Boomerang more = Instantiate(listBoomerangs[0], playerTransform.position, Quaternion.Euler(0, 0, 0));
                 more.transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
-                Boomerang bullet = more.GetComponent<Boomerang>();
-                bullet.gameObject.SetActive(true);
-                listBoomerangs.Add(bullet);
-                return bullet;
+                more.gameObject.SetActive(true);
+                listBoomerangs.Add(more);
+                return more;
             }
         }
         return null;
@@ -134,6 +133,36 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
                 more.transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
                 more.gameObject.SetActive(true);
                 effectDie.Add(more);
+                return more;
+            }
+        }
+        return null;
+
+    }
+    public CandyTree SpawnCandyTree(Transform playerTransform)
+    {
+        for (int i = 0; i < listAxes.Count; i++)
+        {
+            if (!listCandyTree[i].gameObject.activeSelf)
+            {
+                listCandyTree[i].transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
+                listCandyTree[i].gameObject.SetActive(true);
+                _isHadObject = true;
+                return listCandyTree[i];
+            }
+            else
+            {
+                _isHadObject = false;
+            }
+        }
+        if (isCreateNew)
+        {
+            if (!_isHadObject)
+            {
+                CandyTree more = Instantiate(listCandyTree[0], playerTransform.position, playerTransform.rotation,contain[4]);
+                more.transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
+                more.gameObject.SetActive(true);
+                listCandyTree.Add(more);
                 return more;
             }
         }

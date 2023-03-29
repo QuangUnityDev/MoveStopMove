@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelManager : Singleton<LevelManager>
+public class LevelManager : Singleton<LevelManager>,ISubcriber
 {
     [SerializeField] private LevelController levelController;
     public List<Charecter> listAllTarget;
@@ -18,13 +18,8 @@ public class LevelManager : Singleton<LevelManager>
         OnInit();
     }
     private void Start()
-    {
-        LoadLevelCurrent();
-        for (int i = 0; i < levelController.levelData.numberPlayerOnMap; i++)
-        {
-            BotController more = ObjectsPooling.GetInstance().SpawnPlayerEnemy(SpawnRandom().position, transform);
-            listAllTarget.Add(more);
-        }
+    {          
+        GameManager.GetInstance().AddSubcriber(this);
     }
     public void ResetPos()
     {
@@ -69,5 +64,51 @@ public class LevelManager : Singleton<LevelManager>
         Debug.LogError(GameManager.GetInstance().levelCurrent);
         levelController = Instantiate(Resources.Load<LevelController>("Levels/Level" + GameManager.GetInstance().levelCurrent.ToString()));
         ResetPos();
+    }
+
+    public void GamePrepare()
+    {      
+        for (int i = 0; i < listAllTarget.Count; i++)
+        {
+            listAllTarget[i].gameObject.SetActive(false);
+        }
+        listAllTarget.Clear();
+        LoadLevelCurrent();
+        listAllTarget.Add(player);
+        for (int i = 0; i < levelController.levelData.numberPlayerOnMap; i++)
+        {
+            BotController more = ObjectsPooling.GetInstance().SpawnPlayerEnemy(SpawnRandom().position, transform);
+            listAllTarget.Add(more);
+        }
+        ResetPos();
+    }
+
+    public void GameStart()
+    {
+       
+    }
+
+    public void GameRevival()
+    {
+       
+    }
+
+    public void GamePause()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void GameResume()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void GameOver()
+    {
+    }
+
+    public void GameCompleted()
+    {
+        throw new NotImplementedException();
     }
 }

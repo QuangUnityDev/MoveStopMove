@@ -76,23 +76,23 @@ public class Weapon : MonoBehaviour
         player.transform.localScale = new Vector3(1 + player.killed * 0.2f, 1 + player.killed * 0.2f, 1 + player.killed * 0.2f);
         ChangeEquiment.GetInstance().ResetAtributeWeapon(player.currentWeapon, player.colliderRange, player.spriteRange, player);
     }
-    public void GetDamage(Charecter playerHeal, Charecter playerKill)
+    public void GetDamage(Charecter playerGetDamage, Charecter playerKill)
     {
-        playerHeal.hp--;
-        if (playerHeal.hp <= 0)
+        playerGetDamage.hp--;
+        if (playerGetDamage.hp <= 0)
         {
             PlayerDeath( () =>
             {
-                Dead(playerHeal, playerKill);
+                Dead(playerGetDamage, playerKill);
             }
                 );
             callDeath?.Invoke();
             callDeath = null;
         }
     }
-    public void Dead (Charecter playerHeal, Charecter playerKill)
+    public void Dead (Charecter playerGetDamage, Charecter playerKill)
     {
-        playerHeal.OnDeath();
+        playerGetDamage.OnDeath();
         GetKill(playerKill);
     }
     public void PlayerDeath(Action call = null)

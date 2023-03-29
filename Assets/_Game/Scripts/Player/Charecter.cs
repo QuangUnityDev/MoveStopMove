@@ -55,7 +55,7 @@ public class Charecter : MonoBehaviour
     public enum TypeWeaapon
     {
         AXE,
-        SWORD,
+        CandyTree,
         BOOMERANG,
     }
 
@@ -71,7 +71,7 @@ public class Charecter : MonoBehaviour
 
     public virtual void OnInit()
     {
-        listTargetInRange.RemoveAll(listTargetInRange => listTargetInRange);
+        listTargetInRange.Clear();
         hp = dataPlayer.hp; 
         materialPlayer.material = dataPlayer.GetMat(UnityEngine.Random.Range(0, dataPlayer.materials.Length));
         isPrepareAttacking = false;
@@ -83,6 +83,13 @@ public class Charecter : MonoBehaviour
 
     public void ChangeEquiped(TypeWeaapon type)
     {
+        GameManager.GetInstance().SaveData();
+        if (currentWeaponEquiped != null && typeWeaapon == TypeWeaapon.CandyTree) 
+        {
+            WeaponOnHand();
+            return;
+        }
+        if (currentWeaponEquiped != null) currentWeaponEquiped = null;
         switch (typeWeaapon)
         {
             case TypeWeaapon.AXE:
@@ -91,8 +98,8 @@ public class Charecter : MonoBehaviour
             case TypeWeaapon.BOOMERANG:
                 currentWeaponEquiped = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos);
                 break;
-            case TypeWeaapon.SWORD:
-                currentWeaponEquiped = ObjectsPooling.GetInstance().SpawnBullet(throwPos);
+            case TypeWeaapon.CandyTree:
+                currentWeaponEquiped = ObjectsPooling.GetInstance().SpawnCandyTree(throwPos);
                 break;
             default:
                 break;
@@ -102,15 +109,17 @@ public class Charecter : MonoBehaviour
     public void WeaponOnHand()
     {
         WeaponGetInfo(currentWeaponEquiped, WeaponAtributesFirst.rangeBullet);
+        if (typeWeaapon == TypeWeaapon.CandyTree) return;      
         currentWeaponEquiped.transform.SetParent(throwPos);
         currentWeaponEquiped.rb.constraints = RigidbodyConstraints.FreezeAll;
     }
-    public void WeaponThrowed()
+    public void ThrowWeapon()
     {
+        if (typeWeaapon == TypeWeaapon.CandyTree) return;
         if (currentWeaponEquiped == null) return;
-        currentWeaponEquiped.rb.constraints = RigidbodyConstraints.None;
-        currentWeaponEquiped.ShootForce = 10;
+        currentWeaponEquiped.rb.constraints = RigidbodyConstraints.None;      
         currentWeaponEquiped.transform.SetParent(null);
+        currentWeaponEquiped.ShootForce = 10;
         currentWeaponEquiped.rb.AddForce(dir.normalized * 10, ForceMode.VelocityChange);       
         currentWeaponEquiped = null;
     }
@@ -122,7 +131,7 @@ public class Charecter : MonoBehaviour
         }
         isAttacking = true;
         isTimeAttackNext = false;
-        WeaponThrowed();
+        ThrowWeapon();
         Invoke(nameof(DeAttack), 0.4f);      
     }
     public static void RemoveTarget(Action call = null)
@@ -203,7 +212,7 @@ public class Charecter : MonoBehaviour
     {
         gameObject.SetActive(false);
         if(!currentWeaponEquiped)
-        WeaponThrowed();
+        ThrowWeapon();
     }
     public void OnDisable()
     {

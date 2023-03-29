@@ -9,17 +9,15 @@ public class CameraFollow : MonoBehaviour, ISubcriber
     public Camera cameraMain;
 
     private void Awake()
-    {
+    {       
         Transform = cameraMain.transform;
-
     }
     private void Start()
-    {       
-        player = GameObject.FindAnyObjectByType<PlayerController>();
+    {
         GameManager.GetInstance().AddSubcriber(this);
-
+        player = GameObject.FindAnyObjectByType<PlayerController>();
     }
-    void Update()
+    void LateUpdate()
     {
         if (GameManager.GetInstance().IsPreparing) return;
         Transform.position = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z - 5);
@@ -31,7 +29,7 @@ public class CameraFollow : MonoBehaviour, ISubcriber
 
     public void GameOver()
     {
-        throw new System.NotImplementedException();
+      
     }
 
     public void GamePause()
@@ -41,9 +39,7 @@ public class CameraFollow : MonoBehaviour, ISubcriber
 
     public void GamePrepare()
     {
-        cameraMain.fieldOfView = 50;
-        Transform.position = new Vector3(0, 1, -12);
-        Transform.rotation = Quaternion.Euler(9, 0, 0);
+        posPrepareGame();
     }
 
     public void GameResume()
@@ -53,14 +49,29 @@ public class CameraFollow : MonoBehaviour, ISubcriber
 
     public void GameRevival()
     {
-        throw new System.NotImplementedException();
     }
 
     public void GameStart()
+    {
+        posStartGame();
+    }
+    public void posPrepareGame()
+    {
+        cameraMain.fieldOfView = 50;
+        Transform.position = new Vector3(0, 1, -12);
+        Transform.rotation = Quaternion.Euler(9, 0, 0);
+    }
+    public void posStartGame()
     {
         cameraMain.fieldOfView = 90;
         Transform.position = new Vector3(0, 10, -5);
         Transform.rotation = Quaternion.Euler(70, 0, 0);
         Transform.position = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z - 10);
+    }
+    public void posOpenSkinShop()
+    {
+        cameraMain.fieldOfView = 50;
+        Transform.position = new Vector3(0, -1, -12);
+        Transform.rotation = Quaternion.Euler(9, 0, 0);
     }
 }

@@ -15,7 +15,7 @@ public class ChangeEquiment : Singleton<ChangeEquiment>
                 spriteRange.localScale = new Vector3(WeaponAtributesFirst.rangeBullet / 2.5f, WeaponAtributesFirst.rangeBullet / 2.5f, WeaponAtributesFirst.rangeBullet / 2.5f);
                 break;
             case 1:
-                player.typeWeaapon = Charecter.TypeWeaapon.SWORD;
+                player.typeWeaapon = Charecter.TypeWeaapon.CandyTree;
                 rangeCollider.GetComponent<SphereCollider>().radius = WeaponAtributesFirst.rangeSword;
                 spriteRange.localScale = new Vector3(WeaponAtributesFirst.rangeSword / 2.5f, WeaponAtributesFirst.rangeSword / 2.5f, WeaponAtributesFirst.rangeSword / 2.5f);
                 break;

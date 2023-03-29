@@ -5,16 +5,19 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    
+
     public int levelCurrent;
     public int gold;
     public int currentWeapon;
 
     private void Awake()
     {
-        LoadData();       
+        LoadData();
         gameSubcribers = new ArrayList();
-        levelCurrent = 1;
+        levelCurrent = 1;    
+    }
+    private void Start()
+    {
         OnInit();
     }
     void OnInit()
@@ -27,14 +30,11 @@ public class GameManager : Singleton<GameManager>
     }
     public void LoadData()
     {
-        
-       Data data =  SaveLoadData.GetInstance().LoadFromFile();
-        currentWeapon = data.currentWeapon;        
+
+        Data data = SaveLoadData.GetInstance().LoadFromFile();
+        currentWeapon = data.currentWeapon;
         gold = data.gold;
         levelCurrent = data.levelID;
-        //Debug.LogError(currentWeapon);
-        //Debug.LogError(gold);
-        //Debug.LogError(levelCurrent);
     }
     #region Game Subcribers
     public ArrayList gameSubcribers;
@@ -56,37 +56,24 @@ public class GameManager : Singleton<GameManager>
             call(s);
     }
     private Action<bool> callShowRangePlayer;
-    public void ShowRangePlayer(Action<bool> call)
+    public Action<bool> deActivePlayer;
+    public void ShowRangePlayer(Action<bool> call,Action <bool> offActive = null)
     {
         callShowRangePlayer = call;
+        deActivePlayer = offActive;
     }
     public void GamePrepare()
     {
         callShowRangePlayer?.Invoke(false);
-        Debug.LogError("GamePrepare");
-        //CurrencyOnGame = 0;
-        //TopUI.Instance.SetCurrencyInGame(CurrencyOnGame);   
         game_State = GAME_STATE.GAME_PREPARE;
         CallEvent((s) => { s.GamePrepare(); });
-        //AnalyticHelper.OnGame.LogGamePrepare();
-        //StartCoroutine(IEGamePrepare());
-        //isLoaded = true;
-        // }
     }
-    //IEnumerator IEGamePrepare()
-    //{
-    //    yield return new WaitUntil(() => isLoaded);
-    //    CallEvent((s) => { s.GamePrepare(); });
-    //    yield return new WaitForFixedUpdate();
-    //    LoadingPanel.Instance.ActiveScene();
-    //}
     public void GameStart()
     {
         callShowRangePlayer?.Invoke(true);
         startTime = Time.time;
         game_State = GAME_STATE.GAME_PLAY;
         gameMoneyEarned = 0;
-        //AnalyticHelper.OnGame.LogGameStart();
         CallEvent((s) =>
         {
             s.GameStart();
@@ -97,7 +84,6 @@ public class GameManager : Singleton<GameManager>
         if (game_State != GAME_STATE.GAME_REVIVAL)
         {
             game_State = GAME_STATE.GAME_REVIVAL;
-            //AnalyticHelper.OnGame.LogGameRevival();
             CallEvent((s) => { s.GameRevival(); });
         }
 
@@ -127,6 +113,7 @@ public class GameManager : Singleton<GameManager>
         {
             game_State = GAME_STATE.GAME_OVER;
             int duration = Mathf.RoundToInt(Time.time - startTime);
+            callShowRangePlayer?.Invoke(false);
             //  float timer = (Time.time - durationPlayTime);
             //AnalyticHelper.OnGame.LogGameOver(duration);
             CallEvent((s) => { s.GameOver(); });

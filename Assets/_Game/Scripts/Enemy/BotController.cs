@@ -11,10 +11,10 @@ public class BotController : Charecter
     public Transform tarGetSeek;
     public void RandomWeapon()
     {
-        int indexRandom = Random.Range(0, 3);
+        int indexRandom = Random.Range(0, 2);
         if(indexRandom == 0) { typeWeaapon = TypeWeaapon.AXE; }
         else if(indexRandom == 1) { typeWeaapon = TypeWeaapon.BOOMERANG; }
-        else if (indexRandom == 2) { typeWeaapon = TypeWeaapon.SWORD; }
+        else if (indexRandom == 2) { typeWeaapon = TypeWeaapon.CandyTree; }
     }
     protected override void Start()
     {
