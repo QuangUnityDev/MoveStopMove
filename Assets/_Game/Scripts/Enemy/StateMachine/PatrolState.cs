@@ -21,7 +21,7 @@ public class PatrolState : IState
             botController.ChangState(new DeathState());
         }
         time += Time.deltaTime;
-        if (botController.IsHadObject() == true)
+        if (botController.IsHadObject() && botController.numberThrowed > 0)
         {
             nextStateTime += Time.deltaTime;
             if (nextStateTime > 0.5f)

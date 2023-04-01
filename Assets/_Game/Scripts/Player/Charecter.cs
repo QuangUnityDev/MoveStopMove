@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Charecter : MonoBehaviour
 {
-    [SerializeField] protected Rigidbody rb;
+    public Rigidbody rb;
     public List<Charecter> listTargetInRange;
     public Animator anim;
     public TypeWeaapon typeWeaapon;
@@ -39,7 +39,7 @@ public class Charecter : MonoBehaviour
     public bool isDead;
 
 
-    public static Action removeTarget;
+    public static Action<Charecter> removeTarget;
     protected virtual void OnEnable()
     {
         OnInit();
@@ -108,15 +108,22 @@ public class Charecter : MonoBehaviour
     }
     public void WeaponOnHand()
     {
-        WeaponGetInfo(currentWeaponEquiped, WeaponAtributesFirst.rangeBullet);
         if (typeWeaapon == TypeWeaapon.CandyTree) return;      
         currentWeaponEquiped.transform.SetParent(throwPos);
         currentWeaponEquiped.rb.constraints = RigidbodyConstraints.FreezeAll;
+    }
+    public void WeaponGetInfo(Weapon wepon, float rangeFirst)
+    {
+        wepon.player = this;
+        wepon.GetInfoPlayer(id, throwPos.position);
+        wepon.posStart = throwPos.position;
+        wepon.rangWeapon = rangeFirst + killed * scareValue;
     }
     public void ThrowWeapon()
     {
         if (typeWeaapon == TypeWeaapon.CandyTree) return;
         if (currentWeaponEquiped == null) return;
+        WeaponGetInfo(currentWeaponEquiped, WeaponAtributesFirst.rangeBullet);
         currentWeaponEquiped.rb.constraints = RigidbodyConstraints.None;      
         currentWeaponEquiped.transform.SetParent(null);
         currentWeaponEquiped.ShootForce = 10;
@@ -134,24 +141,18 @@ public class Charecter : MonoBehaviour
         ThrowWeapon();
         Invoke(nameof(DeAttack), 0.4f);      
     }
-    public static void RemoveTarget(Action call = null)
+    public static void RemoveTarget(Action<Charecter> call = null)
     {
         removeTarget += call;
     }
-    public void WeaponGetInfo(Weapon wepon, float rangeFirst)
-    {        
-        wepon.player = this;
-        wepon.GetInfoPlayer(id, throwPos.position);
-        wepon.posStart = throwPos.position;       
-        wepon.rangWeapon = rangeFirst + killed * scareValue;
-    }
+ 
     public void NextTimeAttack()
     {
         isTimeAttackNext = true;
         isPrepareAttacking = false;
         timeToAttack = 0;
     }
-    protected void DeAttack()
+    protected virtual void DeAttack()
     {
         ChangeEquiped(typeWeaapon);
         Invoke(nameof(NextTimeAttack), 0.3f);
@@ -172,13 +173,17 @@ public class Charecter : MonoBehaviour
         Transform.LookAt(new Vector3(lookTarget.position.x, Transform.position.y, lookTarget.position.z));
         throwPos.LookAt(new Vector3(lookTarget.position.x, lookTarget.position.y, lookTarget.position.z));
     }
+    public void ResetPlayer()
+    {
+        killed = 0;
+        Transform.localScale = new Vector3(1, 1, 1);
+    }
     public bool IsHadObject()
     {
         if (listTargetInRange.Count > 0)
         {
             target = listTargetInRange[listTargetInRange.Count - 1];
             targetAttack = target.Transform;
-            RemoveTarget(() => listTargetInRange.Remove(target));
         }
         else targetAttack = null;      
         return targetAttack != null && target.isDead == false;
@@ -190,8 +195,11 @@ public class Charecter : MonoBehaviour
         {         
             target = other.GetComponent<Charecter>();
             targetAttack = target.Transform;
-            if(!target.isDead)
-            listTargetInRange.Add(target);
+            if(!target.isDead && !listTargetInRange.Contains(target))
+            {
+                listTargetInRange.Add(target);
+                RemoveTarget((target) => listTargetInRange.Remove(target));
+            }       
         }
     }
 
@@ -199,20 +207,28 @@ public class Charecter : MonoBehaviour
     {
         if (other.CompareTag(GlobalTag.player) || other.CompareTag(GlobalTag.playerEnemy))
         {
-            listTargetInRange.Remove(other.GetComponent<Charecter>());
+            target = other.GetComponent<Charecter>();
+            removeTarget?.Invoke(target);
         }
+    }
+    void DeActiveWeapon()
+    {
+        if (!currentWeaponEquiped) return;
+        currentWeaponEquiped.gameObject.SetActive(false);
+        currentWeaponEquiped = null;
     }
     public virtual void OnDeath()
     {
+        removeTarget?.Invoke(this);
         isDead = true;
-        removeTarget?.Invoke();
+        rb.velocity = Vector3.zero;
+        DeActiveWeapon();
+        removeTarget?.Invoke(this);
         Invoke(nameof(Death), 2f);
     }
     public virtual void Death()
     {
         gameObject.SetActive(false);
-        if(!currentWeaponEquiped)
-        ThrowWeapon();
     }
     public void OnDisable()
     {

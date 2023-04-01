@@ -18,9 +18,13 @@ public class PopUpSkin : MonoBehaviour
 
     [SerializeField] private DataSkin data_HornSkin;
     [SerializeField] private DataSkin data_ShortsSkin;
+    [SerializeField] private DataSkin data_ArmSkin;
+    [SerializeField] private DataSkin data_Skin;
 
     [SerializeField] private GameObject cointainHornSkin;
     [SerializeField] private GameObject cointainShortsSkin;
+    [SerializeField] private GameObject cointainArmSkin;
+    [SerializeField] private GameObject cointainSkin;
     [SerializeField] private bool isCreateNew = true;
 
 
@@ -31,6 +35,8 @@ public class PopUpSkin : MonoBehaviour
     {
         bt_HornSkin.onClick.AddListener(GenHornSkinShop);
         bt_ShortsSkin.onClick.AddListener(GenShortsSkinShop);
+        bt_SkinShop.onClick.AddListener(GenSkinShop);
+        bt_ArmSkin.onClick.AddListener(GenArmShop);
     }
     private void OnEnable()
     {
@@ -78,6 +84,30 @@ public class PopUpSkin : MonoBehaviour
             btSkinShopInShortsSkin.Add(go);
         }
     }
+    public void GenArmShop()
+    {
+        if (typeSkinShopCurrent == TypeSkinShop.ArmSkin) return;
+        ClearButton();
+        typeSkinShopCurrent = TypeSkinShop.ArmSkin;
+        for (int i = 0; i < data_ArmSkin.amountOfSkin; i++)
+        {
+            ButtonSkinShop go = SpawnButtonUI(cointainArmSkin);
+            //go.imageSkin.sprite = data_HornSkin.imageSkill[i];
+            btSkinShopInShortsSkin.Add(go);
+        }
+    }
+    public void GenSkinShop()
+    {
+        if (typeSkinShopCurrent == TypeSkinShop.Skin) return;
+        ClearButton();
+        typeSkinShopCurrent = TypeSkinShop.Skin;
+        for (int i = 0; i < data_Skin.amountOfSkin; i++)
+        {
+            ButtonSkinShop go = SpawnButtonUI(cointainSkin);
+            //go.imageSkin.sprite = data_HornSkin.imageSkill[i];
+            btSkinShopInShortsSkin.Add(go);
+        }
+    }
     public ButtonSkinShop SpawnButtonUI(GameObject contain)
     {
         for (int i = 0; i < btSkinShopPool.Count; i++)
@@ -112,6 +142,8 @@ public class PopUpSkin : MonoBehaviour
         None,
         HornSkin,
         ShortsSkin,
+        ArmSkin,
+        Skin,
 
     }
 }

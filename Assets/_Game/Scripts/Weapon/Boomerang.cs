@@ -13,8 +13,8 @@ public class Boomerang : Weapon
     }
 
     public override void FixedUpdate()
-    {      
-        if(ShootForce > 0)
+    {
+        if (ShootForce <= 0) return;
         Transform.Rotate(Vector3.forward * 200 * Time.fixedDeltaTime);
         SetTarGet(() =>
         {

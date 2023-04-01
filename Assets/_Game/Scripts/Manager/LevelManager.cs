@@ -23,13 +23,15 @@ public class LevelManager : Singleton<LevelManager>,ISubcriber
     }
     public void ResetPos()
     {
-        player.gameObject.SetActive(true);
-        player.transform.position = new Vector3(0,-0.44f,0);
+        player.transform.position = new Vector3(0, -0.44f, 0);
         player.transform.rotation = Quaternion.Euler(0, 180, 0);
+        player.gameObject.SetActive(true);     
     }
+   
     private void OnInit()
     {
         player = Instantiate(playerPrefab);
+        player.ResetPlayer();
         ResetPos();
         player.floatingJoystick = floatingJoystick;
         player.id = 0;
@@ -63,13 +65,18 @@ public class LevelManager : Singleton<LevelManager>,ISubcriber
         GameManager.GetInstance().SaveData();
         Debug.LogError(GameManager.GetInstance().levelCurrent);
         levelController = Instantiate(Resources.Load<LevelController>("Levels/Level" + GameManager.GetInstance().levelCurrent.ToString()));
+        ResetPlayer();
+    }
+    public void ResetPlayer()
+    {
+        player.ResetPlayer();
         ResetPos();
     }
-
     public void GamePrepare()
     {      
         for (int i = 0; i < listAllTarget.Count; i++)
         {
+            listAllTarget[i].ResetPlayer();
             listAllTarget[i].gameObject.SetActive(false);
         }
         listAllTarget.Clear();
@@ -80,7 +87,7 @@ public class LevelManager : Singleton<LevelManager>,ISubcriber
             BotController more = ObjectsPooling.GetInstance().SpawnPlayerEnemy(SpawnRandom().position, transform);
             listAllTarget.Add(more);
         }
-        ResetPos();
+        ResetPlayer();
     }
 
     public void GameStart()

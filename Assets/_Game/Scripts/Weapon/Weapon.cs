@@ -40,6 +40,7 @@ public class Weapon : MonoBehaviour
   
     public virtual void OnTriggerEnter(Collider other)
     {
+        if (idBulletPlayer == 0) return;
         if (other.CompareTag(GlobalTag.playerEnemy) || other.CompareTag(GlobalTag.player))
         {            
             CheckPlayer(other.gameObject.GetComponent<Charecter>());

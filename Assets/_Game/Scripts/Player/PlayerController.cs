@@ -21,7 +21,7 @@ public class PlayerController : Charecter
     }
     public bool IsStop()
     {
-        return Mathf.Abs(floatingJoystick.Vertical) < 0.01f || Mathf.Abs(floatingJoystick.Horizontal) < 0.01f;
+        return Mathf.Abs(floatingJoystick.Vertical) < 0.01f && Mathf.Abs(floatingJoystick.Horizontal) < 0.01f;
     }
     public void FixedUpdate()
     {
@@ -70,7 +70,13 @@ public class PlayerController : Charecter
         if(currentWeaponEquiped)
         ThrowWeapon();
         base.OnDeath();
-        GameManager.GetInstance().GameRevival();
+        if(GameManager.numberOfReviveInOneTimesPlay > 0)
+        {
+            GameManager.numberOfReviveInOneTimesPlay--;
+            GameManager.GetInstance().GameRevival();
+        }
+        else GameManager.GetInstance().GameOver();
+
         ChangeAnim(GlobalTag.playerAnimDeath);
     }
 }

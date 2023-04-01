@@ -8,12 +8,22 @@ public class PopUpRevive : MonoBehaviour
     [SerializeField] private Text txtCountDown;
     private bool isCount;
     [SerializeField] private float timeCountDown;
+    [SerializeField] private Button btReviveAds;
     private bool isBackGamePrepare;
+    private void Awake()
+    {
+        btReviveAds.onClick.AddListener(Revive);
+    }
     private void OnEnable()
     {
         isCount = true;
         timeCountDown = 5;
         isBackGamePrepare = true;
+    }
+    public void Revive()
+    {
+        LevelManager.GetInstance().ResetPos();
+        gameObject.SetActive(false);
     }
     void Update()
     {

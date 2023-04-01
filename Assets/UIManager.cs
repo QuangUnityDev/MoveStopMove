@@ -52,8 +52,13 @@ public class UIManager : Singleton<UIManager>,ISubcriber
         popShopWeapon.SetActive(true);
         OffPopUpHome();
     }
-    public void GameOver()
+    public void ShowPopUpRevive()
     {
+        popUpCurrent = popRevive;
+        popRevive.SetActive(true);
+    }
+    public void GameOver()
+    {     
         popGameOver.SetActive(true);
     }
     public void OffPopUpHome()

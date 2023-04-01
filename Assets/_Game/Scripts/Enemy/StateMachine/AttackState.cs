@@ -17,10 +17,12 @@ public class AttackState : IState
         if (botController.isDead)
         {
             botController.ChangState(new DeathState());
+            return;
         }
         if (!botController.IsHadObject())
         {     
            botController.ChangState(new PatrolState());
+            return;
         }
         if (botController.numberThrowed > 0)
         {
@@ -33,10 +35,12 @@ public class AttackState : IState
             {
                 botController.timeToAttack += Time.fixedDeltaTime;
                 botController.LookTarGet(botController.targetAttack);
+                botController.rb.velocity = Vector3.zero;
                 if (botController.timeToAttack > 0.5f)
-                {                  
+                {
+                    botController.timeToAttack = 0;
                     botController.Attack();
-                    botController.numberThrowed--;
+                    botController.numberThrowed--;                 
                 }
             }
         }      

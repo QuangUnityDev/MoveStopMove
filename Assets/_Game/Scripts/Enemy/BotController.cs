@@ -28,7 +28,7 @@ public class BotController : Charecter
     }
     public void SetNumberThrow()
     {
-        numberThrowed = Random.Range(0, 3);
+        numberThrowed = Random.Range(1, 3);
     }
     public override void OnInit()
     {
@@ -70,6 +70,11 @@ public class BotController : Charecter
     public override void Attack()
     {
       base.Attack();
+    }
+    protected override void DeAttack()
+    {
+        base.DeAttack();
+        ChangState(new PatrolState());
     }
     public void NextState()
     {

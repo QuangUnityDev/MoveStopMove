@@ -9,7 +9,7 @@ public class GameManager : Singleton<GameManager>
     public int levelCurrent;
     public int gold;
     public int currentWeapon;
-
+    public static int numberOfReviveInOneTimesPlay;
     private void Awake()
     {
         LoadData();
@@ -67,6 +67,7 @@ public class GameManager : Singleton<GameManager>
         callShowRangePlayer?.Invoke(false);
         game_State = GAME_STATE.GAME_PREPARE;
         CallEvent((s) => { s.GamePrepare(); });
+        numberOfReviveInOneTimesPlay = 1;
     }
     public void GameStart()
     {

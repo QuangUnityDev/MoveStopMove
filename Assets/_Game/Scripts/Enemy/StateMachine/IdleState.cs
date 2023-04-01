@@ -17,13 +17,14 @@ public class IdleState : IState
 
     public void OnExcute(BotController botController)
     {
+        botController.rb.velocity = Vector3.zero;
         if (botController.isDead)
         {
             botController.ChangState(new DeathState());
         }
         botController.ChangeAnim(GlobalTag.playerAnimIdle);
         time += Time.deltaTime;
-        if (botController.IsHadObject())
+        if (botController.IsHadObject() && botController.numberThrowed > 0)
         {
             timeWaitAttack += Time.deltaTime;
             if (timeWaitAttack > 0.5f)
