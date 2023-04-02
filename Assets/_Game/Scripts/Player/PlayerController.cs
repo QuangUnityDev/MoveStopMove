@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class PlayerController : Charecter
 {
-    public FloatingJoystick floatingJoystick;    
-    protected override void Start()
-    {      
-        base.Start();       
-    }
+    public FloatingJoystick floatingJoystick;
+    GameManager data;
     public override void OnInit()
     {
-        currentWeapon = GameManager.GetInstance().currentWeapon;
+        data = GameManager.GetInstance();
         base.OnInit();        
+        currentWeapon = data.dataPlayer.currentWeapon;
+        ChangeEquiment.GetInstance().ResetAtributeWeapon(data.dataPlayer.currentWeapon, colliderRange, spriteRange, this);       
         ChangeEquiped(typeWeaapon);
-        GameManager.GetInstance().ShowRangePlayer((isTrue) => {
+        data.ShowRangePlayer((isTrue) => {
             spriteRange.gameObject.SetActive(isTrue);
             Transform.position = new Vector3(0, -0.44f, 0);
         }, (isTrue) => Transform.gameObject.SetActive(isTrue));
@@ -25,7 +24,7 @@ public class PlayerController : Charecter
     }
     public void FixedUpdate()
     {
-        if (GameManager.GetInstance().IsPreparing) return;
+        if (data.IsPreparing) return;
         if (isDead) return;
         Vector3 direction = Vector3.forward * floatingJoystick.Vertical + Vector3.right * floatingJoystick.Horizontal;
         if(!isAttacking) rb.velocity = direction * speed * Time.fixedDeltaTime;
@@ -41,15 +40,9 @@ public class PlayerController : Charecter
         }
         else
         {
-            if (!IsHadObject() && !isAttacking || !isTimeAttackNext) 
+            if (IsHadObject() && !isAttacking ) 
             {
-            CancelAttack();
-            ChangeAnim("Idle"); 
-            }
-            else
-            {
-                if (!isTimeAttackNext) return;
-                if (!isPrepareAttacking && !isAttacking)
+                if (!isPrepareAttacking && isTimeAttackNext)
                 {
                     CountDownAttack();
                 }
@@ -58,25 +51,32 @@ public class PlayerController : Charecter
                     LookTarGet(targetAttack);
                     timeToAttack += Time.fixedDeltaTime;
                     if (timeToAttack > 0.4f && !isAttacking)
-                    {                       
+                    {
                         Attack();
                     }
-                }              
+                }               
+            }
+            else
+            {
+                CancelAttack();
+                ChangeAnim("Idle");
             }
         }
     }
     public override void OnDeath()
     {
-        if(currentWeaponEquiped)
-        ThrowWeapon();
-        base.OnDeath();
-        if(GameManager.numberOfReviveInOneTimesPlay > 0)
+        base.OnDeath();     
+        ChangeAnim(GlobalTag.playerAnimDeath);
+    }
+    public override void Death()
+    {
+        base.Death();
+        if (GameManager.numberOfReviveInOneTimesPlay > 0)
         {
             GameManager.numberOfReviveInOneTimesPlay--;
-            GameManager.GetInstance().GameRevival();
+            data.GameRevival();
         }
-        else GameManager.GetInstance().GameOver();
+        else data.GameOver();
 
-        ChangeAnim(GlobalTag.playerAnimDeath);
     }
 }

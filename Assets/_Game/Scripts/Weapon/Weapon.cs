@@ -18,6 +18,7 @@ public class Weapon : MonoBehaviour
     private Action callDeath;
     private void Awake()
     {
+        Transform = transform;
         OnInit();
     }
 
@@ -26,8 +27,7 @@ public class Weapon : MonoBehaviour
         OnInit();
     }
     public virtual void OnInit()
-    {
-        Transform = transform;
+    {       
         isBack = false;         
     }
     public virtual void FixedUpdate()
@@ -40,7 +40,7 @@ public class Weapon : MonoBehaviour
   
     public virtual void OnTriggerEnter(Collider other)
     {
-        if (idBulletPlayer == 0) return;
+        if (shootForce <= 0) return;
         if (other.CompareTag(GlobalTag.playerEnemy) || other.CompareTag(GlobalTag.player))
         {            
             CheckPlayer(other.gameObject.GetComponent<Charecter>());
@@ -58,6 +58,7 @@ public class Weapon : MonoBehaviour
     }
     public virtual void OnDisable()
     {
+        Transform.localScale = new Vector3(1,1,1);
         if(rb != null)
         rb.velocity = Vector3.zero;
     }

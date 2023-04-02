@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour, ISubcriber
     void LateUpdate()
     {
         if (GameManager.GetInstance().IsPreparing) return;
-        Transform.position = new Vector3(player.transform.position.x, player.killed * 0.2f + 15, player.transform.position.z - 5);
+        Transform.position = new Vector3(player.transform.position.x, player.killed + 15, player.transform.position.z - 5);
     }
     public void GameCompleted()
     {

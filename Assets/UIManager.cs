@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,7 @@ public class UIManager : Singleton<UIManager>,ISubcriber
         popUpCurrent = popShopSkin;
         popShopSkin.SetActive(true);
         OffPopUpHome();
+        LevelManager.GetInstance().player.ChangeAnim("Dance");
     }
     public void OpenShopWeapon()
     {
@@ -69,6 +71,12 @@ public class UIManager : Singleton<UIManager>,ISubcriber
     {
         GameManager.GetInstance().GameStart();
     }
+    public void ShowPopUpHome()
+    {
+        popHome.SetActive(true);
+        LevelManager.GetInstance().player.ChangeAnim("Idle");
+        GameManager.GetInstance().deActivePlayer?.Invoke(true);
+    }
     public void GamePrepare()
     {
         popGameOver.SetActive(false);
@@ -83,7 +91,7 @@ public class UIManager : Singleton<UIManager>,ISubcriber
 
     public void GameRevival()
     {
-        popRevive.SetActive(true);
+        ShowPopUpRevive();
     }
     public void GamePause()
     {

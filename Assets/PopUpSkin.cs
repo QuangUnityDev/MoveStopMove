@@ -3,17 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PopUpSkin : MonoBehaviour
+public class PopUpSkin : Singleton<PopUpSkin>
 {
     [SerializeField] private Button bt_HornSkin;
     [SerializeField] private Button bt_ShortsSkin;
     [SerializeField] private Button bt_ArmSkin;
     [SerializeField] private Button bt_SkinShop;
 
-    [SerializeField] private List<ButtonSkinShop> btSkinShopPool;
+    [SerializeField] private GameObject containButtonBuy;
+    [SerializeField] private Button bt_Buy;
+    [SerializeField] private Button bt_BuyAds;
 
-    [SerializeField] private List<ButtonSkinShop> btSkinShopInHornSkin;
-    [SerializeField] private List<ButtonSkinShop> btSkinShopInShortsSkin;
+    public Text txt_Buy;
+
+    [SerializeField] private Image imageSkinShop;
+    [SerializeField] private Image imageArmShop;
+    [SerializeField] private Image imageHornShop;
+    [SerializeField] private Image imageShortsShop;
+    private Image imageCurrent;
+
+    [SerializeField] private List<ButtonShop> btSkinShop;
+    [SerializeField] private List<ButtonShop> btSkinShopInHornSkin;
+    [SerializeField] private List<ButtonShop> btSkinShopInShortsSkin;
+    [SerializeField] private List<ButtonShop> btSkinShopInArmSkin;
+
+    public List<ButtonShop> containButtonCurrent;
 
 
     [SerializeField] private DataSkin data_HornSkin;
@@ -30,6 +44,28 @@ public class PopUpSkin : MonoBehaviour
 
     [SerializeField] private TypeSkinShop typeSkinShopCurrent;
 
+
+    int[] currentSkinSelecting;
+
+    int[] currentHornOwner;
+    int[] currentShortsSkinOwner;
+    int[] currentArmSkinOwner;
+    int[] currentSkinOwner;
+
+
+    public int currentUsingSkin;
+    public int priceCurrent;
+
+    private int currentPopUpSkin;
+    void SelectingImageButton(Image image)
+    {
+        imageSkinShop.gameObject.SetActive(true);
+        imageArmShop.gameObject.SetActive(true);
+        imageHornShop.gameObject.SetActive(true);
+        imageShortsShop.gameObject.SetActive(true);
+        imageCurrent = image;
+        imageCurrent.gameObject.SetActive(false);
+    }
     private bool _isHadObject = false;
     private void Awake()
     {
@@ -41,10 +77,7 @@ public class PopUpSkin : MonoBehaviour
     private void OnEnable()
     {
         GenHornSkinShop();
-    }
-    void Update()
-    {
-
+        currentPopUpSkin = 0;
     }
     void ClearAllContain()
     {
@@ -54,70 +87,94 @@ public class PopUpSkin : MonoBehaviour
     public void ClearButton()
     {
         ClearAllContain();
-        for (int i = 0; i < btSkinShopPool.Count; i++)
+        for (int i = 0; i < containButtonCurrent.Count; i++)
         {
-            btSkinShopPool[i].gameObject.SetActive(false);
+            containButtonCurrent[i].gameObject.SetActive(false);
 
         }
     }
     public void GenHornSkinShop()
     {
         if (typeSkinShopCurrent == TypeSkinShop.HornSkin) return;
-        typeSkinShopCurrent = TypeSkinShop.HornSkin;
-        ClearButton();
-        for (int i = 0; i < data_HornSkin.amountOfSkin; i++)
-        {
-            ButtonSkinShop go = SpawnButtonUI(cointainHornSkin);
-            //go.imageSkin.sprite = data_HornSkin.imageSkill[i];
-            btSkinShopInHornSkin.Add(go);
-        }
+        currentPopUpSkin = 0;
+        LoadPopUpWeapon(currentPopUpSkin);   
     }
     public void GenShortsSkinShop()
     {
         if (typeSkinShopCurrent == TypeSkinShop.ShortsSkin) return;
-        ClearButton();
-        typeSkinShopCurrent = TypeSkinShop.ShortsSkin;
-        for (int i = 0; i < data_ShortsSkin.amountOfSkin; i++)
-        {
-            ButtonSkinShop go = SpawnButtonUI(cointainShortsSkin);
-            //go.imageSkin.sprite = data_HornSkin.imageSkill[i];
-            btSkinShopInShortsSkin.Add(go);
-        }
+        currentPopUpSkin = 1;
+        LoadPopUpWeapon(currentPopUpSkin);      
     }
     public void GenArmShop()
     {
         if (typeSkinShopCurrent == TypeSkinShop.ArmSkin) return;
-        ClearButton();
-        typeSkinShopCurrent = TypeSkinShop.ArmSkin;
-        for (int i = 0; i < data_ArmSkin.amountOfSkin; i++)
-        {
-            ButtonSkinShop go = SpawnButtonUI(cointainArmSkin);
-            //go.imageSkin.sprite = data_HornSkin.imageSkill[i];
-            btSkinShopInShortsSkin.Add(go);
-        }
+        currentPopUpSkin = 2;
+        LoadPopUpWeapon(currentPopUpSkin);     
     }
     public void GenSkinShop()
     {
         if (typeSkinShopCurrent == TypeSkinShop.Skin) return;
-        ClearButton();
-        typeSkinShopCurrent = TypeSkinShop.Skin;
-        for (int i = 0; i < data_Skin.amountOfSkin; i++)
-        {
-            ButtonSkinShop go = SpawnButtonUI(cointainSkin);
-            //go.imageSkin.sprite = data_HornSkin.imageSkill[i];
-            btSkinShopInShortsSkin.Add(go);
-        }
+        currentPopUpSkin = 3;
+        LoadPopUpWeapon(currentPopUpSkin);        
     }
-    public ButtonSkinShop SpawnButtonUI(GameObject contain)
+    public void LoadPopUpWeapon(int currentPopUpSkin)
     {
-        for (int i = 0; i < btSkinShopPool.Count; i++)
+        switch (currentPopUpSkin)
         {
-            if (!btSkinShopPool[i].gameObject.activeSelf)
+            case 0:
+                LoadDataPopUp(data_HornSkin, btSkinShopInHornSkin,imageHornShop);
+                typeSkinShopCurrent = TypeSkinShop.HornSkin;
+                break;
+            case 1:
+
+                LoadDataPopUp(data_ShortsSkin, btSkinShopInShortsSkin,imageShortsShop);
+                typeSkinShopCurrent = TypeSkinShop.ShortsSkin;
+                break;
+            case 2:
+                LoadDataPopUp(data_ArmSkin, btSkinShopInArmSkin, imageArmShop);
+                typeSkinShopCurrent = TypeSkinShop.ArmSkin;
+                break;
+            case 3:
+
+                LoadDataPopUp(data_Skin, btSkinShop , imageSkinShop);
+                typeSkinShopCurrent = TypeSkinShop.Skin;
+                break;
+            default:
+                break;
+        }       
+    }
+    private void LoadDataPopUp(DataSkin dataSkin, List<ButtonShop> cointain, Image imageSkin)
+    {        
+        ClearButton();     
+        SelectingImageButton(imageSkin);
+        bt_Buy.gameObject.SetActive(true);
+        bt_BuyAds.gameObject.SetActive(true);
+        bt_Buy.transform.SetParent(containButtonBuy.transform);
+        bt_BuyAds.transform.SetParent(containButtonBuy.transform);
+        for (int i = 0; i < dataSkin.amountOfSkin; i++)
+        {
+            ButtonShop go = SpawnButtonUI(cointainArmSkin);
+            go.id = dataSkin.iDataSkin[i].idSkin;
+            go.imageSkin.sprite = dataSkin.iDataSkin[i].spriteSkill;
+            go.price = dataSkin.iDataSkin[i].price;
+            cointain.Add(go);
+            containButtonCurrent.Add(go);
+        }
+        cointain[0].imageButton.color = Color.green;
+        txt_Buy.text = dataSkin.iDataSkin[0].price.ToString();
+    }
+    
+    public ButtonShop SpawnButtonUI(GameObject contain)
+    {
+        for (int i = 0; i < containButtonCurrent.Count; i++)
+        {
+            if (!containButtonCurrent[i].gameObject.activeSelf)
             {
-                btSkinShopPool[i].gameObject.transform.SetParent(contain.transform);
-                btSkinShopPool[i].gameObject.SetActive(true);
+                containButtonCurrent[i].gameObject.transform.SetParent(contain.transform);
+                containButtonCurrent[i].gameObject.SetActive(true);
+                containButtonCurrent[i].imageButton.color = Color.white;
                 _isHadObject = true;
-                return btSkinShopPool[i];
+                return containButtonCurrent[i];
             }
             else
             {
@@ -128,9 +185,9 @@ public class PopUpSkin : MonoBehaviour
         {
             if (!_isHadObject)
             {
-                ButtonSkinShop more = Instantiate(btSkinShopPool[0], contain.transform);
+                ButtonShop more = Instantiate(containButtonCurrent[0], contain.transform);
                 more.gameObject.SetActive(true);
-                btSkinShopPool.Add(more);
+                containButtonCurrent.Add(more);
                 return more;
             }
         }

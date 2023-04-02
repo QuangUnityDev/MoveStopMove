@@ -54,9 +54,9 @@ public class Charecter : MonoBehaviour
     }
     public enum TypeWeaapon
     {
-        AXE,
-        CandyTree,
+        AXE,      
         BOOMERANG,
+        CandyTree,
     }
 
     public void ChangeAnim(string animName)
@@ -77,19 +77,17 @@ public class Charecter : MonoBehaviour
         isPrepareAttacking = false;
         isAttacking = false;
         isTimeAttackNext = true;
-        isDead = false;
-        ChangeEquiment.GetInstance().ResetAtributeWeapon(currentWeapon, colliderRange, spriteRange, this);
+        isDead = false;       
     }
 
     public void ChangeEquiped(TypeWeaapon type)
     {
-        GameManager.GetInstance().SaveData();
         if (currentWeaponEquiped != null && typeWeaapon == TypeWeaapon.CandyTree) 
         {
             WeaponOnHand();
             return;
         }
-        if (currentWeaponEquiped != null) currentWeaponEquiped = null;
+        if (currentWeaponEquiped != null) DeActiveWeapon();
         switch (typeWeaapon)
         {
             case TypeWeaapon.AXE:
@@ -108,6 +106,7 @@ public class Charecter : MonoBehaviour
     }
     public void WeaponOnHand()
     {
+        WeaponGetInfo(currentWeaponEquiped, WeaponAtributesFirst.rangeBullet);
         if (typeWeaapon == TypeWeaapon.CandyTree) return;      
         currentWeaponEquiped.transform.SetParent(throwPos);
         currentWeaponEquiped.rb.constraints = RigidbodyConstraints.FreezeAll;
@@ -211,11 +210,13 @@ public class Charecter : MonoBehaviour
             removeTarget?.Invoke(target);
         }
     }
-    void DeActiveWeapon()
+    protected void DeActiveWeapon()
     {
-        if (!currentWeaponEquiped) return;
+        if (currentWeaponEquiped!= null) { 
         currentWeaponEquiped.gameObject.SetActive(false);
+        currentWeaponEquiped.transform.SetParent(null);
         currentWeaponEquiped = null;
+        }
     }
     public virtual void OnDeath()
     {

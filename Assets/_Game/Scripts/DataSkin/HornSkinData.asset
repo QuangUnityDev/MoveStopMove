@@ -14,7 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameData: HornSkin
   amountOfSkin: 3
-  imageSkill:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  iDataSkin:
+  - nameSkin: 
+    idSkin: 1
+    price: 100
+    spriteSkill: {fileID: 21300000, guid: 6c6bcd4775e2e3d409c0449247b715ee, type: 3}
+  - nameSkin: 
+    idSkin: 2
+    price: 200
+    spriteSkill: {fileID: 21300000, guid: 5c9d109b4a3491e4b97fc0490aae0775, type: 3}
+  - nameSkin: 
+    idSkin: 3
+    price: 300
+    spriteSkill: {fileID: 21300000, guid: 86739331a84701e44b5fdde1e9a320fc, type: 3}

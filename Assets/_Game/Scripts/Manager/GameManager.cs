@@ -5,16 +5,23 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-
-    public int levelCurrent;
-    public int gold;
-    public int currentWeapon;
+    public Data dataPlayer;
+    //public int levelCurrent;
+    //public int gold;
+    //public int currentWeapon;
     public static int numberOfReviveInOneTimesPlay;
+    //public int[] weaponOwner;
+    //public int[] skinOwner;
+    //public int[] shortsOwner;
+    //public int[] hornorsOwner;
+
+    //public int[] skinAxeOwer;
+
+    //public int currentSkinWeapon;
     private void Awake()
-    {
-        LoadData();
+    {       
         gameSubcribers = new ArrayList();
-        levelCurrent = 1;    
+        LoadData();
     }
     private void Start()
     {
@@ -30,17 +37,23 @@ public class GameManager : Singleton<GameManager>
     }
     public void LoadData()
     {
-
         Data data = SaveLoadData.GetInstance().LoadFromFile();
-        currentWeapon = data.currentWeapon;
-        gold = data.gold;
-        levelCurrent = data.levelID;
-    }
+        dataPlayer.currentWeapon = data.currentWeapon;
+        dataPlayer.gold = data.gold;
+        dataPlayer.levelID = data.levelID;
+        dataPlayer.weaponOwner = data.weaponOwner;
+        dataPlayer.skinOwner = data.skinOwner;
+        dataPlayer.shortsOwner = data.shortsOwner;
+        dataPlayer.hornorsOwner = data.hornorsOwner;
+        dataPlayer.currentSkin = data.currentSkin;
+        dataPlayer.skinAxeOwer = data.skinAxeOwer;
+        dataPlayer.currentUsingSkinWeapon = data.currentUsingSkinWeapon;
+}
     #region Game Subcribers
     public ArrayList gameSubcribers;
     public delegate void EventCall(ISubcriber s);
     float startTime = 0;
-    public int gameMoneyEarned;
+    //public int gameMoneyEarned;
     public void AddSubcriber(ISubcriber s)
     {
         //Debug.LogError(s);
@@ -74,7 +87,7 @@ public class GameManager : Singleton<GameManager>
         callShowRangePlayer?.Invoke(true);
         startTime = Time.time;
         game_State = GAME_STATE.GAME_PLAY;
-        gameMoneyEarned = 0;
+        //gameMoneyEarned = 0;
         CallEvent((s) =>
         {
             s.GameStart();

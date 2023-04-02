@@ -8,7 +8,7 @@ public class LevelManager : Singleton<LevelManager>,ISubcriber
     [SerializeField] private LevelController levelController;
     public List<Charecter> listAllTarget;
     public PlayerController playerPrefab;
-    private PlayerController player;
+    public PlayerController player;
     public FloatingJoystick floatingJoystick;
     public static int id = 0;
     float timeReload;
@@ -45,7 +45,7 @@ public class LevelManager : Singleton<LevelManager>,ISubcriber
     }
     public void LoadLevelCurrent()
     {
-        levelController = Instantiate(Resources.Load<LevelController>("Levels/Level" + GameManager.GetInstance().levelCurrent.ToString()));
+        levelController = Instantiate(Resources.Load<LevelController>("Levels/Level" + GameManager.GetInstance().dataPlayer.levelID.ToString()));
         ResetPos();
     }
     int pos;
@@ -61,10 +61,10 @@ public class LevelManager : Singleton<LevelManager>,ISubcriber
         {
             Destroy(levelController.gameObject);
         }
-        GameManager.GetInstance().levelCurrent++;
+        GameManager.GetInstance().dataPlayer.levelID++;
         GameManager.GetInstance().SaveData();
-        Debug.LogError(GameManager.GetInstance().levelCurrent);
-        levelController = Instantiate(Resources.Load<LevelController>("Levels/Level" + GameManager.GetInstance().levelCurrent.ToString()));
+        Debug.LogError(GameManager.GetInstance().dataPlayer.levelID);
+        levelController = Instantiate(Resources.Load<LevelController>("Levels/Level" + GameManager.GetInstance().dataPlayer.levelID.ToString()));
         ResetPlayer();
     }
     public void ResetPlayer()

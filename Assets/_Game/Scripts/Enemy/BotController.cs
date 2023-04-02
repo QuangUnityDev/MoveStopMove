@@ -19,22 +19,29 @@ public class BotController : Charecter
     protected override void Start()
     {
         base.Start();
+        SetNumberThrow();
     }
     protected override void OnEnable()
     {
         base.OnEnable();
         RandomWeapon();
+        DeActiveWeapon();
         ChangeEquiped(typeWeaapon);
     }
     public void SetNumberThrow()
     {
+        StartCoroutine(DelayReload());
+    }
+    IEnumerator DelayReload()
+    {
+        yield return new WaitForSeconds(3);
         numberThrowed = Random.Range(1, 3);
     }
     public override void OnInit()
     {
         base.OnInit();
+        ChangeEquiment.GetInstance().ResetAtributeWeapon(currentWeapon, colliderRange, spriteRange, this);
         ChangState(new IdleState());
-        SetNumberThrow();
         nav.speed = speed;
     }
     public Charecter SetTargetRandom()

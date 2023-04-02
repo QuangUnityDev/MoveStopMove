@@ -9,13 +9,14 @@ public class Boomerang : Weapon
     public override void OnEnable()
     {
         base.OnEnable();
-        Transform.rotation = Quaternion.Euler(90f, 0f, 0f);   
+        Transform.rotation = Quaternion.Euler(90f, 0f, 0f);
     }
 
     public override void FixedUpdate()
     {
         if (ShootForce <= 0) return;
         Transform.Rotate(Vector3.forward * 200 * Time.fixedDeltaTime);
+        Transform.localScale = player.transform.localScale;
         SetTarGet(() =>
         {
             rb.velocity = Vector3.zero;
@@ -33,6 +34,6 @@ public class Boomerang : Weapon
             Transform.gameObject.SetActive(false);
         }
         if (isBack == true) finishCallBack?.Invoke();
-        
+
     }
 }

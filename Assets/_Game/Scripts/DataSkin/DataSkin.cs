@@ -6,5 +6,5 @@ public class DataSkin : ScriptableObject
 {
     [SerializeField] private string nameData;
     public int amountOfSkin;
-    public Sprite[] imageSkill;
+    public IDataSkin[] iDataSkin;
 }

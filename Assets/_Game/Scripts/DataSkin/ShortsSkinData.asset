@@ -14,9 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameData: ShortsSkin
   amountOfSkin: 5
-  imageSkill:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  iDataSkin:
+  - nameSkin: 
+    idSkin: 1
+    Price: 0
+    spriteSkill: {fileID: 0}
+  - nameSkin: 
+    idSkin: 2
+    Price: 0
+    spriteSkill: {fileID: 0}
+  - nameSkin: 
+    idSkin: 0
+    Price: 0
+    spriteSkill: {fileID: 0}
+  - nameSkin: 
+    idSkin: 3
+    Price: 0
+    spriteSkill: {fileID: 0}
+  - nameSkin: 
+    idSkin: 4
+    Price: 0
+    spriteSkill: {fileID: 0}
