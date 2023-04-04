@@ -8,10 +8,16 @@ public class Data
 {
     public int currentWeapon = 0 ;
     public int[] weaponOwner = {0} ;
+
     public int[] skinOwner = { 0 };
     public int[] shortsOwner = { 0 };
     public int[] hornorsOwner = { 0 };
+    public int[] armOwner = { 0 };
+
     public int currentSkin;
+    public int currentSkinArm;
+    public int currentSkinHornor;
+    public int currentSkinShorts;
 
     public int[] skinAxeOwer = { 0 };
     public int[] skinBoomerangOwer = { 0 };

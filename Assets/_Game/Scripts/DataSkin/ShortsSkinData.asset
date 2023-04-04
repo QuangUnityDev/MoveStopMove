@@ -17,21 +17,21 @@ MonoBehaviour:
   iDataSkin:
   - nameSkin: 
     idSkin: 1
-    Price: 0
-    spriteSkill: {fileID: 0}
+    price: 0
+    spriteSkill: {fileID: 21300000, guid: 1313b6bd5ad460f4baeb4875923cb9bb, type: 3}
   - nameSkin: 
     idSkin: 2
-    Price: 0
-    spriteSkill: {fileID: 0}
+    price: 0
+    spriteSkill: {fileID: 21300000, guid: b3dbeb4cd91c4b949a8d1b2c3ca8fd38, type: 3}
   - nameSkin: 
     idSkin: 0
-    Price: 0
-    spriteSkill: {fileID: 0}
+    price: 0
+    spriteSkill: {fileID: 21300000, guid: 9952497b7ab69344dbd95db19bd5257f, type: 3}
   - nameSkin: 
     idSkin: 3
-    Price: 0
-    spriteSkill: {fileID: 0}
+    price: 0
+    spriteSkill: {fileID: 21300000, guid: c9c3036d8e60b534b9f43d65ceed2fa3, type: 3}
   - nameSkin: 
     idSkin: 4
-    Price: 0
-    spriteSkill: {fileID: 0}
+    price: 0
+    spriteSkill: {fileID: 21300000, guid: c057c039b8d97764f86fa13b9727ce0a, type: 3}
