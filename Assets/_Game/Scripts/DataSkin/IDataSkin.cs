@@ -9,4 +9,10 @@ public class IDataSkin
     public int idSkin;
     public int price;
     public Sprite spriteSkill;
+    public Material skin;
+    public GameObject prefabWing;
+    public GameObject prefabTail;
+    public GameObject prefabHead;
+    public GameObject prefabBow;
+    public Material shorts;
 }

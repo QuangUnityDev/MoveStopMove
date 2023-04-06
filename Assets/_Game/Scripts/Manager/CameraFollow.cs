@@ -5,12 +5,12 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour, ISubcriber
 {
     private PlayerController player;
-    private Transform Transform;
+    private Transform _transform;
     public Camera cameraMain;
 
     private void Awake()
     {       
-        Transform = cameraMain.transform;
+        _transform = cameraMain.transform;
     }
     private void Start()
     {
@@ -20,11 +20,10 @@ public class CameraFollow : MonoBehaviour, ISubcriber
     void LateUpdate()
     {
         if (GameManager.GetInstance().IsPreparing) return;
-        Transform.position = new Vector3(player.transform.position.x, player.killed + 15, player.transform.position.z - 5);
+        _transform.position = new Vector3(player.transform.position.x, player.killed + 15, player.transform.position.z - 5);
     }
     public void GameCompleted()
     {
-        throw new System.NotImplementedException();
     }
 
     public void GameOver()
@@ -34,7 +33,6 @@ public class CameraFollow : MonoBehaviour, ISubcriber
 
     public void GamePause()
     {
-        throw new System.NotImplementedException();
     }
 
     public void GamePrepare()
@@ -44,7 +42,6 @@ public class CameraFollow : MonoBehaviour, ISubcriber
 
     public void GameResume()
     {
-        throw new System.NotImplementedException();
     }
 
     public void GameRevival()
@@ -58,20 +55,20 @@ public class CameraFollow : MonoBehaviour, ISubcriber
     public void posPrepareGame()
     {
         cameraMain.fieldOfView = 50;
-        Transform.position = new Vector3(0, 1, -12);
-        Transform.rotation = Quaternion.Euler(9, 0, 0);
+        _transform.position = new Vector3(0, 1, -12);
+        _transform.rotation = Quaternion.Euler(9, 0, 0);
     }
     public void posStartGame()
     {
         cameraMain.fieldOfView = 90;
-        Transform.position = new Vector3(0, 15, -5);
-        Transform.rotation = Quaternion.Euler(70, 0, 0);
-        Transform.position = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z - 10);
+        _transform.position = new Vector3(0, 15, -5);
+        _transform.rotation = Quaternion.Euler(70, 0, 0);
+        _transform.position = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z - 10);
     }
     public void posOpenSkinShop()
     {
         cameraMain.fieldOfView = 50;
-        Transform.position = new Vector3(0, -1, -12);
-        Transform.rotation = Quaternion.Euler(9, 0, 0);
+        _transform.position = new Vector3(0, -1, -12);
+        _transform.rotation = Quaternion.Euler(9, 0, 0);
     }
 }

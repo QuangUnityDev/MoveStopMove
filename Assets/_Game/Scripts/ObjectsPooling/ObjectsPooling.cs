@@ -141,7 +141,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
     }
     public CandyTree SpawnCandyTree(Transform playerTransform)
     {
-        for (int i = 0; i < listAxes.Count; i++)
+        for (int i = 0; i < listCandyTree.Count; i++)
         {
             if (!listCandyTree[i].gameObject.activeSelf)
             {

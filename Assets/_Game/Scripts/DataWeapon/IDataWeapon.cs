@@ -8,4 +8,5 @@ public struct IDataWeapon
     public string nameSkin;
     public int id;
     public Sprite spriteSkin;
+    public Material materialSkin;
 }

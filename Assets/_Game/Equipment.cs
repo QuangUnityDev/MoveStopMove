@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Equipment : MonoBehaviour
 {
-    public Weapon weaponEquiped;
+    //public Weapon weaponEquiped;
     void Start()
     {
         

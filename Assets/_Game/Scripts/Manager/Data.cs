@@ -25,7 +25,7 @@ public class Data
     public int currentUsingSkinWeapon;
 
     public int gold ;
-    public int levelID;
+    public int levelID = 1;
     public Data(GameManager gameData)
     {
         //DATA PLAYER

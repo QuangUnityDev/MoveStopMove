@@ -16,6 +16,7 @@ public class Weapon : MonoBehaviour
     public Charecter player;    
     protected Transform Transform;
     private Action callDeath;
+    public MeshRenderer mesh;
     private void Awake()
     {
         Transform = transform;

@@ -78,8 +78,10 @@ public class PopUpWeapon : Singleton<PopUpWeapon>
     {
         dataSkinWeapon.currentUsingSkinWeapon = currentSelectingSkinWeapon;
         dataSkinWeapon.currentWeapon = currentSelectingWeapon;
-        gameObject.SetActive(false);
+        gameObject.SetActive(false);      
         UIManager.GetInstance().ShowPopUpHome();
+        callChange?.Invoke();
+        callChange = null;
     }
     public void CheckBuy()
     {
@@ -123,8 +125,14 @@ public class PopUpWeapon : Singleton<PopUpWeapon>
         }
         return textCondition;
     }
+    public Action callChange;
+    public void ChangSkinWeaponForPlayer(Action call)
+    {
+        callChange = call;
+    }
     public void LoadDataWeapon(DataWeapon data)
-    {    
+    {
+        ChangSkinWeaponForPlayer(() => LevelManager.GetInstance().player.ChangeSkinWeapon(data.iDataWeapon[1].materialSkin));     
         textHeadWeapon.text = data.nameWeapon;     
         textConditionUnlock.gameObject.SetActive(true);    
         textCustom.gameObject.SetActive(false);

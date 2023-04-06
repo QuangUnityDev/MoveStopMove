@@ -15,23 +15,53 @@ MonoBehaviour:
   nameData: Skin
   amountOfSkin: 5
   iDataSkin:
-  - nameSkin: 
-    idSkin: 1
-    price: 0
-    spriteSkill: {fileID: 21300000, guid: e15f673af2ba37545b31f9931f08ec93, type: 3}
-  - nameSkin: 
-    idSkin: 2
-    price: 0
-    spriteSkill: {fileID: 0}
-  - nameSkin: 
+  - nameSkin: DevilSkin
     idSkin: 0
     price: 0
-    spriteSkill: {fileID: 0}
-  - nameSkin: 
+    spriteSkill: {fileID: 21300000, guid: fb157a6e2bd6c3c46aec8df7089dd94c, type: 3}
+    skin: {fileID: 2100000, guid: fcab8775894690d48a2dedb2b3594f07, type: 2}
+    prefabWing: {fileID: 4742370015605984049, guid: 72f23d680ec5c8648ab13508de9e31cd, type: 3}
+    prefabTail: {fileID: 372511315018588326, guid: 2b38c9548d23b7446a7eeb31a909dbbb, type: 3}
+    prefabHead: {fileID: 742842932629248312, guid: ea789f4f15538e64aa5034caac5816cd, type: 3}
+    prefabBow: {fileID: 0}
+    shorts: {fileID: 0}
+  - nameSkin: AngleSkin
+    idSkin: 1
+    price: 0
+    spriteSkill: {fileID: 21300000, guid: 1d2d5380f32cad34ea8f6982b21079df, type: 3}
+    skin: {fileID: 2100000, guid: 7dd7411dd1f903547b332717fbcfcc51, type: 2}
+    prefabWing: {fileID: 5464898989298959558, guid: 3a955cc96f49aba46b626ff7bc51d721, type: 3}
+    prefabTail: {fileID: 0}
+    prefabHead: {fileID: 3301300494692638130, guid: fc9285a726ef5194b8d7fd456600bb73, type: 3}
+    prefabBow: {fileID: 1335496030513809804, guid: 9cb2f49ee9fa6384aa461643aa96f037, type: 3}
+    shorts: {fileID: 0}
+  - nameSkin: WitchSkin
+    idSkin: 2
+    price: 0
+    spriteSkill: {fileID: 21300000, guid: 2d98e86f97497eb4ca1c4544678023af, type: 3}
+    skin: {fileID: 2100000, guid: 2ec0a56dba2952044b0a7eaa3d1084d0, type: 2}
+    prefabWing: {fileID: 0}
+    prefabTail: {fileID: 0}
+    prefabHead: {fileID: 5835487182796135111, guid: 454c8c9353d132a4a9310b3002260ef1, type: 3}
+    prefabBow: {fileID: 2718944730312874830, guid: aaac90e159ed4994db18876665ed3358, type: 3}
+    shorts: {fileID: 0}
+  - nameSkin: DeadPoolSkin
     idSkin: 3
     price: 0
-    spriteSkill: {fileID: 0}
-  - nameSkin: 
+    spriteSkill: {fileID: 21300000, guid: 144a4f3e16bfabb46ad47e3eee4b838f, type: 3}
+    skin: {fileID: 2100000, guid: 7a0fcb07d522b71458a51b9fd63a5b43, type: 2}
+    prefabWing: {fileID: 1046356195456749470, guid: 98f6974fc8a116e4ba67bbd72aaabfc1, type: 3}
+    prefabTail: {fileID: 0}
+    prefabHead: {fileID: 0}
+    prefabBow: {fileID: 0}
+    shorts: {fileID: 0}
+  - nameSkin: ThorSkin
     idSkin: 4
     price: 0
-    spriteSkill: {fileID: 0}
+    spriteSkill: {fileID: 21300000, guid: 80a9e4fe1abcfe445ae33111399b2cb7, type: 3}
+    skin: {fileID: 2100000, guid: 7404c4c799daa5646852ec6c88292d50, type: 2}
+    prefabWing: {fileID: 0}
+    prefabTail: {fileID: 0}
+    prefabHead: {fileID: 1899434714461887501, guid: 094771939d95f5e4b94ece006f4b09ca, type: 3}
+    prefabBow: {fileID: 0}
+    shorts: {fileID: 0}

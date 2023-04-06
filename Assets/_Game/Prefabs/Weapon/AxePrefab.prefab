@@ -53,6 +53,7 @@ MonoBehaviour:
   rangWeapon: 0
   shootForce: 0
   player: {fileID: 0}
+  mesh: {fileID: 6684641525110221041}
 --- !u!65 &2746541863951435037
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -107,14 +108,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6684641525112485425}
-  m_LocalRotation: {x: 0.00000023841852, y: -0.000000044703473, z: -0.000000089406946, w: 1}
-  m_LocalPosition: {x: -0, y: -0.262, z: -0}
-  m_LocalScale: {x: 38.999985, y: 39, z: 39}
+  m_LocalRotation: {x: -0.5227476, y: -0.47825107, z: 0.5322519, w: 0.46337754}
+  m_LocalPosition: {x: -0.11, y: -0.02, z: 0.33}
+  m_LocalScale: {x: 39, y: 39, z: 39}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 983008094934286756}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 1.412, y: -90.228, z: 96.497}
 --- !u!33 &6684641525111220785
 MeshFilter:
   m_ObjectHideFlags: 0

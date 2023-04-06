@@ -9,13 +9,6 @@ public class BotController : Charecter
     private IState currentState;
     public int numberThrowed;
     public Transform tarGetSeek;
-    public void RandomWeapon()
-    {
-        int indexRandom = Random.Range(0, 2);
-        if(indexRandom == 0) { typeWeaapon = TypeWeaapon.AXE; }
-        else if(indexRandom == 1) { typeWeaapon = TypeWeaapon.BOOMERANG; }
-        else if (indexRandom == 2) { typeWeaapon = TypeWeaapon.CandyTree; }
-    }
     protected override void Start()
     {
         base.Start();
@@ -24,9 +17,8 @@ public class BotController : Charecter
     protected override void OnEnable()
     {
         base.OnEnable();
-        RandomWeapon();
         DeActiveWeapon();
-        ChangeEquiped(typeWeaapon);
+        ChangeEquiped(currentWeapon);
     }
     public void SetNumberThrow()
     {

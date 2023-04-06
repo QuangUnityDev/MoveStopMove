@@ -15,6 +15,8 @@ public class ButtonShop : MonoBehaviour
     }
     void ClickOnButton()
     {
+        IDataSkin[] dataSkin = PopUpSkin.GetInstance().data_SkinCurrent.iDataSkin;
+        LevelManager.GetInstance().player.GetComponent<ChangSkin>().ChangeSkin(dataSkin[id].skin, dataSkin[id].prefabWing, dataSkin[id].prefabTail, dataSkin[id].prefabHead, dataSkin[id].prefabBow, dataSkin[id].shorts);
         PopUpSkin.GetInstance().priceCurrent = price;
         PopUpSkin.GetInstance().txt_Buy.text = price.ToString();
         for (int i = 0; i < PopUpSkin.GetInstance().containButtonCurrent.Count; i++)

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DataPlayer
   m_EditorClassIdentifier: 
   materials:
-  - {fileID: 2100000, guid: 6b6dad334d798ee4dbbd842d3481875d, type: 2}
-  - {fileID: 2100000, guid: 9d14477bacee1bf4896202614efcf793, type: 2}
-  - {fileID: 2100000, guid: 0885a8a2c3576e840b2a6fd27df6a834, type: 2}
-  - {fileID: 2100000, guid: f8b23d683c466b94bbfe2169eb4cf0ba, type: 2}
+  - {fileID: 2100000, guid: 3fe011550d52a534c8ecab275c4850bc, type: 2}
+  - {fileID: 2100000, guid: d9bc8510ac9935641898c5d92c4d84f7, type: 2}
+  - {fileID: 2100000, guid: deb899b448b3ab840aa76712f8c53677, type: 2}
+  - {fileID: 2100000, guid: 72c4f88c80332c94c922be06e846305c, type: 2}
   hp: 1

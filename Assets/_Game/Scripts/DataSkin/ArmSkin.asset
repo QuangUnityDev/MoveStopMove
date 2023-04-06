@@ -13,29 +13,25 @@ MonoBehaviour:
   m_Name: ArmSkin
   m_EditorClassIdentifier: 
   nameData: ArmSkin
-  amountOfSkin: 6
+  amountOfSkin: 2
   iDataSkin:
-  - nameSkin: 
-    idSkin: 1
-    Price: 0
-    spriteSkill: {fileID: 21300000, guid: 6c6bcd4775e2e3d409c0449247b715ee, type: 3}
-  - nameSkin: 
-    idSkin: 2
-    Price: 0
-    spriteSkill: {fileID: 21300000, guid: 6c6bcd4775e2e3d409c0449247b715ee, type: 3}
-  - nameSkin: 
+  - nameSkin: Shield0
     idSkin: 0
-    Price: 0
+    price: 0
     spriteSkill: {fileID: 21300000, guid: 6c6bcd4775e2e3d409c0449247b715ee, type: 3}
-  - nameSkin: 
-    idSkin: 3
-    Price: 0
+    skin: {fileID: 0}
+    prefabWing: {fileID: 0}
+    prefabTail: {fileID: 0}
+    prefabHead: {fileID: 0}
+    prefabBow: {fileID: 1660024875940522995, guid: f08fae17b6354bb4f9d8b14c946a1306, type: 3}
+    shorts: {fileID: 0}
+  - nameSkin: Shield1
+    idSkin: 1
+    price: 0
     spriteSkill: {fileID: 21300000, guid: 6c6bcd4775e2e3d409c0449247b715ee, type: 3}
-  - nameSkin: 
-    idSkin: 4
-    Price: 0
-    spriteSkill: {fileID: 21300000, guid: 6c6bcd4775e2e3d409c0449247b715ee, type: 3}
-  - nameSkin: 
-    idSkin: 5
-    Price: 0
-    spriteSkill: {fileID: 21300000, guid: 6c6bcd4775e2e3d409c0449247b715ee, type: 3}
+    skin: {fileID: 0}
+    prefabWing: {fileID: 0}
+    prefabTail: {fileID: 0}
+    prefabHead: {fileID: 0}
+    prefabBow: {fileID: 595924701425062102, guid: 4eea7ea3c6d702b4ab4120068dcaaa5f, type: 3}
+    shorts: {fileID: 0}

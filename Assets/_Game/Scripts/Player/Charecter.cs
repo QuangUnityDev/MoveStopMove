@@ -10,46 +10,46 @@ public class Charecter : MonoBehaviour
     public Animator anim;
     public TypeWeaapon typeWeaapon;
     public Charecter target;
-    [SerializeField] protected DataPlayer dataPlayer;
+    public DataPlayer dataPlayer;
 
     public Weapon currentWeaponEquiped; 
 
-    [HideInInspector] public Transform Transform;
+    [HideInInspector] public Transform _transform;
     public Transform colliderRange;
     public Transform spriteRange;
     public Transform throwPos;
     public Transform targetAttack;
     private Vector3 dir;
-    public SkinnedMeshRenderer materialPlayer;
 
     private string currentAnim;
 
     public int killed;
     public int id;
     public int currentWeapon;
-    public int hp;
-
     public float speed;
     public float timeToAttack;
+    public int hp;
+
     private float scareValue;
 
     public bool isPrepareAttacking;
     public bool isAttacking;
     public bool isTimeAttackNext;
     public bool isDead;
-
-
-    public static Action<Charecter> removeTarget;
+    private CapsuleCollider _collider;
+   
     protected virtual void OnEnable()
     {
-        OnInit();
+       
     }
     private void Awake()
     {
-        Transform = transform;
+        _transform = transform;
+        _collider = transform.GetComponent<CapsuleCollider>();
     }
     protected virtual void Start()
     {
+        OnInit();
         scareValue = 0.2f * WeaponAtributesFirst.rangeFirst;
     }
     public enum TypeWeaapon
@@ -58,7 +58,10 @@ public class Charecter : MonoBehaviour
         BOOMERANG,
         CandyTree,
     }
-
+    public void ChangeSkinWeapon(Material material)
+    {
+        currentWeaponEquiped.mesh.materials[1] = material;
+    }
     public void ChangeAnim(string animName)
     {
         if (animName != currentAnim)
@@ -71,16 +74,16 @@ public class Charecter : MonoBehaviour
 
     public virtual void OnInit()
     {
+        _collider.center = new Vector3(0, 0, 0);
         listTargetInRange.Clear();
-        hp = dataPlayer.hp; 
-        materialPlayer.material = dataPlayer.GetMat(UnityEngine.Random.Range(0, dataPlayer.materials.Length));
+        hp = dataPlayer.hp;        
         isPrepareAttacking = false;
         isAttacking = false;
         isTimeAttackNext = true;
         isDead = false;       
     }
 
-    public void ChangeEquiped(TypeWeaapon type)
+    public void ChangeEquiped(int currentWeapon)
     {
         if (currentWeaponEquiped != null && typeWeaapon == TypeWeaapon.CandyTree) 
         {
@@ -88,15 +91,15 @@ public class Charecter : MonoBehaviour
             return;
         }
         if (currentWeaponEquiped != null) DeActiveWeapon();
-        switch (typeWeaapon)
+        switch (currentWeapon)
         {
-            case TypeWeaapon.AXE:
+            case (int)TypeWeaapon.AXE:
                 currentWeaponEquiped = ObjectsPooling.GetInstance().SpawnBullet(throwPos);             
                 break;
-            case TypeWeaapon.BOOMERANG:
+            case (int)TypeWeaapon.BOOMERANG:
                 currentWeaponEquiped = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos);
                 break;
-            case TypeWeaapon.CandyTree:
+            case (int)TypeWeaapon.CandyTree:
                 currentWeaponEquiped = ObjectsPooling.GetInstance().SpawnCandyTree(throwPos);
                 break;
             default:
@@ -106,9 +109,9 @@ public class Charecter : MonoBehaviour
     }
     public void WeaponOnHand()
     {
-        WeaponGetInfo(currentWeaponEquiped, WeaponAtributesFirst.rangeBullet);
-        if (typeWeaapon == TypeWeaapon.CandyTree) return;      
+        WeaponGetInfo(currentWeaponEquiped, WeaponAtributesFirst.rangeBullet);     
         currentWeaponEquiped.transform.SetParent(throwPos);
+        currentWeaponEquiped.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.Euler(0, 0, 0));
         currentWeaponEquiped.rb.constraints = RigidbodyConstraints.FreezeAll;
     }
     public void WeaponGetInfo(Weapon wepon, float rangeFirst)
@@ -120,7 +123,7 @@ public class Charecter : MonoBehaviour
     }
     public void ThrowWeapon()
     {
-        if (typeWeaapon == TypeWeaapon.CandyTree) return;
+        if (typeWeaapon == TypeWeaapon.CandyTree) { currentWeaponEquiped.ShootForce = 10; return; }       
         if (currentWeaponEquiped == null) return;
         WeaponGetInfo(currentWeaponEquiped, WeaponAtributesFirst.rangeBullet);
         currentWeaponEquiped.rb.constraints = RigidbodyConstraints.None;      
@@ -140,11 +143,6 @@ public class Charecter : MonoBehaviour
         ThrowWeapon();
         Invoke(nameof(DeAttack), 0.4f);      
     }
-    public static void RemoveTarget(Action<Charecter> call = null)
-    {
-        removeTarget += call;
-    }
- 
     public void NextTimeAttack()
     {
         isTimeAttackNext = true;
@@ -153,7 +151,7 @@ public class Charecter : MonoBehaviour
     }
     protected virtual void DeAttack()
     {
-        ChangeEquiped(typeWeaapon);
+        ChangeEquiped(currentWeapon);
         Invoke(nameof(NextTimeAttack), 0.3f);
         isAttacking = false;
     }
@@ -169,20 +167,20 @@ public class Charecter : MonoBehaviour
     }
     public void LookTarGet(Transform lookTarget)
     {
-        Transform.LookAt(new Vector3(lookTarget.position.x, Transform.position.y, lookTarget.position.z));
+        _transform.LookAt(new Vector3(lookTarget.position.x, _transform.position.y, lookTarget.position.z));
         throwPos.LookAt(new Vector3(lookTarget.position.x, lookTarget.position.y, lookTarget.position.z));
     }
     public void ResetPlayer()
     {
         killed = 0;
-        Transform.localScale = new Vector3(1, 1, 1);
+        _transform.localScale = new Vector3(1, 1, 1);
     }
     public bool IsHadObject()
     {
         if (listTargetInRange.Count > 0)
         {
             target = listTargetInRange[listTargetInRange.Count - 1];
-            targetAttack = target.Transform;
+            targetAttack = target._transform;
         }
         else targetAttack = null;      
         return targetAttack != null && target.isDead == false;
@@ -193,12 +191,8 @@ public class Charecter : MonoBehaviour
         if (other.CompareTag(GlobalTag.player) || other.CompareTag(GlobalTag.playerEnemy))
         {         
             target = other.GetComponent<Charecter>();
-            targetAttack = target.Transform;
-            if(!target.isDead && !listTargetInRange.Contains(target))
-            {
-                listTargetInRange.Add(target);
-                RemoveTarget((target) => listTargetInRange.Remove(target));
-            }       
+            targetAttack = target._transform;
+            listTargetInRange.Add(target);    
         }
     }
 
@@ -207,7 +201,7 @@ public class Charecter : MonoBehaviour
         if (other.CompareTag(GlobalTag.player) || other.CompareTag(GlobalTag.playerEnemy))
         {
             target = other.GetComponent<Charecter>();
-            removeTarget?.Invoke(target);
+            listTargetInRange.Remove(other.GetComponent<Charecter>());
         }
     }
     protected void DeActiveWeapon()
@@ -220,19 +214,14 @@ public class Charecter : MonoBehaviour
     }
     public virtual void OnDeath()
     {
-        removeTarget?.Invoke(this);
+        _collider.center = new Vector3(0, 10, 0);
         isDead = true;
         rb.velocity = Vector3.zero;
         DeActiveWeapon();
-        removeTarget?.Invoke(this);
         Invoke(nameof(Death), 2f);
     }
     public virtual void Death()
     {
         gameObject.SetActive(false);
-    }
-    public void OnDisable()
-    {
-        removeTarget = null;
     }
 }

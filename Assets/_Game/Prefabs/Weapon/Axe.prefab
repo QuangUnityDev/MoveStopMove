@@ -134,3 +134,4 @@ MonoBehaviour:
   rangWeapon: 0
   shootForce: 0
   player: {fileID: 0}
+  mesh: {fileID: 7782477666833797795}

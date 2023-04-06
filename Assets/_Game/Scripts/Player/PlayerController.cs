@@ -8,15 +8,15 @@ public class PlayerController : Charecter
     GameManager data;
     public override void OnInit()
     {
+        base.OnInit();
         data = GameManager.GetInstance();
-        base.OnInit();        
         currentWeapon = data.dataPlayer.currentWeapon;
         ChangeEquiment.GetInstance().ResetAtributeWeapon(data.dataPlayer.currentWeapon, colliderRange, spriteRange, this);       
-        ChangeEquiped(typeWeaapon);
+        ChangeEquiped(currentWeapon);
         data.ShowRangePlayer((isTrue) => {
             spriteRange.gameObject.SetActive(isTrue);
-            Transform.position = new Vector3(0, -0.44f, 0);
-        }, (isTrue) => Transform.gameObject.SetActive(isTrue));
+            _transform.position = new Vector3(0, -0.44f, 0);
+        }, (isTrue) => _transform.gameObject.SetActive(isTrue));
     }
     public bool IsStop()
     {
@@ -28,7 +28,7 @@ public class PlayerController : Charecter
         if (isDead) return;
         Vector3 direction = Vector3.forward * floatingJoystick.Vertical + Vector3.right * floatingJoystick.Horizontal;
         if(!isAttacking) rb.velocity = direction * speed * Time.fixedDeltaTime;
-        if (rb.velocity != Vector3.zero) Transform.rotation = Quaternion.LookRotation(direction);
+        if (rb.velocity != Vector3.zero) _transform.rotation = Quaternion.LookRotation(direction);
 
         if (!IsStop())
         {
