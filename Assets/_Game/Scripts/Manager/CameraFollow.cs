@@ -61,7 +61,7 @@ public class CameraFollow : MonoBehaviour, ISubcriber
     public void posStartGame()
     {
         cameraMain.fieldOfView = 90;
-        _transform.position = new Vector3(0, 15, -5);
+        _transform.position = new Vector3(0, 13, -5);
         _transform.rotation = Quaternion.Euler(70, 0, 0);
         _transform.position = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z - 10);
     }

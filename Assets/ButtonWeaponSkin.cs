@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.UI;
 
 public class ButtonWeaponSkin : MonoBehaviour
@@ -10,10 +11,13 @@ public class ButtonWeaponSkin : MonoBehaviour
     public Image imageButton;
     public int price;
     PopUpWeapon popUpWeapon;
+    public Image imageLock;
+    public bool isUnLock;
     private void Awake()
     {
         transform.GetComponent<Button>().onClick.AddListener(OnClickButton);
         popUpWeapon = PopUpWeapon.GetInstance();
+        isUnLock = false;
     }
     public void OnClickButton()
     {
@@ -22,11 +26,17 @@ public class ButtonWeaponSkin : MonoBehaviour
             popUpWeapon.containButton[i].imageButton.color = Color.white;
         }
         popUpWeapon.currentSelectingSkinWeapon = idSkinWeapon;
-        popUpWeapon.skinCurrentImage.sprite = spriteButton;
+        Transform go = popUpWeapon.skinWeaponCurrent.transform;
+        go.DOMoveX(-idSkinWeapon * 2, 1);
         popUpWeapon.textPrice.text = price.ToString();
         popUpWeapon.priceCurrent = price;
         imageButton.color = Color.red;
         popUpWeapon.CheckEquip();
         popUpWeapon.CheckBuy();
+        if (isUnLock) 
+        {
+            imageLock.gameObject.SetActive(false);
+            popUpWeapon.bt_UnlockAds.gameObject.SetActive(false); }
+        else popUpWeapon.bt_UnlockAds.gameObject.SetActive(true);
     }
 }

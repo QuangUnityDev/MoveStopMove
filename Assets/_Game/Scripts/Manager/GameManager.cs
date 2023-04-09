@@ -19,9 +19,28 @@ public class GameManager : Singleton<GameManager>
 
     //public int currentSkinWeapon;
     private void Awake()
-    {       
+    {
+        //SaveData();
         gameSubcribers = new ArrayList();
         LoadData();
+            //base.Awake();
+            Input.multiTouchEnabled = false;
+            Application.targetFrameRate = 60;
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+            int maxScreenHeight = 1280;
+            float ratio = (float)Screen.currentResolution.width / (float)Screen.currentResolution.height;
+            if (Screen.currentResolution.height > maxScreenHeight)
+            {
+                Screen.SetResolution(Mathf.RoundToInt(ratio * (float)maxScreenHeight), maxScreenHeight, true);
+            }
+
+            //csv.OnInit();
+            //userData?.OnInitData();
+
+            //ChangeState(GameState.MainMenu);
+
+            //UIManager.Ins.OpenUI<MianMenu>();
     }
     private void Start()
     {
@@ -45,9 +64,12 @@ public class GameManager : Singleton<GameManager>
         dataPlayer.skinOwner = data.skinOwner;
         dataPlayer.shortsOwner = data.shortsOwner;
         dataPlayer.hornorsOwner = data.hornorsOwner;
+        dataPlayer.armOwner = data.armOwner;
         dataPlayer.currentSkin = data.currentSkin;
         dataPlayer.skinAxeOwer = data.skinAxeOwer;
         dataPlayer.currentUsingSkinWeapon = data.currentUsingSkinWeapon;
+        dataPlayer.skinBoomerangOwer = data.skinBoomerangOwer;
+        dataPlayer.skinCandyTreeOwer = data.skinCandyTreeOwer;
 }
     #region Game Subcribers
     public ArrayList gameSubcribers;

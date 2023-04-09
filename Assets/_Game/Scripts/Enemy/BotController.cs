@@ -18,7 +18,7 @@ public class BotController : Charecter
     {
         base.OnEnable();
         DeActiveWeapon();
-        ChangeEquiped(currentWeapon);
+        ChangeEquiped((int)currentWeapon);
     }
     public void SetNumberThrow()
     {

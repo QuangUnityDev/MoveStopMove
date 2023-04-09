@@ -32,7 +32,7 @@ public class PopUpSkin : Singleton<PopUpSkin>
 
     public DataSkin data_SkinCurrent;
 
-    [SerializeField] private GameObject cointainSkin;
+    [SerializeField] private GameObject cointainItem;
 
     [SerializeField] private bool isCreateNew = true;
 
@@ -40,12 +40,12 @@ public class PopUpSkin : Singleton<PopUpSkin>
     [SerializeField] private TypeSkinShop typeSkinShopCurrent;
 
 
-    int[] currentSkinSelecting;
+    List<int> currentSkinSelecting;
 
-    int[] currentHornOwner;
-    int[] currentShortsSkinOwner;
-    int[] currentArmSkinOwner;
-    int[] currentSkinOwner;
+    List<int> currentHornOwner;
+    List<int> currentShortsSkinOwner;
+    List<int> currentArmSkinOwner;
+    List<int> currentSkinOwner;
 
 
     public int currentUsingSkin;
@@ -68,6 +68,7 @@ public class PopUpSkin : Singleton<PopUpSkin>
         bt_ShortsSkin.onClick.AddListener(GenShortsSkinShop);
         bt_SkinShop.onClick.AddListener(GenSkinShop);
         bt_ArmSkin.onClick.AddListener(GenArmShop);
+        bt_Buy.onClick.AddListener(OnClickedBuy);
     }
     private void OnEnable()
     {
@@ -84,7 +85,7 @@ public class PopUpSkin : Singleton<PopUpSkin>
             }
             for (int i = containButtonCurrent.Count ; i < _dataSkin.amountOfSkin; i++)
             {
-                ButtonShop go = SpawnButtonUI(cointainSkin);
+                ButtonShop go = SpawnButtonUI(cointainItem);
                 go.id = _dataSkin.iDataSkin[i].idSkin;
                 go.imageSkin.sprite = _dataSkin.iDataSkin[i].spriteSkill;
                 go.price = _dataSkin.iDataSkin[i].price;             
@@ -101,6 +102,11 @@ public class PopUpSkin : Singleton<PopUpSkin>
                 containButtonCurrent[i].gameObject.SetActive(false);
             }
         }
+        cointainItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(241.2885f, 0);
+    }
+    public void GetButtonBuy()
+    {
+
     }
     public void SetDatButton(int _i , DataSkin _dataSkin)
     {
@@ -118,7 +124,7 @@ public class PopUpSkin : Singleton<PopUpSkin>
     }
     public void GenShortsSkinShop()
     {
-        if (typeSkinShopCurrent == TypeSkinShop.ShortsSkin) return;
+        if (typeSkinShopCurrent == TypeSkinShop.ShortsSkin) return;      
         currentPopUpSkin = 1;
         LoadPopUpWeapon(currentPopUpSkin);
     }
@@ -135,7 +141,7 @@ public class PopUpSkin : Singleton<PopUpSkin>
         LoadPopUpWeapon(currentPopUpSkin);
     }
     public void LoadPopUpWeapon(int currentPopUpSkin)
-    {
+    {       
         switch (currentPopUpSkin)
         {
             case 0:
@@ -162,7 +168,7 @@ public class PopUpSkin : Singleton<PopUpSkin>
                 break;
             default:
                 break;
-        }
+        }     
     }
     private void LoadDataPopUp(DataSkin dataSkin, Image imageSkin)
     {
@@ -207,6 +213,9 @@ public class PopUpSkin : Singleton<PopUpSkin>
         }
         return null;
 
+    }
+    public void OnClickedBuy()
+    {
     }
     public enum TypeSkinShop
     {

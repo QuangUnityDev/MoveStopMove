@@ -25,11 +25,12 @@ public class Charecter : MonoBehaviour
 
     public int killed;
     public int id;
-    public int currentWeapon;
+    public TypeWeaapon currentWeapon;
     public float speed;
     public float timeToAttack;
     public int hp;
 
+    public TypeWeaapon a;
     private float scareValue;
 
     public bool isPrepareAttacking;
@@ -40,7 +41,7 @@ public class Charecter : MonoBehaviour
    
     protected virtual void OnEnable()
     {
-       
+        OnInit();
     }
     private void Awake()
     {
@@ -52,15 +53,15 @@ public class Charecter : MonoBehaviour
         OnInit();
         scareValue = 0.2f * WeaponAtributesFirst.rangeFirst;
     }
-    public enum TypeWeaapon
+    public void ChangeSkinWeapon(Material[] material)
     {
-        AXE,      
-        BOOMERANG,
-        CandyTree,
-    }
-    public void ChangeSkinWeapon(Material material)
-    {
-        currentWeaponEquiped.mesh.materials[1] = material;
+        currentWeaponEquiped.mesh.materials[0] = material[0];
+        if(material[1] != null)
+        currentWeaponEquiped.mesh.materials[1] = material[1];
+        if (material[2] != null)
+            currentWeaponEquiped.mesh.materials[2] = material[2];
+        if (material[3] != null)
+            currentWeaponEquiped.mesh.materials[3] = material[3];
     }
     public void ChangeAnim(string animName)
     {
@@ -85,7 +86,7 @@ public class Charecter : MonoBehaviour
 
     public void ChangeEquiped(int currentWeapon)
     {
-        if (currentWeaponEquiped != null && typeWeaapon == TypeWeaapon.CandyTree) 
+        if (currentWeaponEquiped != null && typeWeaapon == TypeWeaapon.CANDYTREE) 
         {
             WeaponOnHand();
             return;
@@ -99,7 +100,7 @@ public class Charecter : MonoBehaviour
             case (int)TypeWeaapon.BOOMERANG:
                 currentWeaponEquiped = ObjectsPooling.GetInstance().SpawnBoomerang(throwPos);
                 break;
-            case (int)TypeWeaapon.CandyTree:
+            case (int)TypeWeaapon.CANDYTREE:
                 currentWeaponEquiped = ObjectsPooling.GetInstance().SpawnCandyTree(throwPos);
                 break;
             default:
@@ -123,7 +124,7 @@ public class Charecter : MonoBehaviour
     }
     public void ThrowWeapon()
     {
-        if (typeWeaapon == TypeWeaapon.CandyTree) { currentWeaponEquiped.ShootForce = 10; return; }       
+        if (typeWeaapon == TypeWeaapon.CANDYTREE) { currentWeaponEquiped.ShootForce = 10; return; }       
         if (currentWeaponEquiped == null) return;
         WeaponGetInfo(currentWeaponEquiped, WeaponAtributesFirst.rangeBullet);
         currentWeaponEquiped.rb.constraints = RigidbodyConstraints.None;      
@@ -151,7 +152,7 @@ public class Charecter : MonoBehaviour
     }
     protected virtual void DeAttack()
     {
-        ChangeEquiped(currentWeapon);
+        ChangeEquiped((int)currentWeapon);
         Invoke(nameof(NextTimeAttack), 0.3f);
         isAttacking = false;
     }
@@ -224,4 +225,10 @@ public class Charecter : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+}
+public enum TypeWeaapon
+{
+    AXE,
+    BOOMERANG,
+    CANDYTREE,
 }

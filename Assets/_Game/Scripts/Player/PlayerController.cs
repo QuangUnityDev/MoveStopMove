@@ -12,7 +12,7 @@ public class PlayerController : Charecter
         data = GameManager.GetInstance();
         currentWeapon = data.dataPlayer.currentWeapon;
         ChangeEquiment.GetInstance().ResetAtributeWeapon(data.dataPlayer.currentWeapon, colliderRange, spriteRange, this);       
-        ChangeEquiped(currentWeapon);
+        ChangeEquiped((int)currentWeapon);
         data.ShowRangePlayer((isTrue) => {
             spriteRange.gameObject.SetActive(isTrue);
             _transform.position = new Vector3(0, -0.44f, 0);
