@@ -6,24 +6,12 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public Data dataPlayer;
-    //public int levelCurrent;
-    //public int gold;
-    //public int currentWeapon;
     public static int numberOfReviveInOneTimesPlay;
-    //public int[] weaponOwner;
-    //public int[] skinOwner;
-    //public int[] shortsOwner;
-    //public int[] hornorsOwner;
-
-    //public int[] skinAxeOwer;
-
-    //public int currentSkinWeapon;
     private void Awake()
     {
-        //SaveData();
+        InitFirstPlay();
         gameSubcribers = new ArrayList();
-        LoadData();
-            //base.Awake();
+        
             Input.multiTouchEnabled = false;
             Application.targetFrameRate = 60;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -34,13 +22,6 @@ public class GameManager : Singleton<GameManager>
             {
                 Screen.SetResolution(Mathf.RoundToInt(ratio * (float)maxScreenHeight), maxScreenHeight, true);
             }
-
-            //csv.OnInit();
-            //userData?.OnInitData();
-
-            //ChangeState(GameState.MainMenu);
-
-            //UIManager.Ins.OpenUI<MianMenu>();
     }
     private void Start()
     {
@@ -49,6 +30,32 @@ public class GameManager : Singleton<GameManager>
     void OnInit()
     {
         GamePrepare();
+    }
+    private void InitFirstPlay()
+    {
+        LoadData();
+        if (!dataPlayer.isFirst)
+        {
+            dataPlayer.weaponOwner.Clear();
+            dataPlayer.skinOwner.Clear();
+            dataPlayer.shortsOwner.Clear();
+            dataPlayer.hornorsOwner.Clear();
+            dataPlayer.armOwner.Clear();
+
+            dataPlayer.skinAxeOwer.Clear();
+            dataPlayer.skinBoomerangOwer.Clear();
+            dataPlayer.skinCandyTreeOwer.Clear();
+
+            dataPlayer.isFirst = true;
+            dataPlayer.weaponOwner.Add(0);
+            dataPlayer.currentWeapon = TypeWeaapon.AXE;
+            dataPlayer.gold = 0;
+            dataPlayer.levelID = 1;
+            dataPlayer.currentSkin = 0;
+            dataPlayer.skinAxeOwer.Add(0);
+            dataPlayer.currentUsingSkinWeapon = 0;
+            SaveData();
+        }
     }
     public void SaveData()
     {
@@ -70,15 +77,14 @@ public class GameManager : Singleton<GameManager>
         dataPlayer.currentUsingSkinWeapon = data.currentUsingSkinWeapon;
         dataPlayer.skinBoomerangOwer = data.skinBoomerangOwer;
         dataPlayer.skinCandyTreeOwer = data.skinCandyTreeOwer;
+        dataPlayer.isFirst = data.isFirst;
 }
     #region Game Subcribers
     public ArrayList gameSubcribers;
     public delegate void EventCall(ISubcriber s);
     float startTime = 0;
-    //public int gameMoneyEarned;
     public void AddSubcriber(ISubcriber s)
     {
-        //Debug.LogError(s);
         gameSubcribers.Add(s);
     }
     public void RemoveSubcriber(ISubcriber s)
@@ -109,7 +115,6 @@ public class GameManager : Singleton<GameManager>
         callShowRangePlayer?.Invoke(true);
         startTime = Time.time;
         game_State = GAME_STATE.GAME_PLAY;
-        //gameMoneyEarned = 0;
         CallEvent((s) =>
         {
             s.GameStart();
@@ -150,12 +155,8 @@ public class GameManager : Singleton<GameManager>
             game_State = GAME_STATE.GAME_OVER;
             int duration = Mathf.RoundToInt(Time.time - startTime);
             callShowRangePlayer?.Invoke(false);
-            //  float timer = (Time.time - durationPlayTime);
-            //AnalyticHelper.OnGame.LogGameOver(duration);
             CallEvent((s) => { s.GameOver(); });
-            //TopUI.Instance.SetCurrencyEndGame();
             Debug.Log("Game over you lose");
-            //popUpLost.SetActive(true);
         }
 
     }
@@ -164,10 +165,7 @@ public class GameManager : Singleton<GameManager>
         if (game_State != GAME_STATE.GAME_OVER && game_State != GAME_STATE.GAME_COMPLETE)
         {
             int duration = Mathf.RoundToInt(Time.time - startTime);
-            //AnalyticHelper.OnGame.LogGameClear(duration);
             CallEvent((s) => { s.GameCompleted(); });
-            //popUpWin.SetActive(true);
-            //TopUI.Instance.SetCurrencyEndGame();
         }
     }
     public GAME_STATE game_State = GAME_STATE.GAME_COMPLETE;

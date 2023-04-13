@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Level2
   m_EditorClassIdentifier: 
   levelID: 2
-  numberPlayerOnMap: 15
+  numberPlayerOnMap: 8
+  totalAlive: 80

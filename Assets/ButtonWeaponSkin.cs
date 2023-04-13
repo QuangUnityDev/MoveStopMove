@@ -16,7 +16,7 @@ public class ButtonWeaponSkin : MonoBehaviour
     private void Awake()
     {
         transform.GetComponent<Button>().onClick.AddListener(OnClickButton);
-        popUpWeapon = PopUpWeapon.GetInstance();
+        popUpWeapon = PopUpWeapon.instance;
         isUnLock = false;
     }
     public void OnClickButton()

@@ -76,6 +76,8 @@ public class Weapon : MonoBehaviour
     }
     public void UpSize(Charecter player)
     {
+        if(player.id == 0) { GameManager.GetInstance().dataPlayer.gold += UnityEngine.Random.Range(1, 4); }
+        GameManager.GetInstance().SaveData();
         player.transform.localScale = new Vector3(1 + player.killed * 0.2f, 1 + player.killed * 0.2f, 1 + player.killed * 0.2f);
         ChangeEquiment.GetInstance().ResetAtributeWeapon(player.currentWeapon, player.colliderRange, player.spriteRange, player);
     }

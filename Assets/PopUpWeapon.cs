@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PopUpWeapon : Singleton<PopUpWeapon>
+public class PopUpWeapon : PopupUI<PopUpWeapon>
 {
     [Header("Button")]
     [SerializeField] Button bt_NextWeapon;
@@ -12,6 +12,7 @@ public class PopUpWeapon : Singleton<PopUpWeapon>
     [SerializeField] Button bt_Buy;
     [SerializeField] Button bt_Equip;
     [SerializeField] public Button bt_UnlockAds;
+    [SerializeField] Button btn_Close;
     [Header("Data")]
     [SerializeField] DataWeapon dataWeaponAxe;
     [SerializeField] DataWeapon dataWeaponBoomerang;
@@ -27,9 +28,9 @@ public class PopUpWeapon : Singleton<PopUpWeapon>
 
     public Text textPrice;
 
-    [SerializeField] GameObject skinWeaponAxe;
-    [SerializeField] GameObject skinWeaponBoomerang;
-    [SerializeField] GameObject skinWeaponCandy;
+    [SerializeField] private GameObject skinWeaponAxe;
+    [SerializeField] private GameObject skinWeaponBoomerang;
+    [SerializeField] private GameObject skinWeaponCandy;
 
     [HideInInspector] public GameObject skinWeaponCurrent;
 
@@ -52,14 +53,11 @@ public class PopUpWeapon : Singleton<PopUpWeapon>
     [HideInInspector] public int priceCurrent;
 
     private Data dataSkinWeapon;
-
-    private void OnEnable()
+    private void SetUpData()
     {
-        DestroyButtonLoadNewWeapon();
-        SetUpData();
-    }
-    void SetUpData()
-    {
+        skinWeaponAxe = GameObject.Find(StringNamePopup.WeaponAxe);
+        skinWeaponBoomerang = GameObject.Find(StringNamePopup.WeaponBoomerang);
+        skinWeaponCandy = GameObject.Find(StringNamePopup.WeaponCandy);
         dataSkinWeapon = GameManager.GetInstance().dataPlayer;
 
         currentSelectingWeapon = dataSkinWeapon.currentWeapon;    
@@ -74,41 +72,54 @@ public class PopUpWeapon : Singleton<PopUpWeapon>
 
         LoadPopUpWeapon(currentSelectingWeapon); //Khoi tao khi mo popup
     }
-    private void Awake()
+    protected override void Awake()
+    {
+        base.Awake();
+        SetUpAddListener();          
+    }
+    private void SetUpAddListener()
     {
         bt_NextWeapon.onClick.AddListener(NextWeapon);
         bt_BackWeapon.onClick.AddListener(BackWeapon);
         bt_Buy.onClick.AddListener(OnClickedButtonBuy);
         bt_Equip.onClick.AddListener(Equip);
         bt_UnlockAds.onClick.AddListener(UnLockSkinWeapon);
+        btn_Close.onClick.AddListener(OnClickedButtonClose);
+    }
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        DestroyButtonLoadNewWeapon();
+        SetUpData();
+    }
+    private void OnClickedButtonClose()
+    {
+        Close();
+        skinWeaponCandy.gameObject.SetActive(true);
+        skinWeaponAxe.gameObject.SetActive(true);
+        skinWeaponBoomerang.gameObject.SetActive(true);
+        ShowPopUp.ShowPopUps(StringNamePopup.PopupHome);
     }
     private void OnClickedButtonBuy()
     {
-        GameManager.GetInstance().dataPlayer.weaponOwner.Add(currentSelectingSkinWeapon);
+        GameManager.GetInstance().dataPlayer.weaponOwner.Add(currentSelectingSkinWeapon);        
         GameManager.GetInstance().SaveData();
     }
     public void Equip()
     {
         dataSkinWeapon.currentUsingSkinWeapon = currentSelectingSkinWeapon;
         dataSkinWeapon.currentWeapon = currentSelectingWeapon;
-        gameObject.SetActive(false);
         GameManager.GetInstance().dataPlayer.currentUsingSkinWeapon = currentSelectingSkinWeapon;
         LevelManager.GetInstance().player.ChangeSkinWeapon(dataWeaponCurrent.iDataWeapon[currentSelectingSkinWeapon].materialSkin);
-        UIManager.GetInstance().ShowPopUpHome();
+        OnClickedButtonClose();
         GameManager.GetInstance().SaveData();
     }
     void UnLockSkinWeapon()
     {
         bt_UnlockAds.gameObject.SetActive(false);
-        currentSkinSelecting.Add(currentSelectingSkinWeapon);
-        for (int i = 0; i < containButton.Count; i++)
-        {
-            if(containButton[i].idSkinWeapon == currentSelectingSkinWeapon)
-            {
-                containButton[i].isUnLock = true;
-                break;
-            }
-        }
+        currentSkinSelecting.Add(currentSelectingSkinWeapon); 
+        containButton[currentSelectingSkinWeapon].isUnLock = true;
+        containButton[currentSelectingSkinWeapon].imageLock.gameObject.SetActive(false);
         GameManager.GetInstance().SaveData();
     }
     public void CheckBuy()
@@ -145,6 +156,9 @@ public class PopUpWeapon : Singleton<PopUpWeapon>
     public void LoadDataWeapon(DataWeapon data,GameObject weapon)
     {
         dataWeaponCurrent = data;
+       
+        
+       
         skinWeaponCandy.gameObject.SetActive(false);
         skinWeaponAxe.gameObject.SetActive(false);
         skinWeaponBoomerang.gameObject.SetActive(false);

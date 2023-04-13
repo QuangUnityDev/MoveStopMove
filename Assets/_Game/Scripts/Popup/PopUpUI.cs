@@ -66,18 +66,9 @@ public class PopupUI<T> : MonoBehaviour where T : PopupUI<T>
     [SerializeField] private GameObject window = default;
     [SerializeField] private bool destroyOnClose = true;
     [SerializeField] private float animateTime = 0.3f;
-    [SerializeField] protected Text textTimeClearLevel = default;
-    [SerializeField] protected Text textEnemyKilled = default;
-    [SerializeField] protected Text textCoinEarned = default;
 
     private float _moveY = 2500f;
     private float _moveX = 1500f;
-    protected void DisplayTime(float timeToDisplay)
-    {
-        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
-        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-        textTimeClearLevel.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-    }
     protected virtual void OnEnable()
     {
         if (window) window.SetActive(true);

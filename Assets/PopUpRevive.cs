@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PopUpRevive : MonoBehaviour
+public class PopUpRevive : PopupUI<PopUpRevive>
 {
     [SerializeField] private Text txtCountDown;
     private bool isCount;
     [SerializeField] private float timeCountDown;
     [SerializeField] private Button btReviveAds;
+    [SerializeField] private Button btn_Close;
     private bool isBackGamePrepare;
-    private void Awake()
+    protected override void Awake()
+    {
+        SetUp();
+    }
+    private void OnClickedButtonClose()
+    {
+        Close();
+        GameManager.GetInstance().GameOver();
+    }
+    private void SetUp()
     {
         btReviveAds.onClick.AddListener(Revive);
-    }
-    private void OnEnable()
-    {
+        btn_Close.onClick.AddListener(OnClickedButtonClose);
         isCount = true;
         timeCountDown = 5;
         isBackGamePrepare = true;
@@ -23,7 +31,7 @@ public class PopUpRevive : MonoBehaviour
     public void Revive()
     {
         LevelManager.GetInstance().ResetPos();
-        gameObject.SetActive(false);
+        Close();
     }
     void Update()
     {
@@ -35,7 +43,7 @@ public class PopUpRevive : MonoBehaviour
         {
             GameManager.GetInstance().GameOver();
             isBackGamePrepare = false;
-            transform.gameObject.SetActive(false);
+            OnClickedButtonClose();
         }
     }
     IEnumerator CountDown()

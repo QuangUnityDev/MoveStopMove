@@ -7,91 +7,49 @@ using UnityEngine.UI;
 public class UIManager : Singleton<UIManager>,ISubcriber
 
 {
-    public Button bt_Play;
-    public Button bt_OpenShopSkin;
-    public Button bt_OpenShopWeapom;
-    public GameObject popHome;
-    public GameObject popRevive;
-    public GameObject popGameOver;
-    public GameObject popShopSkin;
-    public GameObject popShopWeapon;
-    public GameObject popUpCurrent;
     public CameraFollow cameraView;
-    protected void Awake()
-    {
-        SetUp();
-    }
-    private void SetUp()
-    {
-        bt_Play.onClick.AddListener(PlayGame);
-        bt_OpenShopSkin.onClick.AddListener(OpenShopSkin);
-        bt_OpenShopWeapom.onClick.AddListener(OpenShopWeapon);
-    }
+   
     protected void Start()
     {
         GameManager.GetInstance().AddSubcriber(this);
     }
-    public void ClosePopUp()
+    public void CameraViewPrepare()
     {
-        GameManager.GetInstance().deActivePlayer?.Invoke(true);
-        popUpCurrent.SetActive(false);
-        popHome.SetActive(true);
         cameraView.posPrepareGame();
     }
 
     public void OpenShopSkin()
     {
-        cameraView.posOpenSkinShop();
-        popUpCurrent = popShopSkin;
-        popShopSkin.SetActive(true);
-        OffPopUpHome();
+        cameraView.posOpenSkinShop();      
         LevelManager.GetInstance().player.ChangeAnim("Dance");
     }
     public void OpenShopWeapon()
     {
-        GameManager.GetInstance().deActivePlayer?.Invoke(false);
-        popUpCurrent = popShopWeapon;
-        popShopWeapon.SetActive(true);
-        OffPopUpHome();
-    }
-    public void ShowPopUpRevive()
-    {
-        popUpCurrent = popRevive;
-        popRevive.SetActive(true);
+        GameManager.GetInstance().deActivePlayer?.Invoke(false);     
     }
     public void GameOver()
-    {     
-        popGameOver.SetActive(true);
-    }
-    public void OffPopUpHome()
     {
-        popHome.SetActive(false);
-    }
-    public void PlayGame()
-    {
-        GameManager.GetInstance().GameStart();
+        ShowPopUp.ShowPopUps(StringNamePopup.PopupGameOver);
     }
     public void ShowPopUpHome()
-    {
-        popHome.SetActive(true);
+    {      
         LevelManager.GetInstance().player.ChangeAnim("Idle");
         GameManager.GetInstance().deActivePlayer?.Invoke(true);
+        ShowPopUp.ShowPopUps(StringNamePopup.PopupHome);
     }
     public void GamePrepare()
     {
-        popGameOver.SetActive(false);
-        popHome.SetActive(true);
-        popRevive.SetActive(false);
+        ShowPopUp.ShowPopUps(StringNamePopup.PopupHome);
     }
 
     public void GameStart()
     {
-        OffPopUpHome();
+        ShowPopUp.ShowPopUps(StringNamePopup.PopupInGame);
     }
 
     public void GameRevival()
     {
-        ShowPopUpRevive();
+        ShowPopUp.ShowPopUps(StringNamePopup.PopupRevive);
     }
     public void GamePause()
     {

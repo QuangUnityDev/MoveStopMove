@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour, ISubcriber
     void LateUpdate()
     {
         if (GameManager.GetInstance().IsPreparing) return;
-        _transform.position = new Vector3(player.transform.position.x, player.killed + 15, player.transform.position.z - 5);
+        _transform.position = Vector3.Lerp(_transform.position, new Vector3(player.transform.position.x, player.killed + 10, player.transform.position.z - 5),0.1f);
     }
     public void GameCompleted()
     {
@@ -61,7 +61,7 @@ public class CameraFollow : MonoBehaviour, ISubcriber
     public void posStartGame()
     {
         cameraMain.fieldOfView = 90;
-        _transform.position = new Vector3(0, 13, -5);
+        _transform.position = new Vector3(0, 10, -5);
         _transform.rotation = Quaternion.Euler(70, 0, 0);
         _transform.position = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z - 10);
     }

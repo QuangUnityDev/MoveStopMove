@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelID: 1
   numberPlayerOnMap: 5
+  totalAlive: 50

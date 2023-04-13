@@ -11,8 +11,8 @@ public class LevelManager : Singleton<LevelManager>,ISubcriber
     public PlayerController player;
     public FloatingJoystick floatingJoystick;
     public GameObject indicatorGo;
-    public static int id = 0;
-    float timeReload;
+    public static int id = default;
+    public int playerAlive = default;
 
     private void Awake()
     {
@@ -37,7 +37,10 @@ public class LevelManager : Singleton<LevelManager>,ISubcriber
         player.floatingJoystick = floatingJoystick;
         player.id = 0;
         listAllTarget.Add(player);
-        CallSpawnAgain(() => ObjectsPooling.GetInstance().SpawnPlayerEnemy(SpawnRandom().position, transform));
+        CallSpawnAgain(() =>
+        {
+            ObjectsPooling.GetInstance().SpawnPlayerEnemy(SpawnRandom().position, transform);                   
+        });     
     }
     public Action callSpawn;
     public void CallSpawnAgain(Action call)
@@ -48,6 +51,7 @@ public class LevelManager : Singleton<LevelManager>,ISubcriber
     {
         levelController = Instantiate(Resources.Load<LevelController>("Levels/Level" + GameManager.GetInstance().dataPlayer.levelID.ToString()));
         ResetPos();
+        playerAlive = levelController.levelData.totalAlive;
     }
     int pos;
     public Transform SpawnRandom()
@@ -89,17 +93,17 @@ public class LevelManager : Singleton<LevelManager>,ISubcriber
             listAllTarget.Add(more);
         }
         ResetPlayer();
-        indicatorGo.gameObject.SetActive(false);
+        indicatorGo.gameObject.SetActive(false);      
     }
 
     public void GameStart()
     {
-        indicatorGo.gameObject.SetActive(true);
+        indicatorGo.gameObject.SetActive(true);  
     }
 
     public void GameRevival()
     {
-       
+      
     }
 
     public void GamePause()

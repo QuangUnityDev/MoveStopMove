@@ -7,14 +7,14 @@ using UnityEngine;
 public class Data
 {
     [Header("Weapon Owner")]
-    public TypeWeaapon currentWeapon = 0 ;
-    public List<int> weaponOwner = new List<int> { 0 };
+    public TypeWeaapon currentWeapon;
+    public List<int> weaponOwner;
 
     [Header("Skin Owner")]
-    public List<int> skinOwner = new List<int>(0);
-    public List<int> shortsOwner = new List<int> { 0};
-    public List<int> hornorsOwner = new List<int> { 0 };
-    public List<int> armOwner = new List<int> { 0 };
+    public List<int> skinOwner;
+    public List<int> shortsOwner;
+    public List<int> hornorsOwner;
+    public List<int> armOwner;
 
     public int currentSkin;
     public int currentSkinArm;
@@ -22,18 +22,17 @@ public class Data
     public int currentSkinShorts;
 
     [Header("Skin Weapon Owner")]
-    public List<int> skinAxeOwer = new List<int> { 0 };
-    public List<int> skinBoomerangOwer = new List<int> { 0 };
-    public List<int> skinCandyTreeOwer = new List<int> { 0 };
+    public List<int> skinAxeOwer;
+    public List<int> skinBoomerangOwer;
+    public List<int> skinCandyTreeOwer;
     public int currentUsingSkinWeapon;
 
     [Header("Level and gold current")]
     public int gold ;
-    public int levelID = 1;
+    public int levelID;
+    public bool isFirst;
     public Data(GameManager gameData)
     {
-        //DATA PLAYER
-       
         gold = gameData.dataPlayer.gold;
         levelID = gameData.dataPlayer.levelID;
 
@@ -54,6 +53,7 @@ public class Data
         skinAxeOwer = gameData.dataPlayer.skinOwner;
         skinBoomerangOwer = gameData.dataPlayer.skinBoomerangOwer;
         skinCandyTreeOwer = gameData.dataPlayer.skinCandyTreeOwer;
+        isFirst = gameData.dataPlayer.isFirst;
     }
 
 }

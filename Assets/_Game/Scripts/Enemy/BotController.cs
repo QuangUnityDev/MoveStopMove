@@ -17,6 +17,7 @@ public class BotController : Charecter
     protected override void OnEnable()
     {
         base.OnEnable();
+     
         DeActiveWeapon();
         ChangeEquiped((int)currentWeapon);
     }
@@ -83,9 +84,14 @@ public class BotController : Charecter
     {
         ChangState(new IdleState());
     }
+    public override void OnDeath()
+    {
+        base.OnDeath();
+        LevelManager.GetInstance().playerAlive--;
+    }
     public override void Death()
     {
         base.Death();
-        LevelManager.GetInstance().callSpawn?.Invoke();
+        LevelManager.GetInstance().callSpawn?.Invoke();     
     }
 }
