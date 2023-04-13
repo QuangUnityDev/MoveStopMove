@@ -78,11 +78,11 @@ public class PopUpWeapon : Singleton<PopUpWeapon>
     {
         bt_NextWeapon.onClick.AddListener(NextWeapon);
         bt_BackWeapon.onClick.AddListener(BackWeapon);
-        bt_Buy.onClick.AddListener(Buy);
+        bt_Buy.onClick.AddListener(OnClickedButtonBuy);
         bt_Equip.onClick.AddListener(Equip);
         bt_UnlockAds.onClick.AddListener(UnLockSkinWeapon);
     }
-    private void Buy()
+    private void OnClickedButtonBuy()
     {
         GameManager.GetInstance().dataPlayer.weaponOwner.Add(currentSelectingSkinWeapon);
         GameManager.GetInstance().SaveData();

@@ -1111,6 +1111,7 @@ MonoBehaviour:
   speed: 300
   timeToAttack: 0
   hp: 0
+  a: 0
   isPrepareAttacking: 0
   isAttacking: 0
   isTimeAttackNext: 0

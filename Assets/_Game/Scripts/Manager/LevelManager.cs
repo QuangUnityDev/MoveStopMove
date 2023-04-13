@@ -10,6 +10,7 @@ public class LevelManager : Singleton<LevelManager>,ISubcriber
     public PlayerController playerPrefab;
     public PlayerController player;
     public FloatingJoystick floatingJoystick;
+    public GameObject indicatorGo;
     public static int id = 0;
     float timeReload;
 
@@ -88,11 +89,12 @@ public class LevelManager : Singleton<LevelManager>,ISubcriber
             listAllTarget.Add(more);
         }
         ResetPlayer();
+        indicatorGo.gameObject.SetActive(false);
     }
 
     public void GameStart()
     {
-       
+        indicatorGo.gameObject.SetActive(true);
     }
 
     public void GameRevival()
