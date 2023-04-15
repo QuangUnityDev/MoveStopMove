@@ -46,7 +46,7 @@ public class SaveLoadData : Singleton<SaveLoadData>
 
         // Print all of the data (normally you would feed this data into other loaded objects that need it like the Player script)
         print("~~~ LOADED GAME DATA ~~~");
-        print("PLAYER currentWeapon NAME: " + data.currentWeapon);
+        print("PLAYER currentWeapon NAME: " + data.equipedWeapon);
         //print("PLAYER NAME: " + loadData.weaponOwner[1]);
         //print("PLAYER NAME: " + data.currentWeapon);
         //print("MONEY: " + data.gold);

@@ -5,6 +5,5 @@ using UnityEngine.UI;
 public class DataSkin : ScriptableObject
 {
     [SerializeField] private string nameData;
-    public int amountOfSkin;
     public IDataSkin[] iDataSkin;
 }

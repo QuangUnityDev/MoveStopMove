@@ -15,6 +15,15 @@ public class ChangSkin : MonoBehaviour
     GameObject _head;
     GameObject _bow;
 
+    private void Start()
+    {
+        ManagerSkinUsing.GetInstance().ChangeSkinUsing();
+    }
+    public void ChangeShorts(Material shorts)
+    {
+        meshShortsPlayer.gameObject.SetActive(true);
+        meshShortsPlayer.material = shorts;
+    }
     public void ChangeSkin(Material skin = null,GameObject wing = null,GameObject tail = null, GameObject head = null, GameObject bow = null ,Material _short = null)
     {
         meshPlayer.material = LevelManager.GetInstance().player.dataPlayer.materials[GameManager.GetInstance().dataPlayer.currentSkin];
@@ -64,11 +73,6 @@ public class ChangSkin : MonoBehaviour
             meshShortsPlayer.gameObject.SetActive(true);
             meshShortsPlayer.material = _short;
         }
-        else meshShortsPlayer.gameObject.SetActive(false);
-
-       
-       
-        
-       
+        else meshShortsPlayer.gameObject.SetActive(false); 
     }
 }

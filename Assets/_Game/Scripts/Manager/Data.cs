@@ -6,9 +6,9 @@ using UnityEngine;
 [Serializable]
 public class Data
 {
-    [Header("Weapon Owner")]
-    public TypeWeaapon currentWeapon;
+    [Header("Weapon Owner")] 
     public List<int> weaponOwner;
+    public TypeWeaapon equipedWeapon;
 
     [Header("Skin Owner")]
     public List<int> skinOwner;
@@ -17,15 +17,14 @@ public class Data
     public List<int> armOwner;
 
     public int currentSkin;
-    public int currentSkinArm;
-    public int currentSkinHornor;
-    public int currentSkinShorts;
+    public int currentItemSkin;
 
     [Header("Skin Weapon Owner")]
     public List<int> skinAxeOwer;
     public List<int> skinBoomerangOwer;
     public List<int> skinCandyTreeOwer;
-    public int currentUsingSkinWeapon;
+
+    public int equipedSkinWeapon;
 
     [Header("Level and gold current")]
     public int gold ;
@@ -37,8 +36,9 @@ public class Data
         levelID = gameData.dataPlayer.levelID;
 
         weaponOwner = gameData.dataPlayer.weaponOwner;
-        currentWeapon = gameData.dataPlayer.currentWeapon;
-        currentUsingSkinWeapon = gameData.dataPlayer.currentUsingSkinWeapon;
+        equipedWeapon = gameData.dataPlayer.equipedWeapon;
+        equipedSkinWeapon = gameData.dataPlayer.equipedSkinWeapon;
+
 
         skinOwner = gameData.dataPlayer.skinOwner;
         shortsOwner  = gameData.dataPlayer.shortsOwner;
@@ -46,9 +46,7 @@ public class Data
         hornorsOwner = gameData.dataPlayer.hornorsOwner;
 
         currentSkin = gameData.dataPlayer.currentSkin;
-        currentSkinArm = gameData.dataPlayer.currentSkinArm;
-        currentSkinHornor = gameData.dataPlayer.currentSkinHornor;
-        currentSkinShorts = gameData.dataPlayer.currentSkinShorts;
+        currentItemSkin = gameData.dataPlayer.currentItemSkin;
 
         skinAxeOwer = gameData.dataPlayer.skinOwner;
         skinBoomerangOwer = gameData.dataPlayer.skinBoomerangOwer;

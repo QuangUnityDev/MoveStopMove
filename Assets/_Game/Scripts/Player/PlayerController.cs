@@ -6,13 +6,18 @@ public class PlayerController : Charecter
 {
     public FloatingJoystick floatingJoystick;
     GameManager data;
+    protected override void OnEnable()
+    {
+        base.OnEnable();    
+    }
     public override void OnInit()
     {
         base.OnInit();
         data = GameManager.GetInstance();
-        currentWeapon = data.dataPlayer.currentWeapon;
-        ChangeEquiment.GetInstance().ResetAtributeWeapon(data.dataPlayer.currentWeapon, colliderRange, spriteRange, this);       
+        currentWeapon = data.dataPlayer.equipedWeapon;
+        ChangeEquiment.GetInstance().ResetAtributeWeapon(data.dataPlayer.equipedWeapon, colliderRange, spriteRange, this);       
         ChangeEquiped((int)currentWeapon);
+        ManagerWeapon.GetInstance().ChangeSkinWeapon(currentWeaponEquiped);
         data.ShowRangePlayer((isTrue) => {
             spriteRange.gameObject.SetActive(isTrue);
             _transform.position = new Vector3(0, -0.44f, 0);

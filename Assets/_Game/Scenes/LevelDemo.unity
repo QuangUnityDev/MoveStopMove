@@ -2330,6 +2330,72 @@ Transform:
   m_Father: {fileID: 2053948470}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -93.775, z: 0}
+--- !u!1 &814489499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 814489501}
+  - component: {fileID: 814489500}
+  - component: {fileID: 814489502}
+  m_Layer: 0
+  m_Name: ManagerSkin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &814489500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814489499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fc638009e8187243b6e3f2c8c34cfe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataskin:
+  - {fileID: 11400000, guid: ca0a6ef910129874786c744a4667b184, type: 2}
+  - {fileID: 11400000, guid: 782ae34f31a285941bb5a52c5d87c18c, type: 2}
+  - {fileID: 11400000, guid: 45ddb0b5c1b08954e92c1301855693d8, type: 2}
+  - {fileID: 11400000, guid: cb9539d82b44e734499e57efcae31b02, type: 2}
+--- !u!4 &814489501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814489499}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 153.58757, y: 916.84845, z: -8.231284}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &814489502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814489499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee2cde176b16ad488a9d1d560e95843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataWeapons:
+  - {fileID: 11400000, guid: ed36dc6d1ac790b4bb745aee19dbb95a, type: 2}
+  - {fileID: 11400000, guid: 3ad51ef6a0e4a9e499df904494033ec8, type: 2}
+  - {fileID: 11400000, guid: 6ac39d3175850924fbb180866750bddb, type: 2}
 --- !u!1001 &815714999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7739,9 +7805,7 @@ MonoBehaviour:
     hornorsOwner: 
     armOwner: 
     currentSkin: 0
-    currentSkinArm: 0
-    currentSkinHornor: 0
-    currentSkinShorts: 0
+    currentItemSkin: 0
     skinAxeOwer: 
     skinBoomerangOwer: 
     skinCandyTreeOwer: 

@@ -38,7 +38,9 @@ public class Charecter : MonoBehaviour
     public bool isTimeAttackNext;
     public bool isDead;
     private CapsuleCollider _collider;
-   
+
+    [SerializeField] private ParticleSystem effectUpLevel;
+
     protected virtual void OnEnable()
     {
         OnInit();
@@ -53,16 +55,7 @@ public class Charecter : MonoBehaviour
         OnInit();
         scareValue = 0.2f * WeaponAtributesFirst.rangeFirst;
     }
-    public void ChangeSkinWeapon(Material[] material)
-    {
-        currentWeaponEquiped.mesh.materials[0] = material[0];
-        if(material[1] != null)
-        currentWeaponEquiped.mesh.materials[1] = material[1];
-        if (material[2] != null)
-            currentWeaponEquiped.mesh.materials[2] = material[2];
-        if (material[3] != null)
-            currentWeaponEquiped.mesh.materials[3] = material[3];
-    }
+  
     public void ChangeAnim(string animName)
     {
         if (animName != currentAnim)
@@ -72,7 +65,10 @@ public class Charecter : MonoBehaviour
             anim.SetTrigger(currentAnim);
         }
     }
-
+    public void ShowEffectLevelUp()
+    {
+        effectUpLevel.Play();
+    }
     public virtual void OnInit()
     {
         _collider.center = new Vector3(0, 0, 0);
@@ -83,7 +79,6 @@ public class Charecter : MonoBehaviour
         isTimeAttackNext = true;
         isDead = false;       
     }
-
     public void ChangeEquiped(int currentWeapon)
     {
         if (currentWeaponEquiped != null && typeWeaapon == TypeWeaapon.CANDYTREE) 

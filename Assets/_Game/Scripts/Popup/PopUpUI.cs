@@ -98,12 +98,10 @@ public class PopupUI<T> : MonoBehaviour where T : PopupUI<T>
         Close();
     }
 
-    //protected virtual void WillShowContent()
-    //{
-    //    textEnemyKilled.text = "Enemy Killed: " + OnGameManager.Instance.NumberEnemyKilled;
-    //    textCoinEarned.text = "Coin Earned: " + OnGameManager.Instance.CoinEarned;
-    //    DisplayTime(OnGameManager.Instance.TimeClearLevel);
-    //}
+    protected virtual void WillShowContent()
+    {
+      
+    }
     protected virtual void DidShowContent()
     {
     }
@@ -113,7 +111,7 @@ public class PopupUI<T> : MonoBehaviour where T : PopupUI<T>
 
         if (window)
         {
-            //WillShowContent();
+            WillShowContent();
             var pos = window.transform.localPosition;
             switch (animate)
             {
@@ -129,7 +127,7 @@ public class PopupUI<T> : MonoBehaviour where T : PopupUI<T>
                 case PopUpAnimate.SLIDERIGHT:
                     pos.x = -_moveX;
                     window.transform.localPosition = pos;
-                    Debug.LogError(window.transform.localPosition);
+                    //Debug.LogError(window.transform.localPosition);
                     window.transform.DOLocalMoveX(0.0f, animateTime).OnComplete(() =>
                     {
                         DidShowContent();

@@ -1,5 +1,207 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &634461788389408209
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9113952725778452708}
+  - component: {fileID: 2842325169305709156}
+  - component: {fileID: 62174887399964212}
+  m_Layer: 5
+  m_Name: Text (Legacy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &9113952725778452708
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634461788389408209}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4596378865763617350}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -1, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2842325169305709156
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634461788389408209}
+  m_CullTransparentMesh: 1
+--- !u!114 &62174887399964212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634461788389408209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.9529412, g: 0.313706, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 59
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 59
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: Equip
+--- !u!1 &3633129337046054868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4596378865763617350}
+  - component: {fileID: 2542740064407729079}
+  - component: {fileID: 2622862163775770573}
+  - component: {fileID: 2308609164077165808}
+  m_Layer: 5
+  m_Name: BtEquipSkin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4596378865763617350
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3633129337046054868}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9113952725778452708}
+  m_Father: {fileID: 7496865057500303856}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 350, y: 120}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2542740064407729079
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3633129337046054868}
+  m_CullTransparentMesh: 1
+--- !u!114 &2622862163775770573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3633129337046054868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 5fb0904446e132c4d911a344d8e72484, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2308609164077165808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3633129337046054868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 2622862163775770573}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5193241711323731027
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,6 +533,7 @@ GameObject:
   - component: {fileID: 7496865056807973000}
   - component: {fileID: 7496865056807973001}
   - component: {fileID: 7496865056807973006}
+  - component: {fileID: 1250804423059321316}
   m_Layer: 5
   m_Name: BtHornSkin
   m_TagString: Untagged
@@ -441,6 +644,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1250804423059321316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7496865056807973004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1303ecfca7d4fd941a3ab0172a56f7e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSkinOwner: 
+  typeSkin: 1
+  data_TypeSkin: {fileID: 11400000, guid: ca0a6ef910129874786c744a4667b184, type: 2}
 --- !u!1 &7496865056824127984
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,6 +747,7 @@ GameObject:
   - component: {fileID: 7496865056918305371}
   - component: {fileID: 7496865056918305368}
   - component: {fileID: 7496865056918305369}
+  - component: {fileID: 1410441988243429636}
   m_Layer: 5
   m_Name: BtSkinShop
   m_TagString: Untagged
@@ -549,12 +768,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7496865058215217870}
-  m_Father: {fileID: 7496865057210753523}
-  m_RootOrder: 1
+  m_Father: {fileID: 7496865057301545778}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 281, y: 0}
+  m_AnchoredPosition: {x: 423, y: 1020}
   m_SizeDelta: {x: 133, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7496865056918305371
@@ -639,6 +858,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1410441988243429636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7496865056918305375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1303ecfca7d4fd941a3ab0172a56f7e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSkinOwner: 
+  typeSkin: 4
+  data_TypeSkin: {fileID: 11400000, guid: cb9539d82b44e734499e57efcae31b02, type: 2}
 --- !u!1 &7496865056924163982
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,7 +940,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7496865057301545778}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -854,6 +1088,7 @@ GameObject:
   - component: {fileID: 7496865057210753516}
   - component: {fileID: 7496865057210753517}
   - component: {fileID: 7496865057210753522}
+  - component: {fileID: 7045990356702418940}
   m_Layer: 5
   m_Name: BtArmSkin
   m_TagString: Untagged
@@ -874,9 +1109,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7496865057927636088}
-  - {fileID: 7496865056918305374}
   m_Father: {fileID: 7496865057301545778}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -965,6 +1199,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7045990356702418940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7496865057210753520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1303ecfca7d4fd941a3ab0172a56f7e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSkinOwner: 
+  typeSkin: 3
+  data_TypeSkin: {fileID: 11400000, guid: 45ddb0b5c1b08954e92c1301855693d8, type: 2}
 --- !u!1 &7496865057250520933
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,7 +1245,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7496865057301545778}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1071,6 +1320,7 @@ RectTransform:
   m_Children:
   - {fileID: 7496865056807973007}
   - {fileID: 7496865057623120383}
+  - {fileID: 7496865056918305374}
   - {fileID: 7496865057210753523}
   - {fileID: 7496865057250520932}
   - {fileID: 7496865057815106304}
@@ -1388,6 +1638,7 @@ RectTransform:
   m_Children:
   - {fileID: 7496865057692439834}
   - {fileID: 7496865056628773178}
+  - {fileID: 4596378865763617350}
   m_Father: {fileID: 7496865057327416160}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1434,6 +1685,7 @@ GameObject:
   - component: {fileID: 7496865057623120376}
   - component: {fileID: 7496865057623120377}
   - component: {fileID: 7496865057623120382}
+  - component: {fileID: 1243172592449885661}
   m_Layer: 5
   m_Name: BtShortsSkin
   m_TagString: Untagged
@@ -1544,6 +1796,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1243172592449885661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7496865057623120380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1303ecfca7d4fd941a3ab0172a56f7e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSkinOwner: 
+  typeSkin: 2
+  data_TypeSkin: {fileID: 11400000, guid: 782ae34f31a285941bb5a52c5d87c18c, type: 2}
 --- !u!1 &7496865057639771806
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,7 +1842,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7496865057301545778}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1850,7 +2117,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7496865057301545778}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2659,31 +2926,27 @@ MonoBehaviour:
   window: {fileID: 7657646703029890308}
   destroyOnClose: 1
   animateTime: 0.3
-  bt_HornSkin: {fileID: 7496865056807973006}
-  bt_ShortsSkin: {fileID: 7496865057623120382}
-  bt_ArmSkin: {fileID: 7496865057210753522}
-  bt_SkinShop: {fileID: 7496865056918305369}
-  containButtonBuy: {fileID: 7496865057500303857}
   bt_Buy: {fileID: 7496865057692439829}
   bt_BuyAds: {fileID: 7496865056628773173}
   btn_Close: {fileID: 7496865058410254973}
+  btn_Equip: {fileID: 2308609164077165808}
   txt_Gold: {fileID: 7066730910637498944}
   txt_Buy: {fileID: 7496865056710068386}
-  imageSkinShop: {fileID: 7496865057057374383}
-  imageArmShop: {fileID: 7496865057815106307}
-  imageHornShop: {fileID: 7496865057639771800}
-  imageShortsShop: {fileID: 7496865057250520935}
+  txt_Equip: {fileID: 62174887399964212}
+  imageHideHorner: {fileID: 7496865057639771800}
+  imageHideArm: {fileID: 7496865057815106307}
+  imageHideShorts: {fileID: 7496865057250520935}
+  imageHideSkin: {fileID: 7496865057057374383}
+  currentSkinSelectOwner: 
   containButtonCurrent:
   - {fileID: 7893110950351962175}
-  data_HornSkin: {fileID: 11400000, guid: ca0a6ef910129874786c744a4667b184, type: 2}
-  data_ShortsSkin: {fileID: 11400000, guid: 782ae34f31a285941bb5a52c5d87c18c, type: 2}
-  data_ArmSkin: {fileID: 11400000, guid: 45ddb0b5c1b08954e92c1301855693d8, type: 2}
-  data_Skin: {fileID: 11400000, guid: cb9539d82b44e734499e57efcae31b02, type: 2}
-  data_SkinCurrent: {fileID: 0}
+  buttonItemCurrent: {fileID: 0}
   cointainItem: {fileID: 7496865058377963874}
-  isCreateNew: 1
-  currentUsingSkin: 0
+  typeSkin: 0
   priceCurrent: 0
+  skinUsing: 0
+  buttonItemIDCurrent: 0
+  isCreateNew: 1
 --- !u!1 &7657646703029890308
 GameObject:
   m_ObjectHideFlags: 0

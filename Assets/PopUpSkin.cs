@@ -5,205 +5,160 @@ using UnityEngine.UI;
 
 public class PopUpSkin : PopupUI<PopUpSkin>
 {
-    [SerializeField] private Button bt_HornSkin;
-    [SerializeField] private Button bt_ShortsSkin;
-    [SerializeField] private Button bt_ArmSkin;
-    [SerializeField] private Button bt_SkinShop;
-
-    [SerializeField] private GameObject containButtonBuy;
     [SerializeField] private Button bt_Buy;
     [SerializeField] private Button bt_BuyAds;
     [SerializeField] private Button btn_Close;
+    [SerializeField] private Button btn_Equip;
+
     [SerializeField] private Text txt_Gold;
+    [SerializeField] private Text txt_Buy;
+    [SerializeField] private Text txt_Equip;
 
-    public Text txt_Buy;
+    [SerializeField] private Image imageHideHorner;
+    [SerializeField] private Image imageHideArm;
+    [SerializeField] private Image imageHideShorts;
+    [SerializeField] private Image imageHideSkin;
 
-    [SerializeField] private Image imageSkinShop;
-    [SerializeField] private Image imageArmShop;
-    [SerializeField] private Image imageHornShop;
-    [SerializeField] private Image imageShortsShop;
-    private Image imageCurrent;
+    public List<int> currentSkinSelectOwner;
 
     public List<ItemUIShop> containButtonCurrent;
-
-
-    [SerializeField] private DataSkin data_HornSkin;
-    [SerializeField] private DataSkin data_ShortsSkin;
-    [SerializeField] private DataSkin data_ArmSkin;
-    [SerializeField] private DataSkin data_Skin;
-
-    public DataSkin data_SkinCurrent;
-
+    public ItemUIShop buttonItemCurrent;
+    
     [SerializeField] private GameObject cointainItem;
 
-    [SerializeField] private bool isCreateNew = true;
+    public TypeSkinShop typeSkin;
 
-
-    List<int> currentHornOwner;
-    List<int> currentShortsSkinOwner;
-    List<int> currentArmSkinOwner;
-    List<int> currentSkinOwner;
-
-
-    public int currentUsingSkin;
     public int priceCurrent = default;
 
-    private TypeSkinShop currentPopUpSkin;
-    void SelectingImageButton(Image image)
-    {
-        imageSkinShop.gameObject.SetActive(true);
-        imageArmShop.gameObject.SetActive(true);
-        imageHornShop.gameObject.SetActive(true);
-        imageShortsShop.gameObject.SetActive(true);
-        imageCurrent = image;
-        imageCurrent.gameObject.SetActive(false);
-    }
+    public int skinUsing = default;
+    public int buttonItemIDCurrent;
+
+    [SerializeField] private bool isCreateNew = true;
     private bool _isHadObject = false;
     protected override void Awake()
     {
         base.Awake();
-        SetUp();       
+        SetUp();
+    }
+    protected override void WillShowContent()
+    {
+        base.WillShowContent();
+        UIManager.GetInstance().OpenShopSkin();
     }
     private void SetUp()
     {
         txt_Gold.text = GameManager.GetInstance().dataPlayer.gold.ToString();
         btn_Close.onClick.AddListener(OnClickedButtonClose);
-        bt_HornSkin.onClick.AddListener(GenHornSkinShop);
-        bt_ShortsSkin.onClick.AddListener(GenShortsSkinShop);
-        bt_SkinShop.onClick.AddListener(GenSkinShop);
-        bt_ArmSkin.onClick.AddListener(GenArmShop);
         bt_Buy.onClick.AddListener(OnClickedButtonBuy);
+        btn_Equip.onClick.AddListener(OnClickedButtonEquip);
         Data ower = GameManager.GetInstance().dataPlayer;
-        currentHornOwner = ower.hornorsOwner;
-        currentSkinOwner = ower.skinOwner;
-        currentArmSkinOwner = ower.armOwner;
-        currentShortsSkinOwner = ower.shortsOwner;
+    }
+    private void OnAllImageHide()
+    {
+        imageHideHorner.gameObject.SetActive(true);
+        imageHideShorts.gameObject.SetActive(true);
+        imageHideArm.gameObject.SetActive(true);
+        imageHideSkin.gameObject.SetActive(true);
+    }
+    public void CheckSelectButtonSkin(TypeSkinShop typeSkinShop)
+    {
+        OnAllImageHide();
+        switch (typeSkinShop)
+        {
+            case TypeSkinShop.HornSkin:
+                imageHideHorner.gameObject.SetActive(false);
+                break;
+            case TypeSkinShop.ArmSkin:
+                imageHideArm.gameObject.SetActive(false);
+                break;
+            case TypeSkinShop.ShortsSkin:
+                imageHideShorts.gameObject.SetActive(false);
+                break;
+            case TypeSkinShop.Skin:
+                imageHideSkin.gameObject.SetActive(false);
+                break;
+            default:
+                break;
+        }
+    }
+    public void UnSelectButtonItem()
+    {
+        for (int i = 0; i < containButtonCurrent.Count; i++)
+        {
+            containButtonCurrent[i].UnSelectButton();
+        }
+
+    }
+    public void SelectFirstButton()
+    {
+        UnSelectButtonItem();
+        containButtonCurrent[0].SelectButton();
+        if (containButtonCurrent[0].isOwnered)
+        {
+            OnOwner();
+        }
+    }
+
+    private void OnClickedButtonEquip()
+    {
+        GameManager.GetInstance().dataPlayer.currentSkin = skinUsing;
+        GameManager.GetInstance().dataPlayer.currentItemSkin = buttonItemIDCurrent;
+        Close();
+        UIManager.GetInstance().ShowPopUpHome();
     }
     private void OnClickedButtonClose()
     {
         Close();
-        ShowPopUp.ShowPopUps(StringNamePopup.PopupHome);
+        ManagerSkinUsing.GetInstance().ChangeSkinUsing();
+        UIManager.GetInstance().ShowPopUpHome();
     }
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        currentPopUpSkin = TypeSkinShop.None;
-        GenHornSkinShop();       
-    }    
-    
-    public void GenHornSkinShop()
-    {
-        if (currentPopUpSkin == TypeSkinShop.HornSkin) return;
-        currentPopUpSkin = TypeSkinShop.HornSkin;
-        LoadPopUpWeapon(currentPopUpSkin);
-    }
-    public void GenShortsSkinShop()
-    {
-        if (currentPopUpSkin == TypeSkinShop.ShortsSkin) return;      
-        currentPopUpSkin = TypeSkinShop.ShortsSkin;
-        LoadPopUpWeapon(currentPopUpSkin);
-    }
-    public void GenArmShop()
-    {
-        if (currentPopUpSkin == TypeSkinShop.ArmSkin) return;
-        currentPopUpSkin = TypeSkinShop.ArmSkin;
-        LoadPopUpWeapon(currentPopUpSkin);
-    }
-    public void GenSkinShop()
-    {
-        if (currentPopUpSkin == TypeSkinShop.Skin) return;
-        currentPopUpSkin = TypeSkinShop.Skin;
-        LoadPopUpWeapon(currentPopUpSkin);
-    }
-    public void LoadPopUpWeapon(TypeSkinShop currentPopUpSkin)
-    {       
-        switch (currentPopUpSkin)
-        {
-            case TypeSkinShop.HornSkin:
-                LoadDataPopUp(data_HornSkin, imageHornShop, currentHornOwner);
-                break;
-            case TypeSkinShop.ShortsSkin:
-                LoadDataPopUp(data_ShortsSkin, imageShortsShop,currentShortsSkinOwner);
-                break;
-            case TypeSkinShop.ArmSkin:
-                LoadDataPopUp(data_ArmSkin, imageArmShop,currentArmSkinOwner);
-                break;
-            case TypeSkinShop.Skin:
-                LoadDataPopUp(data_Skin, imageSkinShop,currentSkinOwner);
-                break;
-            default:
-                break;
-        }     
-    }
-    public void CheckBought(bool isOwnered)
-    {
-        if (isOwnered)
-        {
-            bt_Buy.gameObject.SetActive(false);
-            bt_BuyAds.gameObject.SetActive(false);
 
-        }
-        else
-        {
-            bt_Buy.gameObject.SetActive(true);
-            bt_BuyAds.gameObject.SetActive(true);
-        }
-    }
-    private void LoadDataPopUp(DataSkin dataSkin, Image imageSkin,List<int> skinOwner)
+    public void OnNotOwner(IDataSkin data)
     {
-        data_SkinCurrent = dataSkin;
-        SelectingImageButton(imageSkin);
         bt_Buy.gameObject.SetActive(true);
         bt_BuyAds.gameObject.SetActive(true);
-        bt_Buy.transform.SetParent(containButtonBuy.transform);
-        bt_BuyAds.transform.SetParent(containButtonBuy.transform);
-        ResetButton(dataSkin, skinOwner);
-        containButtonCurrent[0].imageButton.color = Color.green;
-        CheckBought(containButtonCurrent[0].isOwnered);
-        IDataSkin[] idata = dataSkin.iDataSkin;
-        LevelManager.GetInstance().player.GetComponent<ChangSkin>().ChangeSkin(idata[0].skin, idata[0].prefabWing, idata[0].prefabTail, idata[0].prefabHead, idata[0].prefabBow, idata[0].shorts);
-        txt_Buy.text = dataSkin.iDataSkin[0].price.ToString();
+        btn_Equip.gameObject.SetActive(false);
+        txt_Buy.text = data.price.ToString();
     }
-    public void SetDataButton(int _i, DataSkin _dataSkin, List<int> _skinOwner)
+    public void OnOwner()
     {
-        containButtonCurrent[_i].gameObject.SetActive(true);
-        containButtonCurrent[_i].imageButton.color = Color.white;
-        containButtonCurrent[_i].id = _dataSkin.iDataSkin[_i].idSkin;
-        containButtonCurrent[_i].imageSkin.sprite = _dataSkin.iDataSkin[_i].spriteSkill;
-        containButtonCurrent[_i].price = _dataSkin.iDataSkin[_i].price;
-        for (int i = 0; i < _skinOwner.Count; i++)
+        bt_Buy.gameObject.SetActive(false);
+        bt_BuyAds.gameObject.SetActive(false);
+        btn_Equip.gameObject.SetActive(true);
+        if (buttonItemIDCurrent == GameManager.GetInstance().dataPlayer.currentItemSkin && skinUsing == GameManager.GetInstance().dataPlayer.currentSkin)
         {
-            if (containButtonCurrent[_i].id == _skinOwner[i])
-            {
-                containButtonCurrent[_i].isOwnered = true;
-            }
+            txt_Equip.text = "Equiped";
         }
+        else txt_Equip.text = "Equip";
+        buttonItemCurrent.OwneredItem();
     }
     public void ResetButton(DataSkin _dataSkin, List<int> _skinOwner)
     {
-        if (containButtonCurrent.Count <= _dataSkin.amountOfSkin)
+        if (containButtonCurrent.Count <= _dataSkin.iDataSkin.Length)
         {
             for (int i = 0; i < containButtonCurrent.Count; i++)
             {
-                SetDataButton(i, _dataSkin, _skinOwner);
+                containButtonCurrent[i].SetDataButton(_skinOwner, _dataSkin.iDataSkin[i]);
             }
-            for (int i = containButtonCurrent.Count; i < _dataSkin.amountOfSkin; i++)
+            for (int i = containButtonCurrent.Count; i < _dataSkin.iDataSkin.Length; i++)
             {
-                ItemUIShop go = SpawnButtonUI(cointainItem);
-                SetDataButton(i, _dataSkin, _skinOwner);
+                SpawnButtonUI(cointainItem);
+                containButtonCurrent[i].SetDataButton(_skinOwner, _dataSkin.iDataSkin[i]);
             }
         }
         else
         {
-            for (int i = 0; i < _dataSkin.amountOfSkin; i++)
+            for (int i = 0; i < _dataSkin.iDataSkin.Length; i++)
             {
-                SetDataButton(i, _dataSkin, _skinOwner);
+                containButtonCurrent[i].SetDataButton(_skinOwner, _dataSkin.iDataSkin[i]);
             }
-            for (int i = _dataSkin.amountOfSkin; i < containButtonCurrent.Count; i++)
+            for (int i = _dataSkin.iDataSkin.Length; i < containButtonCurrent.Count; i++)
             {
                 containButtonCurrent[i].gameObject.SetActive(false);
             }
         }
+        UnSelectButtonItem();
+        SelectFirstButton();
         cointainItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(241.2885f, 0);
     }
     public ItemUIShop SpawnButtonUI(GameObject contain)
@@ -214,7 +169,7 @@ public class PopUpSkin : PopupUI<PopUpSkin>
             {
                 containButtonCurrent[i].gameObject.transform.SetParent(contain.transform);
                 containButtonCurrent[i].gameObject.SetActive(true);
-                containButtonCurrent[i].imageButton.color = Color.white;
+                containButtonCurrent[i].UnSelectButton();
                 _isHadObject = true;
                 return containButtonCurrent[i];
             }
@@ -238,38 +193,60 @@ public class PopUpSkin : PopupUI<PopUpSkin>
     }
     public void OnClickedButtonBuy()
     {
-        if(GameManager.GetInstance().dataPlayer.gold - priceCurrent < 0) return;
+        if (GameManager.GetInstance().dataPlayer.gold - priceCurrent < 0) return;
         GameManager.GetInstance().dataPlayer.gold -= priceCurrent;
         txt_Gold.text = GameManager.GetInstance().dataPlayer.gold.ToString();
-        AddData(currentUsingSkin);
+        SetupData();
         GameManager.GetInstance().SaveData();
+        OnOwner();
     }
-    private void AddData(int skin)
+    private void SetupData()
     {
-        switch (currentPopUpSkin)
+        switch (typeSkin)
         {
             case TypeSkinShop.HornSkin:
-                GameManager.GetInstance().dataPlayer.hornorsOwner.Add(currentUsingSkin);
+                GameManager.GetInstance().dataPlayer.hornorsOwner.Add(buttonItemIDCurrent);
                 break;
             case TypeSkinShop.ArmSkin:
-                GameManager.GetInstance().dataPlayer.armOwner.Add(currentUsingSkin);
+                GameManager.GetInstance().dataPlayer.armOwner.Add(buttonItemIDCurrent);
                 break;
             case TypeSkinShop.ShortsSkin:
-                GameManager.GetInstance().dataPlayer.shortsOwner.Add(currentUsingSkin);
+                GameManager.GetInstance().dataPlayer.shortsOwner.Add(buttonItemIDCurrent);
                 break;
             case TypeSkinShop.Skin:
-                GameManager.GetInstance().dataPlayer.skinOwner.Add(currentUsingSkin);
+                GameManager.GetInstance().dataPlayer.skinOwner.Add(buttonItemIDCurrent);
                 break;
             default:
                 break;
         }
     }
-    public enum TypeSkinShop
+    public void SkinUsing()
     {
-        None,
-        HornSkin,
-        ShortsSkin,
-        ArmSkin,
-        Skin,
+        switch (typeSkin)
+        {
+            case TypeSkinShop.HornSkin:
+                skinUsing = 0;
+                break;
+            case TypeSkinShop.ArmSkin:
+                skinUsing = 1;
+                break;
+            case TypeSkinShop.ShortsSkin:
+                skinUsing = 2;
+                break;
+            case TypeSkinShop.Skin:
+                skinUsing = 3;
+                break;
+            default:
+                break;
+        }
     }
+
+}
+public enum TypeSkinShop
+{
+    None,
+    HornSkin,
+    ShortsSkin,
+    ArmSkin,
+    Skin,
 }

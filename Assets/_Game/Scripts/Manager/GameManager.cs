@@ -48,12 +48,14 @@ public class GameManager : Singleton<GameManager>
 
             dataPlayer.isFirst = true;
             dataPlayer.weaponOwner.Add(0);
-            dataPlayer.currentWeapon = TypeWeaapon.AXE;
+            dataPlayer.equipedWeapon = TypeWeaapon.AXE;
             dataPlayer.gold = 0;
             dataPlayer.levelID = 1;
             dataPlayer.currentSkin = 0;
             dataPlayer.skinAxeOwer.Add(0);
-            dataPlayer.currentUsingSkinWeapon = 0;
+            dataPlayer.skinBoomerangOwer.Add(0);
+            dataPlayer.skinCandyTreeOwer.Add(0);
+            dataPlayer.equipedSkinWeapon = 0;
             SaveData();
         }
     }
@@ -63,20 +65,28 @@ public class GameManager : Singleton<GameManager>
     }
     public void LoadData()
     {
+        //Data Game
         Data data = SaveLoadData.GetInstance().LoadFromFile();
-        dataPlayer.currentWeapon = data.currentWeapon;
+        dataPlayer.equipedWeapon = data.equipedWeapon;
         dataPlayer.gold = data.gold;
         dataPlayer.levelID = data.levelID;
+
+        //Skin
         dataPlayer.weaponOwner = data.weaponOwner;
         dataPlayer.skinOwner = data.skinOwner;
         dataPlayer.shortsOwner = data.shortsOwner;
         dataPlayer.hornorsOwner = data.hornorsOwner;
         dataPlayer.armOwner = data.armOwner;
         dataPlayer.currentSkin = data.currentSkin;
-        dataPlayer.skinAxeOwer = data.skinAxeOwer;
-        dataPlayer.currentUsingSkinWeapon = data.currentUsingSkinWeapon;
+        dataPlayer.currentItemSkin = data.currentItemSkin;
+
+        //WeaponSkin
+        dataPlayer.skinAxeOwer = data.skinAxeOwer;      
         dataPlayer.skinBoomerangOwer = data.skinBoomerangOwer;
         dataPlayer.skinCandyTreeOwer = data.skinCandyTreeOwer;
+
+        dataPlayer.equipedSkinWeapon = data.equipedSkinWeapon;
+
         dataPlayer.isFirst = data.isFirst;
 }
     #region Game Subcribers

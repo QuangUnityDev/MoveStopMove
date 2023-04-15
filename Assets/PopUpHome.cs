@@ -14,7 +14,10 @@ public class PopUpHome : PopupUI<PopUpHome>
         base.Awake();
         SetUp();
     }
-
+    protected override void WillShowContent()
+    {
+        base.WillShowContent();        
+    }
     private void SetUp()
     {
         bt_Play.onClick.AddListener(OnClickedButtonPlayGame);
@@ -29,12 +32,12 @@ public class PopUpHome : PopupUI<PopUpHome>
     }
     private void OnClickedButtonShopWeapon()
     {
-        ShowPopUp.ShowPopUps(StringNamePopup.PopupShopWeapon);
+        ShowPopUp.ShowPopUps(StringNamePopup.PopupShopWeapon);      
         Close();
     }
     private void OnClickedButtonShopSkin()
     {
-        ShowPopUp.ShowPopUps(StringNamePopup.PopupShopSkin);
+        ShowPopUp.ShowPopUps(StringNamePopup.PopupShopSkin);       
         Close();
     }
 }

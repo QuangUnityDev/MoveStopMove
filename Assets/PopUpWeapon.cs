@@ -48,34 +48,42 @@ public class PopUpWeapon : PopupUI<PopUpWeapon>
 
     [HideInInspector] public List<int> currentSkinSelecting;
 
-    /*[HideInInspector]*/ public int currentSelectingSkinWeapon;
-    [HideInInspector] public TypeWeaapon currentSelectingWeapon;
+    public int equipedSkinWeapon;
+    public TypeWeaapon currentWeponEquiped;
+
     [HideInInspector] public int priceCurrent;
 
-    private Data dataSkinWeapon;
+    private Data data;
+
     private void SetUpData()
     {
         skinWeaponAxe = GameObject.Find(StringNamePopup.WeaponAxe);
         skinWeaponBoomerang = GameObject.Find(StringNamePopup.WeaponBoomerang);
         skinWeaponCandy = GameObject.Find(StringNamePopup.WeaponCandy);
-        dataSkinWeapon = GameManager.GetInstance().dataPlayer;
 
-        currentSelectingWeapon = dataSkinWeapon.currentWeapon;    
-        
-        currentWeaponOwner = dataSkinWeapon.weaponOwner;
+        data = GameManager.GetInstance().dataPlayer;
 
-        currentSelectingSkinWeapon = dataSkinWeapon.currentUsingSkinWeapon;
+        currentWeponEquiped = data.equipedWeapon;                 
+        equipedSkinWeapon = data.equipedSkinWeapon;
 
-        currentAxeSkinOwner = dataSkinWeapon.skinAxeOwer;
-        currentBoomerangSkinOwner = dataSkinWeapon.skinBoomerangOwer;
-        currentCandyTreeSkinOwner = dataSkinWeapon.skinCandyTreeOwer;
 
-        LoadPopUpWeapon(currentSelectingWeapon); //Khoi tao khi mo popup
+        currentWeaponOwner = data.weaponOwner;
+
+        currentAxeSkinOwner = data.skinAxeOwer;
+        currentBoomerangSkinOwner = data.skinBoomerangOwer;
+        currentCandyTreeSkinOwner = data.skinCandyTreeOwer;
+
+        LoadPopUpWeapon(currentWeponEquiped); //Khoi tao khi mo popup
     }
     protected override void Awake()
     {
         base.Awake();
         SetUpAddListener();          
+    }
+    protected override void WillShowContent()
+    {
+        base.WillShowContent();
+        UIManager.GetInstance().OpenShopWeapon();
     }
     private void SetUpAddListener()
     {
@@ -98,28 +106,61 @@ public class PopUpWeapon : PopupUI<PopUpWeapon>
         skinWeaponCandy.gameObject.SetActive(true);
         skinWeaponAxe.gameObject.SetActive(true);
         skinWeaponBoomerang.gameObject.SetActive(true);
-        ShowPopUp.ShowPopUps(StringNamePopup.PopupHome);
+        UIManager.GetInstance().ShowPopUpHome();
     }
+    private void WeaponOwnered()
+    {
+        bt_Buy.gameObject.SetActive(false);
+        bt_UnlockAds.gameObject.SetActive(false);
+        bt_Equip.gameObject.SetActive(true);
+    }
+    private void WeaponNotOwnered()
+    {
+        bt_Buy.gameObject.SetActive(true);
+        bt_UnlockAds.gameObject.SetActive(false);
+        bt_Equip.gameObject.SetActive(false);
+
+        textConditionUnlock.gameObject.SetActive(true);
+        textCustom.gameObject.SetActive(false);
+    }
+    private void ItemSkinOwnered()
+    {
+        bt_Buy.gameObject.SetActive(false);
+        bt_UnlockAds.gameObject.SetActive(false);
+        bt_Equip.gameObject.SetActive(true);
+        
+    }
+    //Khi Nhan Mua Weapon
     private void OnClickedButtonBuy()
     {
-        GameManager.GetInstance().dataPlayer.weaponOwner.Add(currentSelectingSkinWeapon);        
+       if(GameManager.GetInstance().dataPlayer.gold - priceCurrent < 0) return;
+
+        GameManager.GetInstance().dataPlayer.weaponOwner.Add((int)currentWeponEquiped);
+      
+
         GameManager.GetInstance().SaveData();
+
+        LoadPopUpWeapon(currentWeponEquiped);
+
+        WeaponOwnered();
     }
     public void Equip()
     {
-        dataSkinWeapon.currentUsingSkinWeapon = currentSelectingSkinWeapon;
-        dataSkinWeapon.currentWeapon = currentSelectingWeapon;
-        GameManager.GetInstance().dataPlayer.currentUsingSkinWeapon = currentSelectingSkinWeapon;
-        LevelManager.GetInstance().player.ChangeSkinWeapon(dataWeaponCurrent.iDataWeapon[currentSelectingSkinWeapon].materialSkin);
-        OnClickedButtonClose();
+        data.equipedSkinWeapon = equipedSkinWeapon;
+        data.equipedWeapon = currentWeponEquiped;
+
+        GameManager.GetInstance().dataPlayer.equipedSkinWeapon = equipedSkinWeapon;
+        data.equipedWeapon = currentWeponEquiped;
+       
+        OnClickedButtonClose();        
         GameManager.GetInstance().SaveData();
+        ManagerWeapon.GetInstance().ChangeSkinWeapon(LevelManager.GetInstance().player.currentWeaponEquiped);
     }
     void UnLockSkinWeapon()
     {
         bt_UnlockAds.gameObject.SetActive(false);
-        currentSkinSelecting.Add(currentSelectingSkinWeapon); 
-        containButton[currentSelectingSkinWeapon].isUnLock = true;
-        containButton[currentSelectingSkinWeapon].imageLock.gameObject.SetActive(false);
+        currentSkinSelecting.Add(equipedSkinWeapon);
+        containButton[equipedSkinWeapon].imageLock.gameObject.SetActive(false);
         GameManager.GetInstance().SaveData();
     }
     public void CheckBuy()
@@ -153,34 +194,34 @@ public class PopUpWeapon : PopupUI<PopUpWeapon>
                 break;
         }
     }
-    public void LoadDataWeapon(DataWeapon data,GameObject weapon)
+    private void CheckTextCondition()
     {
-        dataWeaponCurrent = data;
-       
-        
-       
-        skinWeaponCandy.gameObject.SetActive(false);
-        skinWeaponAxe.gameObject.SetActive(false);
-        skinWeaponBoomerang.gameObject.SetActive(false);
-
-        weapon.gameObject.SetActive(true);
-        skinWeaponCurrent = weapon;   
-        
-        textHeadWeapon.text = data.nameWeapon;     
-        textConditionUnlock.gameObject.SetActive(true);
-        textCustom.gameObject.SetActive(false);
-
-        bt_Buy.gameObject.SetActive(true);
-        bt_Equip.gameObject.SetActive(false);
-
-        textPrice.text = data.price.ToString();
-
-        //Check Condition Open Weapon
-        if ((int)currentSelectingWeapon == currentWeaponOwner.Count)
+        if ((int)currentWeponEquiped == currentWeaponOwner.Count)
         {
             textConditionUnlock.text = "Lock";
         }
         else textConditionUnlock.text = "Unlock" + textCondition + "First";
+    }
+    private void OffHideWeaponGo()
+    {
+        skinWeaponCandy.gameObject.SetActive(false);
+        skinWeaponAxe.gameObject.SetActive(false);
+        skinWeaponBoomerang.gameObject.SetActive(false);
+    }
+    public void LoadDataWeapon(DataWeapon data,GameObject weapon)
+    {
+        dataWeaponCurrent = data;
+        OffHideWeaponGo();
+        weapon.gameObject.SetActive(true);
+        skinWeaponCurrent = weapon;        
+        textHeadWeapon.text = data.nameWeapon;     
+
+        WeaponNotOwnered();
+
+        textPrice.text = data.price.ToString();
+
+        //Check Condition Open Weapon
+        CheckTextCondition();
         for (int i = 0; i < currentWeaponOwner.Count; i++)
         {
             if(data.idWeapon == currentWeaponOwner[i])
@@ -203,15 +244,11 @@ public class PopUpWeapon : PopupUI<PopUpWeapon>
                         }
                     }
                    containButton.Add(bt);
-                    if (j == GameManager.GetInstance().dataPlayer.currentUsingSkinWeapon)
+                    if (j == GameManager.GetInstance().dataPlayer.equipedSkinWeapon)
                     {
                         containButton[j].imageButton.color = Color.red;
-                        bt_UnlockAds.gameObject.SetActive(false);
-                        bt_Buy.gameObject.SetActive(false);
-                        bt_Equip.gameObject.SetActive(true);
-                        bt.isUnLock = true;
-                        bt_TextEquip.text = "Select";
-                        if (GameManager.GetInstance().dataPlayer.currentWeapon == currentSelectingWeapon)
+                        ItemSkinOwnered();
+                        if (GameManager.GetInstance().dataPlayer.equipedWeapon == currentWeponEquiped)
                         {
                             bt_TextEquip.text = "Equiped";
                             bt.OnClickButton();
@@ -225,7 +262,7 @@ public class PopUpWeapon : PopupUI<PopUpWeapon>
     }
     public void CheckEquip()
     {
-        if (currentSelectingWeapon == GameManager.GetInstance().dataPlayer.currentWeapon && currentSelectingSkinWeapon == GameManager.GetInstance().dataPlayer.currentUsingSkinWeapon)
+        if (currentWeponEquiped == GameManager.GetInstance().dataPlayer.equipedWeapon && equipedSkinWeapon == GameManager.GetInstance().dataPlayer.equipedSkinWeapon)
         {
             bt_TextEquip.text = "Equiped";
         }
@@ -242,16 +279,16 @@ public class PopUpWeapon : PopupUI<PopUpWeapon>
     }
     void NextWeapon()
     {           
-        if ((int)currentSelectingWeapon == 2) return;
-        currentSelectingWeapon++;
+        if ((int)currentWeponEquiped == 2) return;
+        currentWeponEquiped++;
         DestroyButtonLoadNewWeapon();
-        LoadPopUpWeapon(currentSelectingWeapon);
+        LoadPopUpWeapon(currentWeponEquiped);
     }
     void BackWeapon()
     {          
-        if (currentSelectingWeapon == 0) return;
-        currentSelectingWeapon--;
+        if (currentWeponEquiped == 0) return;
+        currentWeponEquiped--;
         DestroyButtonLoadNewWeapon();
-        LoadPopUpWeapon(currentSelectingWeapon);
+        LoadPopUpWeapon(currentWeponEquiped);
     }
 }

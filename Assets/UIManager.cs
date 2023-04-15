@@ -32,7 +32,8 @@ public class UIManager : Singleton<UIManager>,ISubcriber
         ShowPopUp.ShowPopUps(StringNamePopup.PopupGameOver);
     }
     public void ShowPopUpHome()
-    {      
+    {
+        CameraViewPrepare();
         LevelManager.GetInstance().player.ChangeAnim("Idle");
         GameManager.GetInstance().deActivePlayer?.Invoke(true);
         ShowPopUp.ShowPopUps(StringNamePopup.PopupHome);

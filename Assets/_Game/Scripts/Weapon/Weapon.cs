@@ -38,7 +38,13 @@ public class Weapon : MonoBehaviour
     {
         finishCallBack = callBack;   
     }
-  
+    public void ChangSkinWeapon(Material[] materials)
+    {
+        for (int i = 0; i < mesh.materials.Length; i++)
+        {
+            mesh.materials[i] = materials[i];
+        }      
+    }
     public virtual void OnTriggerEnter(Collider other)
     {
         if (shootForce <= 0) return;
@@ -78,6 +84,7 @@ public class Weapon : MonoBehaviour
     {
         if(player.id == 0) { GameManager.GetInstance().dataPlayer.gold += UnityEngine.Random.Range(1, 4); }
         GameManager.GetInstance().SaveData();
+        player.ShowEffectLevelUp();
         player.transform.localScale = new Vector3(1 + player.killed * 0.2f, 1 + player.killed * 0.2f, 1 + player.killed * 0.2f);
         ChangeEquiment.GetInstance().ResetAtributeWeapon(player.currentWeapon, player.colliderRange, player.spriteRange, player);
     }
