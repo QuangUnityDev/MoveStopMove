@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ManagerSkinUsing : Singleton<ManagerSkinUsing>
 {
-   [SerializeField]  DataSkin[] dataskin;
+   public  DataSkin[] dataskin;
     private void Awake()
     {
     }

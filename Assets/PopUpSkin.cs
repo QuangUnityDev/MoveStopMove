@@ -104,13 +104,15 @@ public class PopUpSkin : PopupUI<PopUpSkin>
         GameManager.GetInstance().dataPlayer.currentSkin = skinUsing;
         GameManager.GetInstance().dataPlayer.currentItemSkin = buttonItemIDCurrent;
         Close();
-        UIManager.GetInstance().ShowPopUpHome();
+        //UIManager.GetInstance().ShowPopUpHome();
+        UIManager.GetInstance().ShowPopUpHome(true);
     }
     private void OnClickedButtonClose()
     {
         Close();
         ManagerSkinUsing.GetInstance().ChangeSkinUsing();
-        UIManager.GetInstance().ShowPopUpHome();
+        //UIManager.GetInstance().ShowPopUpHome();
+        UIManager.GetInstance().ShowPopUpHome(true);
     }
 
     public void OnNotOwner(IDataSkin data)
@@ -125,7 +127,7 @@ public class PopUpSkin : PopupUI<PopUpSkin>
         bt_Buy.gameObject.SetActive(false);
         bt_BuyAds.gameObject.SetActive(false);
         btn_Equip.gameObject.SetActive(true);
-        if (buttonItemIDCurrent == GameManager.GetInstance().dataPlayer.currentItemSkin && skinUsing == GameManager.GetInstance().dataPlayer.currentSkin)
+        if (buttonItemIDCurrent == GameManager.GetInstance().dataPlayer.currentItemSkin && skinUsing == (int)GameManager.GetInstance().dataPlayer.currentItemSkin)
         {
             txt_Equip.text = "Equiped";
         }

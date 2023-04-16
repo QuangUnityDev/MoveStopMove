@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ButtonWeaponSkin : MonoBehaviour
 {
     public int idSkinWeapon;
-    public Sprite spriteButton;
+    public Image itemImageButton;
     public Image imageButton;
     PopUpWeapon popUpWeapon;
     public Image imageLock;

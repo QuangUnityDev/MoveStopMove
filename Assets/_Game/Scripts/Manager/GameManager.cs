@@ -8,7 +8,7 @@ public class GameManager : Singleton<GameManager>
     public Data dataPlayer;
     public static int numberOfReviveInOneTimesPlay;
     private void Awake()
-    {
+    {      
         InitFirstPlay();
         gameSubcribers = new ArrayList();
         
@@ -22,6 +22,8 @@ public class GameManager : Singleton<GameManager>
             {
                 Screen.SetResolution(Mathf.RoundToInt(ratio * (float)maxScreenHeight), maxScreenHeight, true);
             }
+
+        OnInit();
     }
     private void Start()
     {
@@ -118,6 +120,8 @@ public class GameManager : Singleton<GameManager>
         callShowRangePlayer?.Invoke(false);
         game_State = GAME_STATE.GAME_PREPARE;
         CallEvent((s) => { s.GamePrepare(); });
+        //ShowPopUp.ShowPopUps(StringNamePopup.PopupHome);
+        UIManager.GetInstance().ShowPopUpHome(true);
         numberOfReviveInOneTimesPlay = 1;
     }
     public void GameStart()

@@ -16,7 +16,6 @@ public class Weapon : MonoBehaviour
     public Charecter player;    
     protected Transform Transform;
     private Action callDeath;
-    public MeshRenderer mesh;
     private void Awake()
     {
         Transform = transform;
@@ -25,11 +24,11 @@ public class Weapon : MonoBehaviour
 
     public virtual void OnEnable()
     {
-        OnInit();
+        OnInit();      
     }
     public virtual void OnInit()
     {       
-        isBack = false;         
+        isBack = false;
     }
     public virtual void FixedUpdate()
     {                  
@@ -37,13 +36,6 @@ public class Weapon : MonoBehaviour
     public void SetTarGet(Action callBack)
     {
         finishCallBack = callBack;   
-    }
-    public void ChangSkinWeapon(Material[] materials)
-    {
-        for (int i = 0; i < mesh.materials.Length; i++)
-        {
-            mesh.materials[i] = materials[i];
-        }      
     }
     public virtual void OnTriggerEnter(Collider other)
     {
@@ -85,7 +77,7 @@ public class Weapon : MonoBehaviour
         if(player.id == 0) { GameManager.GetInstance().dataPlayer.gold += UnityEngine.Random.Range(1, 4); }
         GameManager.GetInstance().SaveData();
         player.ShowEffectLevelUp();
-        player.transform.localScale = new Vector3(1 + player.killed * 0.2f, 1 + player.killed * 0.2f, 1 + player.killed * 0.2f);
+        player.transform.localScale = Vector3.Lerp(player.transform.localScale, new Vector3(1 + player.killed * 0.2f, 1 + player.killed * 0.2f, 1 + player.killed * 0.2f),0.5f);
         ChangeEquiment.GetInstance().ResetAtributeWeapon(player.currentWeapon, player.colliderRange, player.spriteRange, player);
     }
     public void GetDamage(Charecter playerGetDamage, Charecter playerKill)

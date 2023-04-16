@@ -31,6 +31,7 @@ public class PopUpRevive : PopupUI<PopUpRevive>
     public void Revive()
     {
         LevelManager.GetInstance().ResetPos();
+        UIManager.GetInstance().ShowPopUpInGame();
         Close();
     }
     void Update()

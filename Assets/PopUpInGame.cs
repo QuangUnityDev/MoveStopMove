@@ -27,6 +27,7 @@ public class PopUpInGame : PopupUI<PopUpInGame>,ISubcriber
     protected void OnClickedButtonSetting()
     {
         ShowPopUp.ShowPopUps(StringNamePopup.PopupSetting);
+        UIManager.GetInstance().NotShowPopUpInGame();
     }
     private void LateUpdate() //De tam thoi . Luc nao goi moi can // TOFIXME
     {
@@ -60,7 +61,7 @@ public class PopUpInGame : PopupUI<PopUpInGame>,ISubcriber
 
     public void GameOver()
     {
-        //Close();
+        Close();
     }
 
     public void GameCompleted()

@@ -24,7 +24,7 @@ public class PatrolState : IState
         if (botController.IsHadObject() && botController.numberThrowed > 0)
         {
             nextStateTime += Time.deltaTime;
-            if (nextStateTime > 0.5f)
+            if (nextStateTime > 0.2f)
             {
                 botController.ChangState(new AttackState());
             }

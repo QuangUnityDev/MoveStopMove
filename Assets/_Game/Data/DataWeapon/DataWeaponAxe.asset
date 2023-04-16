@@ -19,7 +19,7 @@ MonoBehaviour:
   iDataWeapon:
   - nameSkin: AxeRed
     id: 0
-    spriteSkin: {fileID: 21300000, guid: 452c9c8d1e2f2084d9c8d3becbf0b296, type: 3}
+    spriteSkin: {fileID: 21300000, guid: 0668d85db7490f14295c4dc2f2cc5ae5, type: 3}
     materialSkin:
     - {fileID: 2100000, guid: fc7988a5178033349935f98d480fc0e2, type: 2}
     - {fileID: 2100000, guid: 92476108e0440024d93d42766e223825, type: 2}
@@ -27,7 +27,7 @@ MonoBehaviour:
     - {fileID: 0}
   - nameSkin: AxeYellow
     id: 1
-    spriteSkin: {fileID: 21300000, guid: 0b07588494789ff48ae322f599f38ac1, type: 3}
+    spriteSkin: {fileID: 21300000, guid: d5448e6ccc32b8d4eb4b0090ef9c7246, type: 3}
     materialSkin:
     - {fileID: 2100000, guid: fb21bb80f0c6cc54489a6a3fa50802ec, type: 2}
     - {fileID: 2100000, guid: 78f83f42701852c49b02e03755a8b3a7, type: 2}
@@ -35,7 +35,7 @@ MonoBehaviour:
     - {fileID: 0}
   - nameSkin: AxeYellow
     id: 2
-    spriteSkin: {fileID: 21300000, guid: 0b07588494789ff48ae322f599f38ac1, type: 3}
+    spriteSkin: {fileID: 21300000, guid: d1f903bca68efa540b413306511a8be6, type: 3}
     materialSkin:
     - {fileID: 2100000, guid: 75bd6f7ad5a25464dbbe5f315c94aa27, type: 2}
     - {fileID: 2100000, guid: b8825970e24d6394c99434f3c9ea598c, type: 2}
@@ -43,7 +43,7 @@ MonoBehaviour:
     - {fileID: 0}
   - nameSkin: AxeYellow
     id: 3
-    spriteSkin: {fileID: 21300000, guid: 0b07588494789ff48ae322f599f38ac1, type: 3}
+    spriteSkin: {fileID: 21300000, guid: 0df07325b983e42458a61a65462dd58d, type: 3}
     materialSkin:
     - {fileID: 2100000, guid: 35118dfc33c12304fb16d1a348d1f416, type: 2}
     - {fileID: 2100000, guid: 2cb5dfae4da9c174baecd4ba81c9b115, type: 2}
@@ -51,7 +51,7 @@ MonoBehaviour:
     - {fileID: 0}
   - nameSkin: AxeYellow
     id: 4
-    spriteSkin: {fileID: 21300000, guid: 0b07588494789ff48ae322f599f38ac1, type: 3}
+    spriteSkin: {fileID: 21300000, guid: d46b35889ef10d44c8e846e6af844816, type: 3}
     materialSkin:
     - {fileID: 2100000, guid: d3381a49f558a4746aca8db8e0dc7240, type: 2}
     - {fileID: 2100000, guid: 01cbcb7418866ec478688b8c6428868c, type: 2}

@@ -6,4 +6,5 @@ public class LevelData : ScriptableObject
     [SerializeField] private int levelID;
     public int numberPlayerOnMap;
     public int totalAlive;
+  
 }

@@ -25,6 +25,6 @@ public class PopupSetting : PopupUI<PopupSetting>
     private void OnClickedButtonContinue()
     {
         Close();
-        PopUpInGame.instance.Close();
+        UIManager.GetInstance().ShowPopUpInGame();
     }
 }

@@ -48,7 +48,7 @@ public class Data
         currentSkin = gameData.dataPlayer.currentSkin;
         currentItemSkin = gameData.dataPlayer.currentItemSkin;
 
-        skinAxeOwer = gameData.dataPlayer.skinOwner;
+        skinAxeOwer = gameData.dataPlayer.skinAxeOwer;
         skinBoomerangOwer = gameData.dataPlayer.skinBoomerangOwer;
         skinCandyTreeOwer = gameData.dataPlayer.skinCandyTreeOwer;
         isFirst = gameData.dataPlayer.isFirst;

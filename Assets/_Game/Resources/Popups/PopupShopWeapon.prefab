@@ -133,8 +133,8 @@ MonoBehaviour:
   ContainBtSkinWeapon: {fileID: 6236662357616664601}
   containButton: []
   currentSkinSelecting: 
-  currentSelectingSkinWeapon: 0
-  currentSelectingWeapon: 0
+  equipedSkinWeapon: 0
+  currentWeponEquiped: 0
   priceCurrent: 0
 --- !u!1 &6236662355816464707
 GameObject:
@@ -1971,6 +1971,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6724363623053539311}
     m_Modifications:
+    - target: {fileID: -386128463152140897, guid: ce603a42d29699742a09707462402fbf, type: 3}
+      propertyPath: itemImageButton
+      value: 
+      objectReference: {fileID: 6236662356323969557}
+    - target: {fileID: 520941012, guid: ce603a42d29699742a09707462402fbf, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1537665874, guid: ce603a42d29699742a09707462402fbf, type: 3}
+      propertyPath: m_Name
+      value: ImageItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1537665876, guid: ce603a42d29699742a09707462402fbf, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1537665876, guid: ce603a42d29699742a09707462402fbf, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 186192161, guid: 0668d85db7490f14295c4dc2f2cc5ae5, type: 3}
+    - target: {fileID: 1537665876, guid: ce603a42d29699742a09707462402fbf, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5855055994240011610, guid: ce603a42d29699742a09707462402fbf, type: 3}
       propertyPath: m_Name
       value: ItemUI
@@ -2097,5 +2121,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46a1298c76494ca49856bcbf9c3a15ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6236662356323969557 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1537665876, guid: ce603a42d29699742a09707462402fbf, type: 3}
+  m_PrefabInstance: {fileID: 6236662357571617089}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

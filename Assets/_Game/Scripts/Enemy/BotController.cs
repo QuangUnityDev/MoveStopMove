@@ -17,9 +17,44 @@ public class BotController : Charecter
     protected override void OnEnable()
     {
         base.OnEnable();
-     
+        
         DeActiveWeapon();
-        ChangeEquiped((int)currentWeapon);
+        ChangeRandomWeapon();
+        ChangeRandomSkin();
+    }
+    private void ChangeRamdomSkinWeapon()
+    {
+        ManagerWeapon.GetInstance().ChangeSkinWeaponRandom(currentWeaponEquiped);
+    }
+    private void ChangeRandomWeapon()
+    {
+        int intRandomWeapon = Random.Range(0, 3);
+        switch (intRandomWeapon)
+        {
+            case 0:
+                currentWeapon = TypeWeaapon.AXE;
+                break;
+            case 1:
+                currentWeapon = TypeWeaapon.BOOMERANG;
+                break;
+            case 2:
+                currentWeapon = TypeWeaapon.CANDYTREE;
+                break;
+
+            default:
+                break;
+        }
+        ChangeEquiped(intRandomWeapon);
+    }
+    private void ChangeRandomSkin()
+    {
+        int skinRandom = Random.Range(0, ManagerSkinUsing.GetInstance().dataskin.Length);
+        IDataSkin idata = ManagerSkinUsing.GetInstance().dataskin[skinRandom].iDataSkin[Random.Range(0, ManagerSkinUsing.GetInstance().dataskin[skinRandom].iDataSkin.Length)];
+        transform.GetComponent<ChangSkin>().ChangeSkin(idata.skin, idata.prefabWing, idata.prefabTail, idata.prefabHead, idata.prefabBow, idata.shorts);
+        if(idata.skin == null)
+        {
+            transform.GetComponent<ChangSkin>().ChangeRandomSkinDeafault(dataPlayer);
+        }
     }
     public void SetNumberThrow()
     {
@@ -27,8 +62,8 @@ public class BotController : Charecter
     }
     IEnumerator DelayReload()
     {
-        yield return new WaitForSeconds(3);
-        numberThrowed = Random.Range(1, 3);
+        yield return new WaitForSeconds(2);
+        numberThrowed = Random.Range(2, 3);
     }
     public override void OnInit()
     {
@@ -49,7 +84,10 @@ public class BotController : Charecter
     }
     void FixedUpdate()
     {
-        if (GameManager.GetInstance().IsPreparing) return;
+        if (GameManager.GetInstance().IsPreparing) {
+            canvasInfo.OffInfoPlayer();
+            return; }
+        else canvasInfo.OnInfoPlayer();
         if (currentState != null)
         {
             currentState.OnExcute(this);

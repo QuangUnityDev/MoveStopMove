@@ -19,21 +19,16 @@ MonoBehaviour:
   iDataWeapon:
   - nameSkin: 
     id: 0
-    spriteSkin: {fileID: 21300000, guid: 187e596a496fbc5429b8239cfa80b9f6, type: 3}
-    materialSkin: {fileID: 0}
+    spriteSkin: {fileID: 21300000, guid: 9b33c4ef23587b24bab555c86403903b, type: 3}
   - nameSkin: 
     id: 1
-    spriteSkin: {fileID: 21300000, guid: f09eae8c0ea04254b90c5386a034a225, type: 3}
-    materialSkin: {fileID: 0}
+    spriteSkin: {fileID: 21300000, guid: c96942148b5611c43b02dcfd39f82403, type: 3}
   - nameSkin: 
     id: 2
-    spriteSkin: {fileID: 21300000, guid: f09eae8c0ea04254b90c5386a034a225, type: 3}
-    materialSkin: {fileID: 0}
+    spriteSkin: {fileID: 21300000, guid: 94748d200fc41ac49abe233e8cccfee7, type: 3}
   - nameSkin: 
     id: 3
-    spriteSkin: {fileID: 21300000, guid: f09eae8c0ea04254b90c5386a034a225, type: 3}
-    materialSkin: {fileID: 0}
+    spriteSkin: {fileID: 21300000, guid: 7e6f0938f3688fb489ae778bccdf788a, type: 3}
   - nameSkin: 
     id: 4
-    spriteSkin: {fileID: 21300000, guid: f09eae8c0ea04254b90c5386a034a225, type: 3}
-    materialSkin: {fileID: 0}
+    spriteSkin: {fileID: 21300000, guid: df65140b30a071a468746107ccfbc01d, type: 3}

@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &818942305774592385
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5835475260463026662}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5835475260463026662
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 818942305774592385}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.021133423, y: 0.037810832, z: 0.03831148}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8275123548794062821}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1298842151684563034
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +407,6 @@ Transform:
   - {fileID: 1818768552589793290}
   - {fileID: 9135623098840843216}
   - {fileID: 1364211475053255555}
-  - {fileID: 5835475260463026662}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -473,7 +441,6 @@ MonoBehaviour:
   rb: {fileID: 8275123548794062820}
   listTargetInRange: []
   anim: {fileID: 8626525915646571888}
-  typeWeaapon: 0
   target: {fileID: 0}
   dataPlayer: {fileID: 11400000, guid: a3f03d2539d00e545a50398158df4035, type: 2}
   currentWeaponEquiped: {fileID: 0}
@@ -488,7 +455,6 @@ MonoBehaviour:
   speed: 3
   timeToAttack: 2
   hp: 0
-  a: 0
   isPrepareAttacking: 0
   isAttacking: 0
   isTimeAttackNext: 0

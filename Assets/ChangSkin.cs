@@ -10,14 +10,18 @@ public class ChangSkin : MonoBehaviour
     [SerializeField] Transform posHead;
     [SerializeField] SkinnedMeshRenderer meshPlayer;
     [SerializeField] SkinnedMeshRenderer meshShortsPlayer;
-    GameObject _wing;
-    GameObject _tail;
-    GameObject _head;
-    GameObject _bow;
+    [SerializeField] GameObject _wing;
+    [SerializeField] GameObject _tail;
+    [SerializeField] GameObject _head;
+    [SerializeField] GameObject _bow;
 
     private void Start()
     {
         ManagerSkinUsing.GetInstance().ChangeSkinUsing();
+    }
+    public void ChangeRandomSkinDeafault( DataPlayer dataPlayer)
+    {
+        meshPlayer.material = dataPlayer.materials[Random.Range(0, dataPlayer.materials.Length)];
     }
     public void ChangeShorts(Material shorts)
     {
@@ -27,7 +31,7 @@ public class ChangSkin : MonoBehaviour
     public void ChangeSkin(Material skin = null,GameObject wing = null,GameObject tail = null, GameObject head = null, GameObject bow = null ,Material _short = null)
     {
         meshPlayer.material = LevelManager.GetInstance().player.dataPlayer.materials[GameManager.GetInstance().dataPlayer.currentSkin];
-        if (_wing) 
+        if (_wing != null) 
         { 
             Destroy(_wing);
         }
@@ -37,7 +41,7 @@ public class ChangSkin : MonoBehaviour
             _wing.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.Euler(0,0,0));
         }
 
-        if (_tail)
+        if (_tail != null)
         {
             Destroy(_tail);
         }
@@ -46,7 +50,7 @@ public class ChangSkin : MonoBehaviour
             _tail.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.Euler(0, 0, 0));
         }
 
-        if (_head)
+        if (_head != null)
         {
             Destroy(_head);
         }
@@ -56,7 +60,7 @@ public class ChangSkin : MonoBehaviour
             _head.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.Euler(0, 0, 0));
         }
 
-            if (_bow)
+            if (_bow != null)
         {
             Destroy(_bow); 
         }
@@ -68,7 +72,7 @@ public class ChangSkin : MonoBehaviour
 
         if (skin) { meshPlayer.material = skin; }
        
-        if (_short)
+        if (_short != null)
         {
             meshShortsPlayer.gameObject.SetActive(true);
             meshShortsPlayer.material = _short;

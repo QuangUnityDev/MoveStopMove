@@ -8,7 +8,8 @@ public class PlayerController : Charecter
     GameManager data;
     protected override void OnEnable()
     {
-        base.OnEnable();    
+        base.OnEnable();
+        ManagerWeapon.GetInstance().ChangeSkinWeapon(currentWeaponEquiped);
     }
     public override void OnInit()
     {
@@ -16,8 +17,7 @@ public class PlayerController : Charecter
         data = GameManager.GetInstance();
         currentWeapon = data.dataPlayer.equipedWeapon;
         ChangeEquiment.GetInstance().ResetAtributeWeapon(data.dataPlayer.equipedWeapon, colliderRange, spriteRange, this);       
-        ChangeEquiped((int)currentWeapon);
-        ManagerWeapon.GetInstance().ChangeSkinWeapon(currentWeaponEquiped);
+        ChangeEquiped((int)currentWeapon);     
         data.ShowRangePlayer((isTrue) => {
             spriteRange.gameObject.SetActive(isTrue);
             _transform.position = new Vector3(0, -0.44f, 0);
@@ -29,7 +29,12 @@ public class PlayerController : Charecter
     }
     public void FixedUpdate()
     {
-        if (data.IsPreparing) return;
+        if (data.IsPreparing)
+        {
+            canvasInfo.OffInfoPlayer();
+            return;
+        }
+        else { canvasInfo.OnInfoPlayer(); }
         if (isDead) return;
         Vector3 direction = Vector3.forward * floatingJoystick.Vertical + Vector3.right * floatingJoystick.Horizontal;
         if(!isAttacking) rb.velocity = direction * speed * Time.fixedDeltaTime;
@@ -39,7 +44,7 @@ public class PlayerController : Charecter
         {
             if (!isAttacking)
             {
-                ChangeAnim("Run");
+                ChangeAnim(GlobalTag.playerAnimRun);
                 CancelAttack();
             }       
         }
@@ -55,7 +60,7 @@ public class PlayerController : Charecter
                 {
                     LookTarGet(targetAttack);
                     timeToAttack += Time.fixedDeltaTime;
-                    if (timeToAttack > 0.4f && !isAttacking)
+                    if (timeToAttack > 0.4f && !isAttacking && isTimeAttackNext)
                     {
                         Attack();
                     }

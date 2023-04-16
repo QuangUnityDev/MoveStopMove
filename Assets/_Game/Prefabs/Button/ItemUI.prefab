@@ -60,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 1537665877}
   - component: {fileID: 1537665876}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ImageItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,14 +136,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 17035c204825f6340a252046ab6476fd, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 0668d85db7490f14295c4dc2f2cc5ae5, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -290,10 +290,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idSkinWeapon: 0
-  spriteButton: {fileID: 0}
+  itemImageButton: {fileID: 1537665876}
   imageButton: {fileID: 5855055994240011613}
-  price: 0
   imageLock: {fileID: 520941012}
+  isUnLock: 0
 --- !u!1 &5855055994709086502
 GameObject:
   m_ObjectHideFlags: 0

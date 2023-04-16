@@ -8,7 +8,6 @@ public class Charecter : MonoBehaviour
     public Rigidbody rb;
     public List<Charecter> listTargetInRange;
     public Animator anim;
-    public TypeWeaapon typeWeaapon;
     public Charecter target;
     public DataPlayer dataPlayer;
 
@@ -30,7 +29,6 @@ public class Charecter : MonoBehaviour
     public float timeToAttack;
     public int hp;
 
-    public TypeWeaapon a;
     private float scareValue;
 
     public bool isPrepareAttacking;
@@ -38,6 +36,7 @@ public class Charecter : MonoBehaviour
     public bool isTimeAttackNext;
     public bool isDead;
     private CapsuleCollider _collider;
+    protected CanvasPlayer canvasInfo;
 
     [SerializeField] private ParticleSystem effectUpLevel;
 
@@ -49,6 +48,7 @@ public class Charecter : MonoBehaviour
     {
         _transform = transform;
         _collider = transform.GetComponent<CapsuleCollider>();
+        canvasInfo = _transform.GetComponent<CanvasPlayer>();
     }
     protected virtual void Start()
     {
@@ -68,10 +68,17 @@ public class Charecter : MonoBehaviour
     public void ShowEffectLevelUp()
     {
         effectUpLevel.Play();
+        SetTextSelf();
+    }
+    private void SetTextSelf()
+    {
+        canvasInfo.SetTextNamePlayer(id);
+        canvasInfo.SetTextLevel(killed);
     }
     public virtual void OnInit()
     {
         _collider.center = new Vector3(0, 0, 0);
+        SetTextSelf();
         listTargetInRange.Clear();
         hp = dataPlayer.hp;        
         isPrepareAttacking = false;
@@ -81,11 +88,11 @@ public class Charecter : MonoBehaviour
     }
     public void ChangeEquiped(int currentWeapon)
     {
-        if (currentWeaponEquiped != null && typeWeaapon == TypeWeaapon.CANDYTREE) 
-        {
-            WeaponOnHand();
-            return;
-        }
+        //if (currentWeaponEquiped != null && this.currentWeapon == TypeWeaapon.CANDYTREE) 
+        //{
+        //    WeaponOnHand();
+        //    return;
+        //}
         if (currentWeaponEquiped != null) DeActiveWeapon();
         switch (currentWeapon)
         {
@@ -119,7 +126,7 @@ public class Charecter : MonoBehaviour
     }
     public void ThrowWeapon()
     {
-        if (typeWeaapon == TypeWeaapon.CANDYTREE) { currentWeaponEquiped.ShootForce = 10; return; }       
+        //if (currentWeapon == TypeWeaapon.CANDYTREE) { currentWeaponEquiped.ShootForce = 10; return; }       
         if (currentWeaponEquiped == null) return;
         WeaponGetInfo(currentWeaponEquiped, WeaponAtributesFirst.rangeBullet);
         currentWeaponEquiped.rb.constraints = RigidbodyConstraints.None;      
@@ -134,10 +141,10 @@ public class Charecter : MonoBehaviour
         {
             dir = target.transform.position - throwPos.position;
         }
-        isAttacking = true;
         isTimeAttackNext = false;
         ThrowWeapon();
-        Invoke(nameof(DeAttack), 0.4f);      
+        isAttacking = false;
+        Invoke(nameof(DeAttack), 0.6f);   
     }
     public void NextTimeAttack()
     {
@@ -148,8 +155,8 @@ public class Charecter : MonoBehaviour
     protected virtual void DeAttack()
     {
         ChangeEquiped((int)currentWeapon);
-        Invoke(nameof(NextTimeAttack), 0.3f);
-        isAttacking = false;
+        ChangeAnim(GlobalTag.playerAnimIdle);
+        Invoke(nameof(NextTimeAttack), 0.3f);       
     }
     public void CancelAttack()
     {

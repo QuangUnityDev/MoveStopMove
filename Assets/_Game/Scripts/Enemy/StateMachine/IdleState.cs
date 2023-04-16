@@ -27,7 +27,7 @@ public class IdleState : IState
         if (botController.IsHadObject() && botController.numberThrowed > 0)
         {
             timeWaitAttack += Time.deltaTime;
-            if (timeWaitAttack > 0.5f)
+            if (timeWaitAttack > 0.2f)
             {                
               botController.ChangState(new AttackState());
             }
