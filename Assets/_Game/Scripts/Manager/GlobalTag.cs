@@ -11,4 +11,5 @@ public class GlobalTag : MonoBehaviour
     public const string playerAnimAttack = "Attack";
     public const string weapon = "Weapon";
     public const string playerAnimDeath = "Death";
+    public const string playerAnimDance = "Dance";
 }

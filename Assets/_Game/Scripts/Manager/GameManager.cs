@@ -10,19 +10,7 @@ public class GameManager : Singleton<GameManager>
     private void Awake()
     {      
         InitFirstPlay();
-        gameSubcribers = new ArrayList();
-        
-            Input.multiTouchEnabled = false;
-            Application.targetFrameRate = 60;
-            Screen.sleepTimeout = SleepTimeout.NeverSleep;
-
-            int maxScreenHeight = 1280;
-            float ratio = (float)Screen.currentResolution.width / (float)Screen.currentResolution.height;
-            if (Screen.currentResolution.height > maxScreenHeight)
-            {
-                Screen.SetResolution(Mathf.RoundToInt(ratio * (float)maxScreenHeight), maxScreenHeight, true);
-            }
-
+        gameSubcribers = new ArrayList();            
         OnInit();
     }
     private void Start()
@@ -51,7 +39,7 @@ public class GameManager : Singleton<GameManager>
             dataPlayer.isFirst = true;
             dataPlayer.weaponOwner.Add(0);
             dataPlayer.equipedWeapon = TypeWeaapon.AXE;
-            dataPlayer.gold = 0;
+            dataPlayer.gold = 1000;
             dataPlayer.levelID = 1;
             dataPlayer.currentSkin = 0;
             dataPlayer.skinAxeOwer.Add(0);
@@ -196,6 +184,13 @@ public class GameManager : Singleton<GameManager>
         get
         {
             return game_State == GAME_STATE.GAME_PREPARE;
+        }
+    }
+    public bool IsOverGame
+    {
+        get
+        {
+            return game_State == GAME_STATE.GAME_OVER;
         }
     }
     public enum GAME_STATE

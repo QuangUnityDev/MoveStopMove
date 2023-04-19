@@ -15,7 +15,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
     [SerializeField] private List<ParticleSystem> effectDie;
     private bool _isHadObject = false;
 
-    public Axe SpawnBullet(Transform playerTransform )
+    public Axe SpawnBullet(Transform playerTransform)
     {
         for (int i = 0; i < listAxes.Count; i++)
         {
@@ -51,7 +51,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
         {
             if (!listBoomerangs[i].gameObject.activeSelf)
             {
-                listBoomerangs[i].transform.SetPositionAndRotation(playerTransform.position, Quaternion.Euler(0,0,0));
+                listBoomerangs[i].transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
                 listBoomerangs[i].gameObject.SetActive(true);
                 _isHadObject = true;
                 return listBoomerangs[i];
@@ -65,7 +65,7 @@ public class ObjectsPooling : Singleton<ObjectsPooling>
         {
             if (!_isHadObject)
             {
-                Boomerang more = Instantiate(listBoomerangs[0], playerTransform.position, Quaternion.Euler(0, 0, 0));
+                Boomerang more = Instantiate(listBoomerangs[0], playerTransform.position, playerTransform.rotation);
                 more.transform.SetPositionAndRotation(playerTransform.position, playerTransform.rotation);
                 more.gameObject.SetActive(true);
                 listBoomerangs.Add(more);

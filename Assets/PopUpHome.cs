@@ -23,6 +23,10 @@ public class PopUpHome : PopupUI<PopUpHome>
         bt_Play.onClick.AddListener(OnClickedButtonPlayGame);
         bt_OpenShopSkin.onClick.AddListener(OnClickedButtonShopSkin);
         bt_OpenShopWeapom.onClick.AddListener(OnClickedButtonShopWeapon);
+        
+    }
+    private void LateUpdate()
+    {
         txt_Gold.text = GameManager.GetInstance().dataPlayer.gold.ToString();
     }
     private void OnClickedButtonPlayGame()

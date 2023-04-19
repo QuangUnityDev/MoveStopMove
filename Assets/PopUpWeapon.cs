@@ -51,7 +51,7 @@ public class PopUpWeapon : PopupUI<PopUpWeapon>
     public int equipedSkinWeapon;
     public TypeWeaapon currentWeponEquiped;
 
-    [HideInInspector] public int priceCurrent;
+    public int priceCurrent;
 
     private Data data;
 
@@ -217,6 +217,7 @@ public class PopUpWeapon : PopupUI<PopUpWeapon>
     }
     public void LoadDataWeapon(DataWeapon data,GameObject weapon)
     {
+        priceCurrent = data.price;
         dataWeaponCurrent = data;
         OffHideWeaponGo();
         weapon.gameObject.SetActive(true);
@@ -276,6 +277,7 @@ public class PopUpWeapon : PopupUI<PopUpWeapon>
     {
         for (int i = 0; i < currentWeaponOwner.Count; i++)
         {
+            if(currentWeponEquiped == GameManager.GetInstance().dataPlayer.equipedWeapon)
             if (equipedSkinWeapon == currentWeaponOwner[i]) ItemNotSkinOwnered();
         }
     }

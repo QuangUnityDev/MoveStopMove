@@ -84,6 +84,7 @@ public class BotController : Charecter
     }
     void FixedUpdate()
     {
+        throwPos.SetLocalPositionAndRotation(Vector3.zero, Quaternion.Euler(new Vector3(211, 71, -6)));
         if (GameManager.GetInstance().IsPreparing) {
             canvasInfo.OffInfoPlayer();
             return; }

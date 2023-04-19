@@ -16,13 +16,13 @@ public class ChangeEquiment : Singleton<ChangeEquiment>
                 break;
             case TypeWeaapon.BOOMERANG:
                 player.currentWeapon = TypeWeaapon.BOOMERANG;
-                rangeCollider.GetComponent<SphereCollider>().radius = WeaponAtributesFirst.rangeSword;
-                spriteRange.localScale = new Vector3(WeaponAtributesFirst.rangeSword / 2.5f, WeaponAtributesFirst.rangeSword / 2.5f, WeaponAtributesFirst.rangeSword / 2.5f);
+                rangeCollider.GetComponent<SphereCollider>().radius = WeaponAtributesFirst.rangeBoomerang;
+                spriteRange.localScale = new Vector3(WeaponAtributesFirst.rangeBoomerang / 2.5f, WeaponAtributesFirst.rangeBoomerang / 2.5f, WeaponAtributesFirst.rangeBoomerang / 2.5f);
                 break;
             case TypeWeaapon.CANDYTREE:
                 player.currentWeapon = TypeWeaapon.CANDYTREE;
-                rangeCollider.GetComponent<SphereCollider>().radius = WeaponAtributesFirst.rangeBoomerang;
-                spriteRange.localScale = new Vector3(WeaponAtributesFirst.rangeBoomerang / 2.5f, WeaponAtributesFirst.rangeBoomerang / 2.5f, WeaponAtributesFirst.rangeBoomerang / 2.5f);
+                rangeCollider.GetComponent<SphereCollider>().radius = WeaponAtributesFirst.Candytree;
+                spriteRange.localScale = new Vector3(WeaponAtributesFirst.Candytree / 2.5f, WeaponAtributesFirst.Candytree / 2.5f, WeaponAtributesFirst.Candytree / 2.5f);
                 break;
             default:
                 break;

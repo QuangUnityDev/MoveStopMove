@@ -25,7 +25,7 @@ public class UIManager : Singleton<UIManager>,ISubcriber
         if (isShow)
         {
             CameraViewPrepare();
-            LevelManager.GetInstance().player.ChangeAnim("Idle");
+            LevelManager.GetInstance().player.ChangeAnim(GlobalTag.playerAnimIdle);
             GameManager.GetInstance().deActivePlayer?.Invoke(true);
         }
        
@@ -36,7 +36,7 @@ public class UIManager : Singleton<UIManager>,ISubcriber
     public void OpenShopSkin()
     {
         cameraView.posOpenSkinShop();      
-        LevelManager.GetInstance().player.ChangeAnim("Dance");
+        LevelManager.GetInstance().player.ChangeAnim(GlobalTag.playerAnimDance);
     }
     public void OpenShopWeapon()
     {
@@ -44,6 +44,7 @@ public class UIManager : Singleton<UIManager>,ISubcriber
     }
     public void GameOver()
     {
+        NotShowPopUpInGame();
         ShowPopUp.ShowPopUps(StringNamePopup.PopupGameOver);
     }
     //public void ShowPopUpHome()

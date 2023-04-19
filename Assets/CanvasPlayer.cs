@@ -8,7 +8,7 @@ public class CanvasPlayer : MonoBehaviour
     [SerializeField] private RectTransform go;
     [SerializeField] private Text textLevelPlayer;
     [SerializeField] private Text textNamePlayer;
-    void Update()
+    void FixedUpdate ()
     {
         go.rotation = Quaternion.Euler(45, Quaternion.identity.y, Quaternion.identity.z);
     }

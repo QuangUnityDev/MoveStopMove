@@ -61,7 +61,7 @@ public class PopUpInGame : PopupUI<PopUpInGame>,ISubcriber
 
     public void GameOver()
     {
-        Close();
+      
     }
 
     public void GameCompleted()

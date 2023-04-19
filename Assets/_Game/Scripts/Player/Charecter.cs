@@ -177,6 +177,7 @@ public class Charecter : MonoBehaviour
     {
         killed = 0;
         _transform.localScale = new Vector3(1, 1, 1);
+        _transform.rotation = Quaternion.Euler(Vector3.zero);
     }
     public bool IsHadObject()
     {
@@ -217,11 +218,11 @@ public class Charecter : MonoBehaviour
     }
     public virtual void OnDeath()
     {
-        _collider.center = new Vector3(0, 10, 0);
-        isDead = true;
+        _collider.center = new Vector3(0, 10, 0);     
         rb.velocity = Vector3.zero;
         DeActiveWeapon();
         Invoke(nameof(Death), 2f);
+        isDead = true;
     }
     public virtual void Death()
     {

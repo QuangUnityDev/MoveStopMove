@@ -6,6 +6,7 @@ public class PlayerController : Charecter
 {
     public FloatingJoystick floatingJoystick;
     GameManager data;
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -16,7 +17,7 @@ public class PlayerController : Charecter
         base.OnInit();
         data = GameManager.GetInstance();
         currentWeapon = data.dataPlayer.equipedWeapon;
-        ChangeEquiment.GetInstance().ResetAtributeWeapon(data.dataPlayer.equipedWeapon, colliderRange, spriteRange, this);       
+        ChangeEquiment.GetInstance().ResetAtributeWeapon(currentWeapon, colliderRange, spriteRange, this);       
         ChangeEquiped((int)currentWeapon);     
         data.ShowRangePlayer((isTrue) => {
             spriteRange.gameObject.SetActive(isTrue);
@@ -29,6 +30,7 @@ public class PlayerController : Charecter
     }
     public void FixedUpdate()
     {
+        throwPos.SetLocalPositionAndRotation(Vector3.zero, Quaternion.Euler(new Vector3(211, 71, -6)));
         if (data.IsPreparing)
         {
             canvasInfo.OffInfoPlayer();
@@ -36,6 +38,7 @@ public class PlayerController : Charecter
         }
         else { canvasInfo.OnInfoPlayer(); }
         if (isDead) return;
+    
         Vector3 direction = Vector3.forward * floatingJoystick.Vertical + Vector3.right * floatingJoystick.Horizontal;
         if(!isAttacking) rb.velocity = direction * speed * Time.fixedDeltaTime;
         if (rb.velocity != Vector3.zero) _transform.rotation = Quaternion.LookRotation(direction);
@@ -69,7 +72,7 @@ public class PlayerController : Charecter
             else
             {
                 CancelAttack();
-                ChangeAnim("Idle");
+                ChangeAnim(GlobalTag.playerAnimIdle);
             }
         }
     }

@@ -27,4 +27,11 @@ public class PopupSetting : PopupUI<PopupSetting>
         Close();
         UIManager.GetInstance().ShowPopUpInGame();
     }
+    private void Update()
+    {
+        if(GameManager.GetInstance().IsOverGame)
+        {
+            Close();
+        }
+    }
 }
