@@ -37,7 +37,7 @@ public class PlayerController : Charecter
             return;
         }
         else { canvasInfo.OnInfoPlayer(); }
-        if (isDead) return;
+        if (isDead) { ChangeAnim(GlobalTag.playerAnimDeath); return; }
     
         Vector3 direction = Vector3.forward * floatingJoystick.Vertical + Vector3.right * floatingJoystick.Horizontal;
         if(!isAttacking) rb.velocity = direction * speed * Time.fixedDeltaTime;
@@ -79,7 +79,7 @@ public class PlayerController : Charecter
     public override void OnDeath()
     {
         base.OnDeath();     
-        ChangeAnim(GlobalTag.playerAnimDeath);
+        
     }
     public override void Death()
     {

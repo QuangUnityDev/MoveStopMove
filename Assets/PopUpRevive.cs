@@ -42,7 +42,6 @@ public class PopUpRevive : PopupUI<PopUpRevive>
         }   
         if(timeCountDown == 0 && isBackGamePrepare)
         {
-            GameManager.GetInstance().GameOver();
             isBackGamePrepare = false;
             OnClickedButtonClose();
         }

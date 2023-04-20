@@ -8,7 +8,8 @@ public class GameManager : Singleton<GameManager>
     public Data dataPlayer;
     public static int numberOfReviveInOneTimesPlay;
     private void Awake()
-    {      
+    {
+        SaveData();
         InitFirstPlay();
         gameSubcribers = new ArrayList();            
         OnInit();
